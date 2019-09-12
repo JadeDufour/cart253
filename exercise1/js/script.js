@@ -15,6 +15,13 @@ let squareX;
 let squareY;
 let squareSize = 100;
 
+//The curremt position and size of the triangle
+
+let triangleX;
+let triangleY;
+let triangleSize = 100;
+
+
 
 // preload()
 //
@@ -45,8 +52,15 @@ function setup() {
   squareX = width + squareSize/2;
   squareY = height + squareSize/2;
 
+
   // We'll draw rectangles from the center
   rectMode(CENTER);
+
+  //Start the triangle off screen to the left of the screen
+  triangleX = width + triangleSize/2;
+  triangleY = -height + triangleSize/2;
+
+
   // We won't have a stroke in this
   noStroke();
 }
@@ -68,6 +82,7 @@ function draw() {
   // Display the circle
   ellipse(circleX,circleY,circleSize,circleSize);
 
+
   // Move square up and to the left
   squareX -= 1;
   squareY -= 1;
@@ -75,4 +90,18 @@ function draw() {
   fill(255,0,255,10);
   // Display the square
   rect(squareX,squareY,squareSize,squareSize);
+
+
+//Move the triangle to the right
+triangleX +=1;
+triangleY -=1;
+
+//Make the triangle transparent green
+fill(120,0,255,0);
+
+//Display the triangle
+triangle(triangleX,triangleY,triangleX,triangleY,triangleSize,triangleSize);
+
+
+
 }
