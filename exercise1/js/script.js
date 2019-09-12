@@ -8,7 +8,7 @@
 // The current position and size of the circle
 let circleX;
 let circleY;
-let circleSize = 100;
+let circleSize = 101;
 
 // The current position and size of the square
 let squareX;
