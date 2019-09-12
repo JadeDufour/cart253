@@ -29,8 +29,6 @@ function preload() {
 //
 // Set up the canvas, position the images, set the image mode.
 
-
-
 function setup() {
   // Create our canvas
   createCanvas(640,640);
@@ -63,16 +61,16 @@ function draw() {
   // Move circle up and to the right
   circleX += 1;
   circleY -= 1;
-  // Make the circle transparent purple
-  fill(142,34,255,10);
+  // Make the circle transparent red
+  fill(255,0,0,10);
   // Display the circle
   ellipse(circleX,circleY,circleSize,circleSize);
 
   // Move square up and to the left
   squareX -= 1;
   squareY -= 1;
-  // Make the square transparent pink
-  fill(255,0,255,10);
+  // Make the square transparent blue
+  fill(0,0,255,10);
   // Display the square
   rect(squareX,squareY,squareSize,squareSize);
 }
