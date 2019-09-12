@@ -24,7 +24,7 @@ function preload() {
 let x=0;
 let y=0;
 let speed;
-let circleColor=250;
+let circleColor=253;
 
 function setup() {
   createCanvas(500,500);
