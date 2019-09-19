@@ -16,11 +16,6 @@ let squareY;
 let squareSize = 100;
 
 
-//The curremt position and size of the squareX
-let textX;
-let textY;
-
-
 // preload()
 //
 // Nothing here
@@ -29,11 +24,10 @@ function preload() {
 
 }
 
+
 // setup()
 //
 // Set up the canvas, position the images, set the image mode.
-
-
 
 function setup() {
   // Create our canvas
@@ -49,15 +43,10 @@ function setup() {
   squareX = width + squareSize/2;
   squareY = height + squareSize/2;
 
-  //Start the text off the screen from the middle right
-  textX=0;
-  textY=0;
-
-
-
   // We'll draw rectangles from the center
   rectMode(CENTER);
-
+  // We won't have a stroke in this
+  noStroke();
 }
 
 
@@ -72,39 +61,16 @@ function draw() {
   // Move circle up and to the right
   circleX += 1;
   circleY -= 1;
-  // Make the circle transparent purple
-  noStroke();
-  fill(142,34,255,10);
+  // Make the circle transparent red
+  fill(255,0,0,10);
   // Display the circle
   ellipse(circleX,circleY,circleSize,circleSize);
-
 
   // Move square up and to the left
   squareX -= 1;
   squareY -= 1;
-  // Make the square transparent pink
-  noStroke();
-  fill(255,0,255,10);
+  // Make the square transparent blue
+  fill(0,0,255,10);
   // Display the square
   rect(squareX,squareY,squareSize,squareSize);
-
-  //Add text
-
-textX += 1;
-textSize(70);
-stroke(255);
-fill(255,102,102,70);
-text('Holà', textX, width/2);
-
-
-//add second textX
-
-textY +=1;
-textSize(50);
-stroke(255);
-fill(51,205,250,60);
-text('Jade', width/2, textY);
-
-
-
 }
