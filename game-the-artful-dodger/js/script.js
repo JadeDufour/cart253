@@ -26,13 +26,20 @@ let enemySize = 50;
 let enemySpeed = 5;
 let enemyVX = 5;
 
-
-
 // How many dodges the player has made
 let dodges = 0;
 
+//Player
+let img;
 
 
+function preload(){
+
+
+img = loadImage('assets/laDefense.jpg');
+
+
+}
 
 
 // setup()
@@ -40,7 +47,9 @@ let dodges = 0;
 // Make the canvas, position the avatar and anemy
 function setup() {
   // Create our playing area
+
   createCanvas(500,500);
+
 
 
 
