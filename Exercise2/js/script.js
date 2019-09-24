@@ -1,16 +1,11 @@
 /******************************************************
 
-Game - The Artful Dodger
+Game - The Cone Dodger
 Jade Dufour
 
 A simple dodging game with keyboard controls
 
 ******************************************************/
-
-// The two deadly rivals
-let coneOrange;
-let car;
-
 
 
 // The position and size of our avatar 
@@ -35,13 +30,35 @@ let enemyVX = 5;
 // How many dodges the player has made
 let dodges = 0;
 
+// The two deadly rivals  <----------------------------------
+let cone;
+let car;
+
+
+
+
+//Insert function preload to load in images  <-------------------
+
+function preload(){
+
+//So our avatar and enemy can look like their true selves :)  <-----------------
+//Save the images in Assets <----------------------
+
+/*car = loadImage("assets/images/car.png.png");
+cone = loadImage("assets/images/smallcone.png");*/
+
+}
+
+
+
 // setup()
 //
-// Make the canvas, position the avatar and anemy
+// Make the canvas, position the avatar and enemy
 function setup() {
   // Create our playing area
-  //Increase the size by 100px on the y axis
-  createCanvas(500,600);
+  //Increase the size of the canvas <-----------------------------
+  createCanvas(700,700);
+
 
   // Put the avatar in the centre
   avatarX = width/2;
@@ -55,25 +72,42 @@ function setup() {
   noStroke();
 }
 
-// draw()
-//
+
 // Handle moving the avatar and enemy and checking for dodges and
 // game over situations.
+
+
+
 function draw() {
-  // A pink background
-  background(255,220,220);
+  // A grey background (the road)<---------------------------------
+  background(128,128,128);
+  //The yellow line on the street  <---------------------------------
+  fill(220,220,0);
+  rect(0,350, 700, 20);
 
-
-  //Tell the player how many dodges they achieved 
-  fill(210,255,200);
-  textSize(20);
-  textFont('Arial');
-  text(dodges + " dodge(s)!", 200,30);
 
 
   // Default the avatar's velocity to 0 in case no key is pressed this frame
   avatarVX = 0;
   avatarVY = 0;
+
+
+//Set the player speed faster if in the 1/3 left of the screen <--------------------
+
+    if (avatarX <= width/3) {
+      avatarSpeed = 12;
+    }
+    else if (avatarX <= width/3*2) {
+      avatarSpeed = 6;
+    }
+
+    //And much slower if the player is in the 1/3 right <-------------------------
+    else {
+      avatarSpeed = 4;
+    }
+
+
+
 
   // Check which keys are down and set the avatar's velocity based on its
   // speed appropriately
@@ -101,6 +135,8 @@ function draw() {
 
   // The enemy always moves at enemySpeed
   enemyVX = enemySpeed;
+
+
   // Update the enemy's position based on its velocity
   enemyX = enemyX + enemyVX;
 
@@ -110,20 +146,27 @@ function draw() {
   if (dist(enemyX,enemyY,avatarX,avatarY) < enemySize/2 + avatarSize/2) {
     // Tell the player they lost
     console.log("YOU LOSE!");
-    // Reset the enemy's position
+
+  // Reset the enemy's position and speed  <------------------------
     enemyX = 0;
     enemyY = random(0,height);
-    enemySize = 50;
-    // Reset the avatar's position
+    enemySize=40;
+    enemySpeed=7;
+
+
+  // Reset the avatar's position
     avatarX = width/2;
     avatarY = height/2;
-    // Reset the dodge counter
+
+  // Reset the dodge counter
     dodges = 0;
   }
 
+
+
   // Check if the avatar has gone off the screen (cheating!)
   if (avatarX < 0 || avatarX > width || avatarY < 0 || avatarY > height) {
-    // If they went off the screen they lose in the same way as above.
+  // If they went off the screen they lose in the same way as above.
     console.log("YOU LOSE!");
     enemyX = 0;
     enemyY = random(0,height);
@@ -134,15 +177,21 @@ function draw() {
 
   // Check if the enemy has moved all the way across the screen
   if (enemyX > width) {
-    // This means the player dodged so update its dodge statistic
+
+  //Increase the enemy (cone) size when the player dodges  <--------------
+    enemySize +=10;
+  //The enemy gains speed at the same time  <---------------
+    enemySpeed +=0.5;
+
+
+// This means the player dodged so update its dodge statistic
     dodges = dodges + 1;
 
-    //Increase the enemy (cone) size when the player dodges
-    enemySize +=10;
 
-    // Tell them how many dodges they have made
+  
+  // Tell them how many dodges they have made
     console.log(dodges + " DODGES!");
-    // Reset the enemy's position to the left at a random height
+   // Reset the enemy's position to the left at a random height
     enemyX = 0;
     enemyY = random(0,height);
   }
@@ -150,14 +199,28 @@ function draw() {
   // Display the number of successful dodges in the console
   console.log(dodges);
 
-  // The player is black
-  fill(0);
-  // Draw the player as a circle
-  ellipse(avatarX,avatarY,avatarSize,avatarSize);
 
-  // The enemy is red
-  fill(255,0,0);
-  // Draw the enemy as a circle
-  ellipse(enemyX,enemyY,enemySize,enemySize);
+//Display the images onto the avatars <-----------------
+  //the car  <----------------------------------
+  image(car,avatarX,avatarY,avatarSize,avatarSize);
+  //The cone(s) <--------------------------------
+  image(cone,enemyX,enemyY,enemySize,enemySize);
+
+
+
+  
+  //Tell the player how many dodges they achieved <----------------------------
+  textFont('Arial');
+  textAlign(RIGHT,TOP);
+  textSize(70);
+  fill(210,255,200);
+  text(dodges, width, 0);
+
 
 }
+
+
+
+
+
+ 
