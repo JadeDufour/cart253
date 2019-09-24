@@ -40,7 +40,8 @@ let dodges = 0;
 // Make the canvas, position the avatar and anemy
 function setup() {
   // Create our playing area
-  createCanvas(500,500);
+  //Increase the size by 100px on the y axis
+  createCanvas(500,600);
 
   // Put the avatar in the centre
   avatarX = width/2;
@@ -112,6 +113,7 @@ function draw() {
     // Reset the enemy's position
     enemyX = 0;
     enemyY = random(0,height);
+    enemySize = 50;
     // Reset the avatar's position
     avatarX = width/2;
     avatarY = height/2;
@@ -134,6 +136,10 @@ function draw() {
   if (enemyX > width) {
     // This means the player dodged so update its dodge statistic
     dodges = dodges + 1;
+
+    //Increase the enemy (cone) size when the player dodges
+    enemySize +=10;
+
     // Tell them how many dodges they have made
     console.log(dodges + " DODGES!");
     // Reset the enemy's position to the left at a random height
