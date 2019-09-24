@@ -6,57 +6,41 @@ Jade Dufour
 A simple dodging game with keyboard controls
 
 ******************************************************/
-//The two enemies, the car and the traffic cone
+
+// The two deadly rivals
+let coneOrange;
 let car;
-let trafficCone;
 
 
-// The position and size of our avatar circle
+
+// The position and size of our avatar 
 let avatarX;
 let avatarY;
-let avatarSize = 50;
+let avatarSize = 20;
 
-// The speed and velocity of our avatar circle
+// The speed and velocity of our avatar 
 let avatarSpeed = 10;
 let avatarVX = 0;
 let avatarVY = 0;
 
-// The position and size of the enemy circle
+// The position and size of the enemy
 let enemyX;
 let enemyY;
 let enemySize = 50;
 
-// The speed and velocity of our enemy circle
+// The speed and velocity of our enemy 
 let enemySpeed = 5;
 let enemyVX = 5;
 
 // How many dodges the player has made
 let dodges = 0;
 
-//Player
-let img;
-
-
-function preload(){
-
-
-img = loadImage('assets/laDefense.jpg');
-
-
-}
-
-
 // setup()
 //
 // Make the canvas, position the avatar and anemy
 function setup() {
   // Create our playing area
-
   createCanvas(500,500);
-
-
-
-
 
   // Put the avatar in the centre
   avatarX = width/2;
@@ -75,16 +59,17 @@ function setup() {
 // Handle moving the avatar and enemy and checking for dodges and
 // game over situations.
 function draw() {
-
-
-
   // A pink background
   background(255,220,220);
-  // Tell them how many dodges they have made
-  fill(0,255,0);
+
+
+  //Tell the player how many dodges they achieved 
+  fill(210,255,200);
   textSize(20);
   textFont('Arial');
-  text(dodges + " DODGES!", 10,20);
+  text(dodges + " dodge(s)!", 200,30);
+
+
   // Default the avatar's velocity to 0 in case no key is pressed this frame
   avatarVX = 0;
   avatarVY = 0;
@@ -122,7 +107,8 @@ function draw() {
   // We do this by checking if the distance between the centre of the enemy
   // and the centre of the avatar is less that their combined radii
   if (dist(enemyX,enemyY,avatarX,avatarY) < enemySize/2 + avatarSize/2) {
-
+    // Tell the player they lost
+    console.log("YOU LOSE!");
     // Reset the enemy's position
     enemyX = 0;
     enemyY = random(0,height);
@@ -131,15 +117,12 @@ function draw() {
     avatarY = height/2;
     // Reset the dodge counter
     dodges = 0;
-
-
   }
-
 
   // Check if the avatar has gone off the screen (cheating!)
   if (avatarX < 0 || avatarX > width || avatarY < 0 || avatarY > height) {
     // If they went off the screen they lose in the same way as above.
-
+    console.log("YOU LOSE!");
     enemyX = 0;
     enemyY = random(0,height);
     avatarX = width/2;
@@ -147,10 +130,19 @@ function draw() {
     dodges = 0;
   }
 
+  // Check if the enemy has moved all the way across the screen
+  if (enemyX > width) {
+    // This means the player dodged so update its dodge statistic
+    dodges = dodges + 1;
+    // Tell them how many dodges they have made
+    console.log(dodges + " DODGES!");
+    // Reset the enemy's position to the left at a random height
+    enemyX = 0;
+    enemyY = random(0,height);
+  }
 
   // Display the number of successful dodges in the console
   console.log(dodges);
-
 
   // The player is black
   fill(0);
@@ -161,22 +153,5 @@ function draw() {
   fill(255,0,0);
   // Draw the enemy as a circle
   ellipse(enemyX,enemyY,enemySize,enemySize);
-
-  // Check if the enemy has moved all the way across the screen
-  if (enemyX > width) {
-
-    // This means the player dodged so update its dodge statistic
-    dodges = dodges + 1;
-
-
-    // Increase Enemy size
-    enemySize += 10;
-
-
-
-    // Reset the enemy's position to the left at a random height
-    enemyX = 0;
-    enemyY = random(0,height);
-  }
 
 }
