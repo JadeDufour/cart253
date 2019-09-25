@@ -11,7 +11,7 @@ A simple dodging game with keyboard controls
 // The position and size of our avatar
 let avatarX;
 let avatarY;
-let avatarSize = 40;
+let avatarSize = 45;
 
 // The speed and velocity of our avatar
 let avatarSpeed = 10;
@@ -100,7 +100,7 @@ function draw() {
       avatarSpeed = 12;
     }
     else if (avatarX <= width/3*2) {
-      avatarSpeed = 6;
+      avatarSpeed = 10;
     }
 
     //And much slower if the player is in the 1/3 right <-------------------------
@@ -181,7 +181,7 @@ function draw() {
   if (enemyX > width) {
 
   //Increase the enemy (cone) size when the player dodges  <--------------
-    enemySize +=10;
+    enemySize +=12;
   //The enemy gains speed at the same time  <---------------
     enemySpeed +=0.5;
 
@@ -209,19 +209,19 @@ function draw() {
   textFont('Arial');
   textAlign(RIGHT,TOP);
   textSize(70);
-  //Green <----------------
+  //Green <--------------------------------------
   if(dodges <= 5) {
     fill(20,250,20);
   }
-  //Blue <-----------------
+  //Blue <---------------------------------------
   else if (dodges < 11){
     fill(25,23,211);
   }
-//Red <---------------------
+//Red <-----------------------------------------
   else if (dodges < 20){
     fill(255,0,0);
   }
-//Yellow <--------------------
+//Yellow <---------------------------------------
   else {
     fill(255,255,0);
   }
@@ -230,72 +230,72 @@ function draw() {
 
 
 
+/*  textFont('Arial');
+  textAlign(RIGHT,TOP);
+  textSize(50);
+  //Green <--------------------------------------
+  if(dodges = 5) {
+    fill(20,250,20);
+    Text()
+  }
+  //Blue <---------------------------------------
+  else if (dodges = 10){
+    fill(25,23,211);
+    Text(h,width,90);
+  }
+  //Red <-----------------------------------------
+  else if (dodges = 20){
+    fill(255,0,0);
+    Text(hi,width - 40 ,90);
+  }
+
+  text(dodges, width, 0); */
+
+
+
+
+
+
+
+
+
  // Display the number of successful dodges in the console
  console.log(dodges);
 
 
-/*
-// The player is red
- fill(255,0,0);
- // Draw the player as a circle
- ellipse(avatarX,avatarY,avatarSize,avatarSize);
-
- // The enemy is orange <--------------------------------
- fill(255,140,0);
- // Draw the enemy as a triangle
- ellipse(enemyX,enemyY,enemySize,enemySize);
-*/
-
 imageMode(CENTER);
-//Display the images onto the avatars <-----------------
-  //the car  <----------------------------------
+//Display the images onto the avatars <---------------------------
+  //the car  <----------------------------------------------------
   image(avatarImage,avatarX,avatarY,avatarSize,avatarSize);
-  //The cone(s) <--------------------------------
+  //The cone(s) <-------------------------------------------------
   image(enemyImage,enemyX,enemyY,enemySize,enemySize);
 
 
-
+//Add instructions before the game starts <-----------------------
 if (showInstructions){
   textAlign(CENTER);
   fill(0);
-  textSize(60);
-  text("Hello\nHi", width/2, 0);
+  textSize(30);
+  text("The Cone Dodger\n\nSingle player : Dodge the cones with the arrows\nMultiplayer: Grab the mouse and hit\nthe cones to make them bigger!\n\n\nClick to continue", width/2, 90);
   noLoop();
 }
 
-
-
-
 }
 
 
-
-function mouseClicked() {
-  // Check if the distance between the mouse and the centre of the circle
+  //Implement second player with mouseClicked function <---------------------
+function mousePressed() {
+  // Check if the distance between the mouse and the centre of the circle <--
   // is less than the circle's radius
   if (dist(mouseX,mouseY,enemyX,enemyY) < enemySize/2) {
-    // If it is, then the click was inside the circle
-    // Make the circle smaller (harder to click)
-    enemySize = enemySize +150;
+    // If it is, then the click was inside the circle  <----------------------
+    // Make the circle bigger (harder for the other player) <-----------------
+    enemySize = enemySize +30;
 
-
-
-/*
-    // Make the circle faster
-    speed = speed + 0.25;
-
-    // Give it a new random velocity
-    vx = random(-speed,speed);
-    vy = random(-speed, speed);
-    // Increase the successful clicks
-    clicks = clicks + 1;
-
-    */
   }
 
+//Remove the instructions if the player clicked <-----------------------------
   showInstructions = false;
   loop();
-
-
 
 }
