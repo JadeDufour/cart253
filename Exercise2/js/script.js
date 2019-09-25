@@ -242,14 +242,14 @@ function draw() {
  // Display the number of successful dodges in the console
  console.log(dodges);
 
-// The player is black
- fill(0);
+// The player is red
+ fill(255,0,0);
  // Draw the player as a circle
  ellipse(avatarX,avatarY,avatarSize,avatarSize);
 
- // The enemy is red
- fill(255,0,0);
- // Draw the enemy as a circle
+ // The enemy is orange <--------------------------------
+ fill(255,140,0);
+ // Draw the enemy as a triangle
  ellipse(enemyX,enemyY,enemySize,enemySize);
 
 }
