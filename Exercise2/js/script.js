@@ -11,7 +11,7 @@ A simple dodging game with keyboard controls
 // The position and size of our avatar 
 let avatarX;
 let avatarY;
-let avatarSize = 20;
+let avatarSize = 2;
 
 // The speed and velocity of our avatar 
 let avatarSpeed = 10;
@@ -162,7 +162,7 @@ function draw() {
     dodges = 0;
   }
 
-
+  
 
   // Check if the avatar has gone off the screen (cheating!)
   if (avatarX < 0 || avatarX > width || avatarY < 0 || avatarY > height) {
@@ -200,21 +200,45 @@ function draw() {
   console.log(dodges);
 
 
-//Display the images onto the avatars <-----------------
+/*//Display the images onto the avatars <-----------------
   //the car  <----------------------------------
   image(car,avatarX,avatarY,avatarSize,avatarSize);
   //The cone(s) <--------------------------------
-  image(cone,enemyX,enemyY,enemySize,enemySize);
+  image(cone,enemyX,enemyY,enemySize,enemySize);*/
 
 
 
   
   //Tell the player how many dodges they achieved <----------------------------
+  //Change the text color depending on the score <-----------------------------
+  
+  //Green <----------------
+  if(dodges <= 5) {
+
   textFont('Arial');
   textAlign(RIGHT,TOP);
   textSize(70);
-  fill(210,255,200);
+  fill(20,250,20);
   text(dodges, width, 0);
+  }
+  //Blue <-----------------
+  if (dodges >5){
+    fill(25,23,211);
+    text(dodges, width, 0);
+
+  }
+//Red <---------------------
+  if (dodges >= 12){
+    
+    fill(255,0,0);
+    text(dodges, width, 0);
+  }
+//Yellow <--------------------
+  if (dodges > 20){
+    fill(255,255,0);
+    text(dodges, width, 0);
+  }
+
 
 
 }
