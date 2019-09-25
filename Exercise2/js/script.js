@@ -11,7 +11,7 @@ A simple dodging game with keyboard controls
 // The position and size of our avatar 
 let avatarX;
 let avatarY;
-let avatarSize = 2;
+let avatarSize = 10;
 
 // The speed and velocity of our avatar 
 let avatarSpeed = 10;
@@ -41,10 +41,10 @@ let car;
 
 function preload(){
 
-//So our avatar and enemy can look like their true selves :)  <-----------------
+/*//So our avatar and enemy can look like their true selves :)  <-----------------
 //Save the images in Assets <----------------------
 
-/*car = loadImage("assets/images/car.png.png");
+car = loadImage("assets/images/car.png");
 cone = loadImage("assets/images/smallcone.png");*/
 
 }
@@ -239,7 +239,18 @@ function draw() {
     text(dodges, width, 0);
   }
 
+ // Display the number of successful dodges in the console
+ console.log(dodges);
 
+// The player is black
+ fill(0);
+ // Draw the player as a circle
+ ellipse(avatarX,avatarY,avatarSize,avatarSize);
+
+ // The enemy is red
+ fill(255,0,0);
+ // Draw the enemy as a circle
+ ellipse(enemyX,enemyY,enemySize,enemySize);
 
 }
 
