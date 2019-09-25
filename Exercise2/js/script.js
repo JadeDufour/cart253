@@ -11,7 +11,7 @@ A simple dodging game with keyboard controls
 // The position and size of our avatar 
 let avatarX;
 let avatarY;
-let avatarSize = 10;
+let avatarSize = 20;
 
 // The speed and velocity of our avatar 
 let avatarSpeed = 10;
@@ -30,23 +30,25 @@ let enemyVX = 5;
 // How many dodges the player has made
 let dodges = 0;
 
-// The two deadly rivals  <----------------------------------
-let cone;
-let car;
+// The two deadly rivals,  <----------------------------------
+//the car
+let avatarImage;
+//the cone
+let enemyImage;
 
 
 
 
 //Insert function preload to load in images  <-------------------
-
 function preload(){
 
-/*//So our avatar and enemy can look like their true selves :)  <-----------------
+/*
+  //So our avatar and enemy can look like their true selves :)  <-----------------
 //Save the images in Assets <----------------------
 
-car = loadImage("assets/images/car.png");
-cone = loadImage("assets/images/smallcone.png");*/
-
+avatarImage = loadImage('assets/images/54502-00.png');
+enemyImage = loadImage('assets/images/orange.png');
+*/
 }
 
 
@@ -77,7 +79,6 @@ function setup() {
 // game over situations.
 
 
-
 function draw() {
   // A grey background (the road)<---------------------------------
   background(128,128,128);
@@ -85,7 +86,7 @@ function draw() {
   fill(220,220,0);
   rect(0,350, 700, 20);
 
-
+  
 
   // Default the avatar's velocity to 0 in case no key is pressed this frame
   avatarVX = 0;
@@ -200,14 +201,6 @@ function draw() {
   console.log(dodges);
 
 
-/*//Display the images onto the avatars <-----------------
-  //the car  <----------------------------------
-  image(car,avatarX,avatarY,avatarSize,avatarSize);
-  //The cone(s) <--------------------------------
-  image(cone,enemyX,enemyY,enemySize,enemySize);*/
-
-
-
   
   //Tell the player how many dodges they achieved <----------------------------
   //Change the text color depending on the score <-----------------------------
@@ -221,6 +214,8 @@ function draw() {
   fill(20,250,20);
   text(dodges, width, 0);
   }
+
+
   //Blue <-----------------
   if (dodges >5){
     fill(25,23,211);
@@ -234,14 +229,18 @@ function draw() {
     text(dodges, width, 0);
   }
 //Yellow <--------------------
-  if (dodges > 20){
+  else if (dodges > 20){
     fill(255,255,0);
     text(dodges, width, 0);
   }
 
+
+
  // Display the number of successful dodges in the console
  console.log(dodges);
 
+
+ 
 // The player is red
  fill(255,0,0);
  // Draw the player as a circle
@@ -250,9 +249,22 @@ function draw() {
  // The enemy is orange <--------------------------------
  fill(255,140,0);
  // Draw the enemy as a triangle
- ellipse(enemyX,enemyY,enemySize,enemySize);
+ ellipse(enemyX,enemyY,enemySize,enemySize);    
+
+
+/*
+//Display the images onto the avatars <-----------------
+  //the car  <----------------------------------
+  Image(avatarImage,avatarX,avatarY,avatarSize,avatarSize);
+  //The cone(s) <--------------------------------
+  Image(enemyImage,enemyX,enemyY,enemySize,enemySize);
+*/
+
+
 
 }
+
+
 
 
 
