@@ -11,7 +11,7 @@ A simple dodging game with keyboard controls
 // The position and size of our avatar
 let avatarX;
 let avatarY;
-let avatarSize = 50;
+let avatarSize = 55;
 
 // The speed and velocity of our avatar
 let avatarSpeed = 10;
@@ -32,7 +32,7 @@ let enemyVX = 5;
 
 
 //The speed, velocity, size and position of the police (in that order)
-let policeSpeed = 2;
+let policeSpeed = 4;
 let policeVX = 5;
 let policeX;
 let policeY;
@@ -53,12 +53,14 @@ let enemyImage;
 let backgroundImg;
 
 
+
 //The police (watch out!)
 let police;
 
 
 //Add instructions
 let showInstructions = true;
+
 
 
 //Insert function preload to load in images  <-------------------
@@ -70,8 +72,9 @@ function preload(){
 
 avatarImage = loadImage('assets/images/54502-00.png');
 enemyImage = loadImage('assets/images/orange.png');
-backgroundImg= loadImage('assets/images/greyRoad.png');
+backgroundImg= loadImage('assets/images/road.jpg');
 policeImage = loadImage('assets/images/police.png');
+
 
 }
 
@@ -245,7 +248,7 @@ function draw() {
   if (enemyX > width) {
 
   //Increase the enemy (cone) size when the player dodges  <--------------
-    enemySize +=12;
+    enemySize +=15;
   //The enemy gains speed at the same time  <---------------
     enemySpeed +=0.7;
 
@@ -334,11 +337,12 @@ imageMode(CENTER);
 
 //Add instructions before the game starts <-----------------------
 if (showInstructions){
+  //A white background for the instructions
   background(255);
   textAlign(CENTER);
   fill(0);
   textSize(20);
-  text("The Cone Dodger\n\n*Speed your way through road work*\n\n-Single player : Dodge the cones with the arrows\n-Multiplayer: Grab the mouse and hit the cones to make them bigger\nand hit the police to make it go faster\n\nClick to continue", width/2, 90);
+  text("The Cone Dodger\n\n*Speed your way through road work,\ndodge the cones with the arrows*\n-Multiplayer: Grab the mouse and hit the cones to make them bigger\nand hit the police to make it go faster\n\nClick to continue", width/2, 90);
   textAlign(CENTER);
   fill(0);
   textSize(10);
