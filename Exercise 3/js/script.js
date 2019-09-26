@@ -114,8 +114,28 @@ function setup() {
   targetX = random(0,width);
   targetY = random(0,height);
 
-  // And draw it (because it's the last thing drawn, it will always be on top)
-  image(targetImage,targetX,targetY);
+  //
+
+
+        //Load the sausage dog image on top of the whie rectangle
+            image(targetImage,targetX,targetY,imageSize,imageSize);
+
+
+}
+
+
+//Add a chance of finding une recompense
+//the dog used Decoy!
+
+
+
+
+
+// draw()
+//
+// Displays the game over screen if the player has won,
+// otherwise nothing (all the gameplay stuff is in mousePressed())
+function draw() {
 
   //Draw the white rectangle behind the image of the dog
   noStroke();
@@ -138,24 +158,9 @@ function setup() {
       fill(0);
       text("MISSING",width-125,30);
 
-
-}
-
-
-//Add a chance of finding une recompense
+  image(targetImage,width-130,130,100,100);
 
 
-
-
-
-
-
-
-// draw()
-//
-// Displays the game over screen if the player has won,
-// otherwise nothing (all the gameplay stuff is in mousePressed())
-function draw() {
 
 
   if (gameOver) {
