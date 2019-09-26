@@ -2,7 +2,7 @@
 
 /******************************************************************************
 Where's Sausage Dog?
-by Pippin Barr
+by Jade Dufour
 
 An algorithmic version of a Where's Wally/Waldo searching game where you
 need to click on the sausage dog you're searching for in amongst all
@@ -128,8 +128,13 @@ function draw() {
     noStroke();
     fill(random(255));
 
+    //Draw the rectangle behind the image of the dog
+      rectMode(CENTER);
+      fill(0);
+      rect(witdh,0,80,80);
+
     // Tell them they won!
-    text("YOU WINNED!",width/2,height/2);
+    text("YOU WIN!",width/2,height/2);
 
     // Draw a circle around the sausage dog to show where it is (even though
     // they already know because they found it!)
