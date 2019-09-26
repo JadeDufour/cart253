@@ -126,12 +126,17 @@ function draw() {
     textSize(128);
     textAlign(CENTER,CENTER);
     noStroke();
-    fill(random(255));
+    fill(random(255,255,0));
 
     //Draw the rectangle behind the image of the dog
       rectMode(CENTER);
       fill(0);
-      rect(witdh,0,80,80);
+      rect(witdh-80,0,80,120);
+
+      //Add the missing dog text
+      textFont('Georgia');
+      textSize(100);
+      textAlign
 
     // Tell them they won!
     text("YOU WIN!",width/2,height/2);
