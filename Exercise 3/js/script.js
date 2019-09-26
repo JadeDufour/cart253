@@ -29,6 +29,8 @@ let decoyImage8;
 let decoyImage9;
 let decoyImage10;
 
+
+
 // The number of decoys to show on the screen, randomly
 // chosen from the decoy images
 let numDecoys = 100;
@@ -59,9 +61,11 @@ function preload() {
 // Creates the canvas, sets basic modes, draws correct number
 // of decoys in random positions, then the target
 function setup() {
+
   createCanvas(windowWidth,windowHeight);
   background("#ffff00");
   imageMode(CENTER);
+
 
   // Use a for loop to draw as many decoys as we need
   for (let i = 0; i < numDecoys; i++) {
@@ -112,7 +116,39 @@ function setup() {
 
   // And draw it (because it's the last thing drawn, it will always be on top)
   image(targetImage,targetX,targetY);
+
+  //Draw the white rectangle behind the image of the dog
+  noStroke();
+  fill(255);
+  rect(width-150,0,150,180);
+
+  //Add the first missing dog text
+      textFont('Georgia');
+      textSize(18);
+      textAlign(TOP,RIGHT);
+      noStroke();
+      fill(0);
+      text("YOU WILL BE\nREWARDED",width-130,145);
+
+  //Add the second missing dog text
+      textFont('Georgia');
+      textSize(18);
+      textAlign(TOP,RIGHT);
+      noStroke();
+      fill(0);
+      text("MISSING",width-125,30);
+
+
 }
+
+
+//Add a chance of finding une recompense
+
+
+
+
+
+
 
 
 // draw()
@@ -120,7 +156,10 @@ function setup() {
 // Displays the game over screen if the player has won,
 // otherwise nothing (all the gameplay stuff is in mousePressed())
 function draw() {
+
+
   if (gameOver) {
+
     // Prepare our typography
     textFont("Helvetica");
     textSize(128);
@@ -128,18 +167,9 @@ function draw() {
     noStroke();
     fill(random(255,255,0));
 
-    //Draw the rectangle behind the image of the dog
-      rectMode(CENTER);
-      fill(0);
-      rect(witdh-80,0,80,120);
-
-      //Add the missing dog text
-      textFont('Georgia');
-      textSize(100);
-      textAlign
 
     // Tell them they won!
-    text("YOU WIN!",width/2,height/2);
+    text("YOU WON!",width/2,height/2);
 
     // Draw a circle around the sausage dog to show where it is (even though
     // they already know because they found it!)
@@ -148,7 +178,11 @@ function draw() {
     strokeWeight(10);
     ellipse(targetX,targetY,targetImage.width,targetImage.height);
   }
+
+
+
 }
+
 
 // mousePressed()
 //
