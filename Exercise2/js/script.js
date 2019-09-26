@@ -11,7 +11,7 @@ A simple dodging game with keyboard controls
 // The position and size of our avatar
 let avatarX;
 let avatarY;
-let avatarSize = 45;
+let avatarSize = 50;
 
 // The speed and velocity of our avatar
 let avatarSpeed = 10;
@@ -27,6 +27,19 @@ let enemySize = 50;
 let enemySpeed = 5;
 let enemyVX = 5;
 
+
+
+
+
+//The speed, velocity, size and position of the police (in that order)
+let policeSpeed = 2;
+let policeVX = 5;
+let policeX;
+let policeY;
+let policeSize = 30
+
+
+
 // How many dodges the player has made
 let dodges = 0;
 
@@ -39,6 +52,12 @@ let enemyImage;
 //The background
 let backgroundImg;
 
+
+//The police (watch out!)
+let police;
+
+
+//Add instructions
 let showInstructions = true;
 
 
@@ -46,16 +65,15 @@ let showInstructions = true;
 function preload(){
 
 
-  //So our avatar and enemy can look like their true selves :)  <-----------------
+//So our avatar and enemy can look like their true selves :)  <-----------------
 //Save the images in Assets <----------------------
 
 avatarImage = loadImage('assets/images/54502-00.png');
 enemyImage = loadImage('assets/images/orange.png');
 backgroundImg= loadImage('assets/images/greyRoad.png');
+policeImage = loadImage('assets/images/police.png');
 
 }
-
-
 
 // setup()
 //
@@ -63,7 +81,7 @@ backgroundImg= loadImage('assets/images/greyRoad.png');
 function setup() {
   // Create our playing area
   //Increase the size of the canvas <-----------------------------
-  createCanvas(700,600);
+  createCanvas(900,600);
 
 
   // Put the avatar in the centre
@@ -73,6 +91,10 @@ function setup() {
   // Put the enemy to the left at a random y coordinate within the canvas
   enemyX = 0;
   enemyY = random(0,height);
+
+  //Put the police also at random y coordinates
+  policeX = 0;
+  policeY = random(0,height);
 
   // No stroke so it looks cleaner
   noStroke();
@@ -131,6 +153,7 @@ function draw() {
     avatarVY = avatarSpeed;
   }
 
+
   // Move the avatar according to its calculated velocity
   avatarX = avatarX + avatarVX;
   avatarY = avatarY + avatarVY;
@@ -138,9 +161,19 @@ function draw() {
   // The enemy always moves at enemySpeed
   enemyVX = enemySpeed;
 
+  //So does the police
+  policeVX = policeSpeed;
+
 
   // Update the enemy's position based on its velocity
   enemyX = enemyX + enemyVX;
+
+
+  // Update the police's position based on it's velocity
+  policeX = policeX + policeVX;
+
+
+
 
   // Check if the enemy and avatar overlap - if they do the player loses
   // We do this by checking if the distance between the centre of the enemy
@@ -159,6 +192,37 @@ function draw() {
   // Reset the avatar's position
     avatarX = width/2;
     avatarY = height/2;
+
+  //Decrease the police's speed
+    policeSpeed -= 1;
+
+  // Reset the dodge counter
+    dodges = 0;
+  }
+
+
+
+
+
+  // Check if the police and avatar overlap - if they do the player loses
+  if (dist(policeX,policeY,avatarX,avatarY) < policeSize/2 + policeSize/2) {
+    // Tell the player they lost
+    console.log("YOU LOSE!");
+
+  // Reset the police's position and speed  <------------------------
+    policeX = 0;
+    policeY = random(0,height);
+    policeSize=40;
+    policeSpeed=2;
+
+
+  // Reset the avatar's position
+    avatarX = width/2;
+    avatarY = height/2;
+
+  //Reset the enemy's (cones) position
+    enemyX = width/2;
+    enemyY = height/2;
 
   // Reset the dodge counter
     dodges = 0;
@@ -183,7 +247,7 @@ function draw() {
   //Increase the enemy (cone) size when the player dodges  <--------------
     enemySize +=12;
   //The enemy gains speed at the same time  <---------------
-    enemySpeed +=0.5;
+    enemySpeed +=0.7;
 
 
 // This means the player dodged so update its dodge statistic
@@ -198,13 +262,34 @@ function draw() {
     enemyY = random(0,height);
   }
 
+
+
+  // Check if the police has moved all the way across the screen
+  if (policeX > width) {
+
+
+ // Dodging the police does not increase score counter (just the price of your ticket) <-------------------
+ //The police does NOT gain in size as it goes across the screen <-----------------------------------
+
+
+  // How many dodges the player has made
+    console.log(dodges + " DODGES!");
+   // Reset the police's position to the left at a random height
+    policeX = 0;
+    policeY = random(0,height);
+  }
+
+
+
+
   // Display the number of successful dodges in the console
   console.log(dodges);
 
 
 
+
   //Tell the player how many dodges they achieved <----------------------------
-  //Change the text color depending on the score <-----------------------------
+  //Changed the text color depending on the score <-----------------------------
 
   textFont('Arial');
   textAlign(RIGHT,TOP);
@@ -212,51 +297,25 @@ function draw() {
   //Green <--------------------------------------
   if(dodges <= 5) {
     fill(20,250,20);
+
   }
   //Blue <---------------------------------------
-  else if (dodges < 11){
+  else if (dodges < 8){
     fill(25,23,211);
+
   }
 //Red <-----------------------------------------
-  else if (dodges < 20){
+  else if (dodges < 12){
     fill(255,0,0);
+
   }
 //Yellow <---------------------------------------
   else {
     fill(255,255,0);
+    //Add a little commentary <--------------------
+    text("GodSpeed!", width, 90);
   }
-  text(dodges, width, 0);
-
-
-
-
-/*  textFont('Arial');
-  textAlign(RIGHT,TOP);
-  textSize(50);
-  //Green <--------------------------------------
-  if(dodges = 5) {
-    fill(20,250,20);
-    Text()
-  }
-  //Blue <---------------------------------------
-  else if (dodges = 10){
-    fill(25,23,211);
-    Text(h,width,90);
-  }
-  //Red <-----------------------------------------
-  else if (dodges = 20){
-    fill(255,0,0);
-    Text(hi,width - 40 ,90);
-  }
-
-  text(dodges, width, 0); */
-
-
-
-
-
-
-
+ text(dodges, width, 0);
 
 
  // Display the number of successful dodges in the console
@@ -269,14 +328,23 @@ imageMode(CENTER);
   image(avatarImage,avatarX,avatarY,avatarSize,avatarSize);
   //The cone(s) <-------------------------------------------------
   image(enemyImage,enemyX,enemyY,enemySize,enemySize);
+  //The police <--------------------------------------------------
+  image(policeImage,policeX,policeY,policeSize+30,policeSize+10);
 
 
 //Add instructions before the game starts <-----------------------
 if (showInstructions){
+  background(255);
   textAlign(CENTER);
   fill(0);
-  textSize(30);
-  text("The Cone Dodger\n\nSingle player : Dodge the cones with the arrows\nMultiplayer: Grab the mouse and hit\nthe cones to make them bigger!\n\n\nClick to continue", width/2, 90);
+  textSize(20);
+  text("The Cone Dodger\n\n*Speed your way through road work*\n\n-Single player : Dodge the cones with the arrows\n-Multiplayer: Grab the mouse and hit the cones to make them bigger\nand hit the police to make it go faster\n\nClick to continue", width/2, 90);
+  textAlign(CENTER);
+  fill(0);
+  textSize(10);
+  text("Btw, dodging the police does won't make you a better driver, just a worse citizen", width/2,400);
+
+  //We don't want the game running in the background of the instructions <----------
   noLoop();
 }
 
@@ -288,9 +356,14 @@ function mousePressed() {
   // Check if the distance between the mouse and the centre of the circle <--
   // is less than the circle's radius
   if (dist(mouseX,mouseY,enemyX,enemyY) < enemySize/2) {
-    // If it is, then the click was inside the circle  <----------------------
+
     // Make the circle bigger (harder for the other player) <-----------------
     enemySize = enemySize +30;
+  }
+
+  if (dist(mouseX,mouseY,policeX,policeY) < policeSize/2) {
+    //Make the police go faster! <-------------------------------------------
+  policeSpeed +=2;
 
   }
 
