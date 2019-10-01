@@ -16,6 +16,7 @@ https://creativenerds.co.uk/freebies/80-free-wildlife-icons-the-best-ever-animal
 let targetX;
 let targetY;
 let targetImage;
+let imageSize;
 
 // The ten decoy images
 let decoyImage1;
@@ -28,8 +29,6 @@ let decoyImage7;
 let decoyImage8;
 let decoyImage9;
 let decoyImage10;
-
-
 
 // The number of decoys to show on the screen, randomly
 // chosen from the decoy images
@@ -75,9 +74,6 @@ function setup() {
     // Generate a random number we can use for probability
     let r = random();
     // Use the random number to display one of the ten decoy
-    // images, each with a 10% chance of being shown
-    // We'll talk more about this nice quality of random soon enough.
-    // But basically each "if" and "else if" has a 10% chance of being true
     if (r < 0.1) {
       image(decoyImage1,x,y);
     }
@@ -114,11 +110,10 @@ function setup() {
   targetX = random(0,width);
   targetY = random(0,height);
 
-  //
 
 
-        //Load the sausage dog image on top of the whie rectangle
-          //*  image(targetImage,targetX,targetY,imageSize,imageSize);*//
+  //Load the sausage dog image on top of the white rectangle
+   image(targetImage,targetX,targetY,imageSize,imageSize);
 
 }
 
@@ -137,9 +132,9 @@ function setup() {
 function draw() {
 
   //Draw the white rectangle behind the image of the dog
-  noStroke();
   fill(255);
   rect(width-150,0,150,180);
+  image(targetImage,width-130,130,100,100);
 
   //Add the first missing dog text
       textFont('Georgia');
@@ -157,7 +152,7 @@ function draw() {
       fill(0);
       text("MISSING",width-125,30);
 
-  image(targetImage,width-130,130,100,100);
+
 
 
 
@@ -181,6 +176,7 @@ function draw() {
     stroke(random(255));
     strokeWeight(10);
     ellipse(targetX,targetY,targetImage.width,targetImage.height);
+    image(targetImage,targetX,targetY);
   }
 
 
