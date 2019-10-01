@@ -37,6 +37,8 @@ let winDogImgVX;
 let winDogImgVY;
 //Set win dog image speed
 let winDogImgSpeed = 3;
+//Set win dog size
+let winDogSize;
 
 // The ten decoy images
 let decoyImage1;
@@ -49,6 +51,11 @@ let decoyImage7;
 let decoyImage8;
 let decoyImage9;
 let decoyImage10;
+
+//The fake dog target
+let fakeTarget;
+let fakeTargetX;
+let fakeTargetY;
 
 // The number of decoys to show on the screen, randomly
 //Added decoys at the start
@@ -65,7 +72,9 @@ function preload() {
   //Add a second target dog image so it can move and grow when player wins
   winDogImg = loadImage("assets/images/animals-target.png");
 
-
+  //Add a fake dog target
+  fakeTarget = loadImage("assets/images/fake-target.png")
+  //The decoys
   decoyImage1 = loadImage("assets/images/animals-01.png");
   decoyImage2 = loadImage("assets/images/animals-02.png");
   decoyImage3 = loadImage("assets/images/animals-03.png");
@@ -84,7 +93,7 @@ function preload() {
 function setup() {
 
   createCanvas(windowWidth,windowHeight);
-  //Changed background color
+  //Changed background color to green (So it looks like grass)
   background("#98FB98");
   imageMode(CENTER);
 
@@ -134,6 +143,11 @@ function setup() {
   targetX = random(0,width);
   targetY = random(0,height);
 
+  //Choose a random position for the fake dog
+  fakeTargetX = random(0,width);
+  fakeTargetY = random(0,height);
+
+
   //So we can display the win dog image over the image targer when player wins
   winDogImgX= targetX;
   winDogImgY = targetY;
@@ -141,7 +155,10 @@ function setup() {
   winDogImgVY=0;
 
   //Load the sausage dog image
-   image(targetImage,targetX,targetY,imageSize,imageSize);
+   image(targetImage,targetX,targetY);
+
+   //Load the fake dog target image
+   image(fakeTarget, fakeTargetX, fakeTargetY);
 }
 
 
@@ -158,17 +175,13 @@ function draw() {
   rect(width-150,0,170,180);
   image(targetImage,width-80,110,100,100);
 
-
-
 //Add the missing dog text
       textFont('Georgia');
       textSize(18);
       textAlign(TOP,RIGHT);
       noStroke();
       fill(0);
-      text(findDog,width-125,40);
-
-
+      text(findDog,width-120,40);
 
   if (gameOver) {
     //The dog runs around the screen when player wins
@@ -177,13 +190,15 @@ function draw() {
    winDogImgX += winDogImgVX;
    winDogImgY += winDogImgVY;
 
+
+   //
    image(winDogImg,winDogImgX,winDogImgY);
 
 
+   //Create a function for the win message so the "if" statement is not overloaded
   winMessage();
 
-    // Draw a circle around the sausage dog to show where it is (even though
-    // they already know because they found it!)
+    // Draw a circle around the sausage dog to show where it is
     noFill();
     stroke(random(255));
     strokeWeight(10);
@@ -199,16 +214,15 @@ function draw() {
       winDogImgVY *= -1;
     }
 
-
 }
 
-
-function winMessage(){
+//  NOT WORKING RIGHT AT THE MOMENT
+function winMessage() {
 
   // Prepare our typography
   textFont("Helvetica");
   textSize(110);
-  /*textAlign(CENTER,CENTER);*/
+  /*textAlign(CENTER);*/
   noStroke();
   fill(random(255,255,255));
 
@@ -236,14 +250,21 @@ function winMessage(){
 
 }
 
-// mousePressed()
-//
+
 // Checks if the player clicked on the target and if so tells them they won
 function mousePressed() {
+
+  rightDog();
+  fakeDog();
+
+
+}
+
+
+  function rightDog(){
   // The mouse was clicked!
   // Check if the cursor is in the x range of the target
   // (We're subtracting the image's width/2 because we're using imageMode(CENTER) -
-  // the key is we want to determine the left and right edges of the image.)
   if (mouseX > targetX - targetImage.width/2 && mouseX < targetX + targetImage.width/2) {
     // Check if the cursor is also in the y range of the target
     // i.e. check if it's within the top and bottom of the image
@@ -251,4 +272,26 @@ function mousePressed() {
       gameOver = true;
     }
   }
+
 }
+
+function fakeDog(){
+
+  if (mouseX > fakeTargetX - fakeTarget.width/2 && mouseX < fakeTargetX + fakeTarget.width/2) {
+    // Check if the cursor is also in the y range of the target
+    // i.e. check if it's within the top and bottom of the image
+    if (mouseY > fakeTargetY - fakeTarget.height/2 && mouseY < fakeTargetY + fakeTarget.height/2) {
+
+      }
+
+      background(255,192,203);
+      text(findDog="Nani?");
+      textSize(70);
+
+      textFont("Impact");
+      textSize(80);
+      textAlign(CENTER);
+      text("That's not your dog??\nHow dare you!\nClick to play again",windowWidth/2,windowHeight/2);
+
+    }
+  }
