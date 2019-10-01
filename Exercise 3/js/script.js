@@ -26,6 +26,17 @@ let winningText = "";
 let winningTextX;
 let winningTextY;
 
+//Defines values for the dog when player wins (Your dog is happy to see you!)
+//Set win dog image
+let winDogImg;
+//set win dog image position
+let winDogImgX;
+let winDogImgY;
+//Set win dog image velocity
+let winDogImgVX;
+let winDogImgVY;
+//Set win dog image speed
+let winDogImgSpeed = 3;
 
 // The ten decoy images
 let decoyImage1;
@@ -40,8 +51,8 @@ let decoyImage9;
 let decoyImage10;
 
 // The number of decoys to show on the screen, randomly
-// chosen from the decoy images
-let numDecoys = 100;
+//Added decoys at the start
+let numDecoys = 150;
 
 // Keep track of whether they've won
 let gameOver = false;
@@ -51,6 +62,9 @@ let gameOver = false;
 // Loads the target and decoy images before the program starts
 function preload() {
   targetImage = loadImage("assets/images/animals-target.png");
+  //Add a second target dog image so it can move and grow when player wins
+  winDogImg = loadImage("assets/images/animals-target.png");
+
 
   decoyImage1 = loadImage("assets/images/animals-01.png");
   decoyImage2 = loadImage("assets/images/animals-02.png");
@@ -64,13 +78,13 @@ function preload() {
   decoyImage10 = loadImage("assets/images/animals-10.png");
 }
 
-// setup()
-//
+
 // Creates the canvas, sets basic modes, draws correct number
 // of decoys in random positions, then the target
 function setup() {
 
   createCanvas(windowWidth,windowHeight);
+  //Changed background color
   background("#98FB98");
   imageMode(CENTER);
 
@@ -120,13 +134,17 @@ function setup() {
   targetX = random(0,width);
   targetY = random(0,height);
 
+  //So we can display the win dog image over the image targer when player wins
+  winDogImgX= targetX;
+  winDogImgY = targetY;
+  winDogImgVX=0;
+  winDogImgVY=0;
 
   //Load the sausage dog image
    image(targetImage,targetX,targetY,imageSize,imageSize);
-
 }
 
-//Add a chance of finding une recompense
+
 //the dog used Decoy!
 
 
@@ -153,6 +171,14 @@ function draw() {
 
 
   if (gameOver) {
+    //The dog runs around the screen when player wins
+   winDogImgVX += random(-winDogImgSpeed,winDogImgSpeed);
+   winDogImgVY += random(-winDogImgSpeed,winDogImgSpeed);
+   winDogImgX += winDogImgVX;
+   winDogImgY += winDogImgVY;
+
+   image(winDogImg,winDogImgX,winDogImgY);
+
 
   winMessage();
 
@@ -163,6 +189,17 @@ function draw() {
     strokeWeight(10);
     ellipse(targetX,targetY,targetImage.width,targetImage.height);
     image(targetImage,targetX,targetY);
+
+    //Set some boundaries for the dog, so you won't lose it again
+    //It can't go off screen (bounces)
+    if (winDogImgX < 0 || winDogImgX > width) {
+      winDogImgVX *= -1;
+    }
+  if (winDogImgY < 0 || winDogImgY > height) {
+      winDogImgVY *= -1;
+    }
+
+
 }
 
 
