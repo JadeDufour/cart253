@@ -18,6 +18,14 @@ let targetY;
 let targetImage;
 let imageSize;
 
+//Displays the instructions to find the missing Dog
+let findDog = "MISSING\nDOG :("
+
+//Display a different reward when the player wins
+let winningText = "";
+let winningTextX;
+let winningTextY;
+
 
 // The ten decoy images
 let decoyImage1;
@@ -67,6 +75,7 @@ function setup() {
   imageMode(CENTER);
 
 
+
   // Use a for loop to draw as many decoys as we need
   for (let i = 0; i < numDecoys; i++) {
     // Choose a random location on the canvas for this decoy
@@ -111,6 +120,7 @@ function setup() {
   targetX = random(0,width);
   targetY = random(0,height);
 
+
   //Load the sausage dog image
    image(targetImage,targetX,targetY,imageSize,imageSize);
 
@@ -128,38 +138,23 @@ function draw() {
   //Draw the white rectangle behind the image of the dog
   fill(255);
   rect(width-150,0,170,180);
-  image(targetImage,width-80,90,100,100);
-  //Add the first missing dog text
-      textFont('Georgia');
-      textSize(18);
-      textAlign(TOP,RIGHT);
-      noStroke();
-      fill(0);
-      text("YOU WILL BE\nREWARDED",width-140,145);
+  image(targetImage,width-80,110,100,100);
 
-//Add the second missing dog text
+
+
+//Add the missing dog text
       textFont('Georgia');
       textSize(18);
       textAlign(TOP,RIGHT);
       noStroke();
       fill(0);
-      text("MISSING",width-125,30);
+      text(findDog,width-125,40);
 
 
 
   if (gameOver) {
 
-    // Prepare our typography
-    textFont("Helvetica");
-    textSize(128);
-    textAlign(CENTER,CENTER);
-    noStroke();
-    fill(random(255,255,255));
-
-
-    // Tell them they won!
-    text("YOU WON!",width/2,height/2);
-
+  winMessage();
 
     // Draw a circle around the sausage dog to show where it is (even though
     // they already know because they found it!)
@@ -168,13 +163,41 @@ function draw() {
     strokeWeight(10);
     ellipse(targetX,targetY,targetImage.width,targetImage.height);
     image(targetImage,targetX,targetY);
-  }
+}
 
 
+function winMessage(){
+
+  // Prepare our typography
+  textFont("Helvetica");
+  textSize(110);
+  /*textAlign(CENTER,CENTER);*/
+  noStroke();
+  fill(random(255,255,255));
+
+  // Tell them they won!
+  winningTextX= windowWidth/2;
+  winningTextY=windowHeight/2;
+  text(winningText,winningTextX,winningTextY);
+
+  let r = random(0, 1);
+
+   if (r < 0.01) {
+     winningText += "no1";
+   }
+   else if (r < 0.1) {
+     winningText += "no2";
+   }
+   else if (r < 0.4) {
+     winningText += "no3";
+   }
+   else {
+     winningText += "no4";
+   }
+}
 
 
 }
-
 
 // mousePressed()
 //
