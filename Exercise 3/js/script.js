@@ -54,18 +54,18 @@ let decoyImage10;
 
 //The fake dog target
 let fakeTarget;
+//the fake dog's position
 let fakeTargetX;
 let fakeTargetY;
 
 // The number of decoys to show on the screen, randomly
 //Added decoys at the start
-let numDecoys = 150;
+let numDecoys = 180;
 
 // Keep track of whether they've won
 let gameOver = false;
 
-// preload()
-//
+
 // Loads the target and decoy images before the program starts
 function preload() {
   targetImage = loadImage("assets/images/animals-target.png");
@@ -74,7 +74,7 @@ function preload() {
 
   //Add a fake dog target
   fakeTarget = loadImage("assets/images/fake-target.png")
-  //The decoys
+  //The 10 decoys
   decoyImage1 = loadImage("assets/images/animals-01.png");
   decoyImage2 = loadImage("assets/images/animals-02.png");
   decoyImage3 = loadImage("assets/images/animals-03.png");
@@ -162,10 +162,6 @@ function setup() {
 }
 
 
-//the dog used Decoy!
-
-
-
 // Displays the game over screen if the player has won,
 // otherwise nothing (all the gameplay stuff is in mousePressed())
 function draw() {
@@ -227,23 +223,23 @@ function winMessage() {
   fill(random(255,255,255));
 
   // Tell them they won!
-  winningTextX= windowWidth/2;
-  winningTextY=windowHeight/2;
-  text(winningText,winningTextX,winningTextY);
+  winningTextX= width/2;
+  winningTextY=height/2;
+  /*text(winningText,winningTextX,winningTextY);*/
 
   let r = random(0, 1);
 
    if (r < 0.01) {
-     winningText += "no1";
+     text(winningText += "no1",winningTextX,winningTextY);
    }
    else if (r < 0.1) {
-     winningText += "no2";
+    text(winningText += "no2",winningTextX,winningTextY);
    }
    else if (r < 0.4) {
-     winningText += "no3";
+     text(winningText += "no3",winningTextX,winningTextY);
    }
    else {
-     winningText += "no4";
+     text(winningText += "no4",winningTextX,winningTextY);
    }
 }
 
@@ -256,8 +252,6 @@ function mousePressed() {
 
   rightDog();
   fakeDog();
-
-
 }
 
 
@@ -272,8 +266,8 @@ function mousePressed() {
       gameOver = true;
     }
   }
-
 }
+
 
 function fakeDog(){
 
@@ -291,7 +285,7 @@ function fakeDog(){
       textFont("Impact");
       textSize(80);
       textAlign(CENTER);
-      text("That's not your dog??\nHow dare you!\nClick to play again",windowWidth/2,windowHeight/2);
+      text("That's not your dog??\nHow dare you!\nHit reload to play again",windowWidth/2,windowHeight/2);
 
     }
   }
