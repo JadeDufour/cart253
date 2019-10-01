@@ -18,6 +18,7 @@ let targetY;
 let targetImage;
 let imageSize;
 
+
 // The ten decoy images
 let decoyImage1;
 let decoyImage2;
@@ -62,7 +63,7 @@ function preload() {
 function setup() {
 
   createCanvas(windowWidth,windowHeight);
-  background("#ffff00");
+  background("#98FB98");
   imageMode(CENTER);
 
 
@@ -110,50 +111,39 @@ function setup() {
   targetX = random(0,width);
   targetY = random(0,height);
 
-
-
-  //Load the sausage dog image on top of the white rectangle
+  //Load the sausage dog image
    image(targetImage,targetX,targetY,imageSize,imageSize);
 
 }
-
 
 //Add a chance of finding une recompense
 //the dog used Decoy!
 
 
 
-
-
-// draw()
-//
 // Displays the game over screen if the player has won,
 // otherwise nothing (all the gameplay stuff is in mousePressed())
 function draw() {
 
   //Draw the white rectangle behind the image of the dog
   fill(255);
-  rect(width-150,0,150,180);
-  image(targetImage,width-130,130,100,100);
-
+  rect(width-150,0,170,180);
+  image(targetImage,width-80,90,100,100);
   //Add the first missing dog text
       textFont('Georgia');
       textSize(18);
       textAlign(TOP,RIGHT);
       noStroke();
       fill(0);
-      text("YOU WILL BE\nREWARDED",width-130,145);
+      text("YOU WILL BE\nREWARDED",width-140,145);
 
-  //Add the second missing dog text
+//Add the second missing dog text
       textFont('Georgia');
       textSize(18);
       textAlign(TOP,RIGHT);
       noStroke();
       fill(0);
       text("MISSING",width-125,30);
-
-
-
 
 
 
@@ -164,11 +154,12 @@ function draw() {
     textSize(128);
     textAlign(CENTER,CENTER);
     noStroke();
-    fill(random(255,255,0));
+    fill(random(255,255,255));
 
 
     // Tell them they won!
     text("YOU WON!",width/2,height/2);
+
 
     // Draw a circle around the sausage dog to show where it is (even though
     // they already know because they found it!)
@@ -178,6 +169,7 @@ function draw() {
     ellipse(targetX,targetY,targetImage.width,targetImage.height);
     image(targetImage,targetX,targetY);
   }
+
 
 
 
