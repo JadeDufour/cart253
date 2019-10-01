@@ -118,8 +118,7 @@ function setup() {
 
 
         //Load the sausage dog image on top of the whie rectangle
-            image(targetImage,targetX,targetY,imageSize,imageSize);
-
+          //*  image(targetImage,targetX,targetY,imageSize,imageSize);*//
 
 }
 
