@@ -2,8 +2,8 @@
 
 /******************************************************
 
-Game - Chaser
-Pippin Barr
+Game - Chaser //CHANGE NAME LATER
+Jade Dufour
 
 A "simple" game of cat and mouse. The player is a circle and can move with keys,
 if they overlap the (randomly moving) prey they "eat it" by sucking out its life
@@ -37,6 +37,8 @@ let preyY;
 let preyRadius = 25;
 let preyVX;
 let preyVY;
+let preyTX;
+let preyTY;
 let preyMaxSpeed = 4;
 // Prey health
 let preyHealth;
@@ -54,7 +56,6 @@ let preyEaten = 0;
 // Sets up the basic elements of the game
 function setup() {
   createCanvas(500, 500);
-
   noStroke();
 
   // We're using simple functions to separate code out
@@ -71,6 +72,9 @@ function setupPrey() {
   preyVX = -preyMaxSpeed;
   preyVY = preyMaxSpeed;
   preyHealth = preyMaxHealth;
+  //Add time parameter to determine how similar in time the x and y values of the prey will be (noise)
+  preyTX= noise(0,1);
+  preyTY= noise(0,1);
 }
 
 // setupPlayer()
@@ -224,8 +228,12 @@ function movePrey() {
     //
     // Use map() to convert from the 0-1 range of the random() function
     // to the appropriate range of velocities for the prey
-    preyVX = map(random(), 0, 1, -preyMaxSpeed, preyMaxSpeed);
-    preyVY = map(random(), 0, 1, -preyMaxSpeed, preyMaxSpeed);
+
+    //The prey now moves according to the Perlin noise
+    preyVX = map(noise(preyTX),0,1,-preyMaxSpeed,preyMaxSpeed);
+    preyVY = map(noise(preyTY),0,1,-preyMaxSpeed,preyMaxSpeed);
+    preyX += preyVX;
+    preyY += preyVY;
   }
 
   // Update prey position based on velocity
@@ -246,6 +254,8 @@ function movePrey() {
   else if (preyY > height) {
     preyY = preyY - height;
   }
+  preyTX += 0.02;
+  preyTY += 0.01;
 }
 
 // drawPrey()
@@ -254,6 +264,7 @@ function movePrey() {
 function drawPrey() {
   fill(preyFill, preyHealth);
   ellipse(preyX, preyY, preyRadius * 2);
+
 }
 
 // drawPlayer()
