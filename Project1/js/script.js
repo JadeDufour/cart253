@@ -25,9 +25,14 @@ let playerRadius = 25;
 let playerVX = 0;
 let playerVY = 0;
 let playerMaxSpeed = 2;
+//Add a boosted speed (we will switch between the two when holding Shift)
+let playerBoostedSpeed  = 5;
+
 // Player health
 let playerHealth;
 let playerMaxHealth = 255;
+//The player looses health when speeding with the shift key
+/*let playerHealthDam;*/
 // Player fill color
 let playerFill = 50;
 
@@ -138,6 +143,17 @@ function handleInput() {
   else {
     playerVY = 0;
   }
+
+  //Add the possibility for the player to sprint
+  if (keyIsDown(SHIFT)) {
+    playerMaxSpeed = playerBoostedSpeed;
+    //The player looses health when they speed up
+    playerMaxHealth -=1;
+  }
+
+  else {
+  playerMaxSpeed= 2; //Reset the player speed if the shift key is not pressed
+}
 }
 
 // movePlayer()
