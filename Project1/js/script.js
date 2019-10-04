@@ -56,6 +56,9 @@ let eatHealth = 10;
 // Number of prey eaten during the game (the "score")
 let preyEaten = 0;
 
+//Add a counter so the player know at which stage of theur life they are
+let stage=0;
+
 // setup()
 //
 // Sets up the basic elements of the game
@@ -101,6 +104,12 @@ function setupPlayer() {
 function draw() {
   background(100, 100, 200);
 
+  textFont('Arial');
+  textAlign(RIGHT,TOP);
+  textSize(30);
+  fill(0);
+  text("Stage : "+ stage, 200,10);
+
   if (!gameOver) {
     handleInput();
 
@@ -116,6 +125,7 @@ function draw() {
   else {
     showGameOver();
   }
+
 }
 
 // handleInput()
@@ -197,6 +207,7 @@ function updateHealth() {
   // Check if the player is dead (0 health)
   if (playerHealth === 0) {
     // If so, the game is over
+    stage=0;
     gameOver = true;
   }
 }
@@ -227,6 +238,8 @@ function checkEating() {
       preyHealth = preyMaxHealth;
       // Track how many prey were eaten
       preyEaten = preyEaten + 1;
+
+      stage +=1;
     }
   }
 }
@@ -300,7 +313,7 @@ function showGameOver() {
   textAlign(CENTER, CENTER);
   fill(0);
   // Set up the text to display
-  let gameOverText = "GAME OVER\n"; // \n means "new line"
+  let gameOverText = "GAME OVER\n"; //
   gameOverText = gameOverText + "You ate " + preyEaten + " prey\n";
   gameOverText = gameOverText + "before you died."
   // Display it in the centre of the screen

@@ -103,12 +103,6 @@ function setup() {
   noStroke();
 }
 
-
-
-
-
-
-
 function draw() {
   // A grey background (the road)<---------------------------------
   imageMode(CENTER);
