@@ -308,14 +308,19 @@ function drawPlayer() {
 //
 // Display text about the game being over!
 function showGameOver() {
+  background(220,220,220);
   // Set up the font
   textSize(32);
+  textFont('Arial Black');
   textAlign(CENTER, CENTER);
   fill(0);
   // Set up the text to display
-  let gameOverText = "GAME OVER\n"; //
-  gameOverText = gameOverText + "You ate " + preyEaten + " prey\n";
+
+  let gameOverText = "WASTED\n\n"; //
+  gameOverText = gameOverText + "You made it to stage " + preyEaten + "\n";
   gameOverText = gameOverText + "before you died."
+  fill(255,0,0);
+
   // Display it in the centre of the screen
   text(gameOverText, width / 2, height / 2);
 }
