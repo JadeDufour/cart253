@@ -21,68 +21,107 @@ let gameOver = false;
 // Player position, size, velocity
 let playerX;
 let playerY;
-let playerRadius = 25;
+let playerRadius = 30;
 let playerVX = 0;
 let playerVY = 0;
-let playerMaxSpeed = 2;
+let playerMaxSpeed = 3;
+
+//Add Player size
+let playerSizeX = 75;
+let playerSizeY =65;
+
 //Add a boosted speed (we will switch between the two when holding Shift)
 let playerBoostedSpeed  = 5;
 
 // Player health
 let playerHealth;
 let playerMaxHealth = 255;
-//The player looses health when speeding with the shift key
-/*let playerHealthDam;*/
+
 // Player fill color
 let playerFill = 50;
 
+//Changing the circle for the playerimage (naruto)
+let playerImage;
+
 // Prey position, size, velocity
-let preyX;
-let preyY;
-let preyRadius = 25;
-let preyVX;
-let preyVY;
-let preyTX;
-let preyTY;
-let preyMaxSpeed = 4;
+let memeX;
+let memeY;
+let memeRadius = 30;
+let memeVX;
+let memeVY;
+let memeTX;
+let memeTY;
+let memeMaxSpeed = 3;
 // Prey health
-let preyHealth;
-let preyMaxHealth = 100;
+let memeHealth;
+let memeMaxHealth = 100;
 // Prey fill color
-let preyFill = 200;
+let memeFill = 200;
+
+//Prey size (for the images)
+let memeSizeX = 50;
+let memeSizeY = 50;
+
+//Declare that the preys are now old memes (and will change depending on the game stage)
+let meme1;
+let meme2
+let meme3;
+let meme4;
+let meme5;
+let meme6;
+let meme7;
+let meme8;
+let meme9;
+
 
 // Amount of health obtained per frame of "eating" (overlapping) the prey
 let eatHealth = 10;
 // Number of prey eaten during the game (the "score")
-let preyEaten = 0;
+let memeEaten = 0;
 
 //Add a counter so the player know at which stage of theur life they are
 let stage=0;
+
+function preload(){
+  //Load the player image
+  playerImage= loadImage('assets/images/naruto1.gif')
+
+  //Load the memes (preys)
+  meme1 = loadImage("assets/images/pepe1.png");
+  meme2 = loadImage("assets/images/doge2.png");
+  meme3 = loadImage("assets/images/gabe3.png");
+  meme4 = loadImage("assets/images/harambe4.png");
+  meme5 = loadImage("assets/images/shia5.png");
+  meme6 = loadImage("assets/images/kid6.png");
+  meme7 = loadImage("assets/images/patrick7.png");
+  meme8 = loadImage("assets/images/ron8.png");
+  meme9 = loadImage("assets/images/safe9.png");
+
+}
 
 // setup()
 //
 // Sets up the basic elements of the game
 function setup() {
-  createCanvas(500, 500);
+  createCanvas(800, 800);
   noStroke();
 
   // We're using simple functions to separate code out
-  setupPrey();
+  setupMeme();
   setupPlayer();
 }
 
-// setupPrey()
-//
-// Initialises prey's position, velocity, and health
-function setupPrey() {
-  preyX = width / 5;
-  preyY = height / 2;
-  preyVX = -preyMaxSpeed;
-  preyVY = preyMaxSpeed;
-  preyHealth = preyMaxHealth;
-  //Add time parameter to determine how similar in time the x and y values of the prey will be (noise)
-  preyTX= noise(0,1);
-  preyTY= noise(0,1);
+
+// Initialises meme's position, velocity, and health
+function setupMeme() {
+  memeX = width / 5;
+  memeY = height / 2;
+  memeVX = -memeMaxSpeed;
+  memeVY = memeMaxSpeed;
+  memeHealth = memeMaxHealth;
+  //Add time parameter to determine how similar in time the x and y values of the meme will be (noise)
+  memeTX= noise(0,1);
+  memeTY= noise(0,1);
 }
 
 // setupPlayer()
@@ -97,35 +136,33 @@ function setupPlayer() {
 // draw()
 //
 // While the game is active, checks input
-// updates positions of prey and player,
+// updates positions of meme and player,
 // checks health (dying), checks eating (overlaps)
 // displays the two agents.
 // When the game is over, shows the game over screen.
 function draw() {
   background(100, 100, 200);
-
   textFont('Arial');
-  textAlign(RIGHT,TOP);
-  textSize(30);
+  textAlign(CENTER,CENTER);
+  textSize(25);
   fill(0);
-  text("Stage : "+ stage, 200,10);
+  text("Memes saved from Meme Review : "+ stage, width/2,width -30);
 
   if (!gameOver) {
     handleInput();
 
     movePlayer();
-    movePrey();
+    moveMeme();
 
     updateHealth();
     checkEating();
 
-    drawPrey();
+    drawMeme();
     drawPlayer();
   }
   else {
     showGameOver();
   }
-
 }
 
 // handleInput()
@@ -158,7 +195,7 @@ function handleInput() {
   if (keyIsDown(SHIFT)) {
     playerMaxSpeed = playerBoostedSpeed;
     //The player looses health when they speed up
-    playerMaxHealth -=1;
+    playerMaxHealth -=0.5;
   }
 
   else {
@@ -210,98 +247,176 @@ function updateHealth() {
     stage=0;
     gameOver = true;
   }
+
+  if (playerHealth < playerMaxHealth/2){
+    showPlayerMessage();
+  }
+
+  if (playerHealth < playerMaxHealth/3)
+    showPlayerMessage2();
 }
+
+
+function showPlayerMessage(){
+  textSize(20);
+  textFont('Arial');
+  textAlign(CENTER, CENTER);
+  fill(0);
+  // Set up the first text to display (the first message the avatar says)
+  let playerMessage = "Mr. Stark, I don't feel so good...";
+
+  // Display it in the centre of the screen, at 1/8 the height
+  text(playerMessage, width / 2, height/8);
+}
+
+function showPlayerMessage2(){
+
+  textSize(15);
+  textFont('Arial');
+  textAlign(CENTER, CENTER);
+  fill(0);
+  // Set up the second text to display (the last message the avatar says before it vanishes)
+  let playerMessage2 = "Mr. Stark, I don't wanna go..";
+
+  // Display it in the centre of the screen, at 1/6 the height
+  text(playerMessage2, width / 2, height/6);
+}
+
 
 // checkEating()
 //
 // Check if the player overlaps the prey and updates health of both
 function checkEating() {
   // Get distance of player to prey
-  let d = dist(playerX, playerY, preyX, preyY);
+  let d = dist(playerX, playerY, memeX, memeY);
   // Check if it's an overlap
-  if (d < playerRadius + preyRadius) {
+  if (d < playerRadius + memeRadius) {
     // Increase the player health
     playerHealth = playerHealth + eatHealth;
     // Constrain to the possible range
     playerHealth = constrain(playerHealth, 0, playerMaxHealth);
-    // Reduce the prey health
-    preyHealth = preyHealth - eatHealth;
+    // Reduce the meme's health
+    memeHealth = memeHealth - memeHealth;
     // Constrain to the possible range
-    preyHealth = constrain(preyHealth, 0, preyMaxHealth);
+    memeHealth = constrain(memeHealth, 0, memeMaxHealth);
 
-    // Check if the prey died (health 0)
-    if (preyHealth === 0) {
-      // Move the "new" prey to a random position
-      preyX = random(0, width);
-      preyY = random(0, height);
+    // Check if the meme died (health 0) :(
+    if (memeHealth === 0) {
+      // Move the "new" meme to a random position
+      memeX = random(0, width);
+      memeY = random(0, height);
       // Give it full health
-      preyHealth = preyMaxHealth;
-      // Track how many prey were eaten
-      preyEaten = preyEaten + 1;
+      memeHealth = memeMaxHealth;
 
+      // Track how many meme were eaten
+      memeEaten = memeEaten + 1;
+      //Update score
       stage +=1;
+      //Give player full health
+      playerHealth = playerMaxHealth;
     }
   }
 }
 
-// movePrey()
+// moveMeme()
 //
-// Moves the prey based on random velocity changes
-function movePrey() {
-  // Change the prey's velocity at random intervals
-  // random() will be < 0.05 5% of the time, so the prey
+// Moves the meme based on random velocity changes
+function moveMeme() {
+  // Change the meme's velocity at random intervals
+  // random() will be < 0.05 5% of the time, so the meme
   // will change direction on 5% of frames
   if (random() < 0.05) {
     // Set velocity based on random values to get a new direction
     // and speed of movement
-    //
     // Use map() to convert from the 0-1 range of the random() function
-    // to the appropriate range of velocities for the prey
+    // to the appropriate range of velocities for the meme
 
-    //The prey now moves according to the Perlin noise
-    preyVX = map(noise(preyTX),0,1,-preyMaxSpeed,preyMaxSpeed);
-    preyVY = map(noise(preyTY),0,1,-preyMaxSpeed,preyMaxSpeed);
-    preyX += preyVX;
-    preyY += preyVY;
+    //The meme now moves according to the Perlin noise
+    memeVX = map(noise(memeTX),0,1,-memeMaxSpeed,memeMaxSpeed);
+    memeVY = map(noise(memeTY),0,1,-memeMaxSpeed,memeMaxSpeed);
+    memeX += memeVX;
+    memeY += memeVY;
   }
 
-  // Update prey position based on velocity
-  preyX = preyX + preyVX;
-  preyY = preyY + preyVY;
+  // Update meme position based on velocity
+  memeX = memeX + memeVX;
+  memeY = memeY + memeVY;
 
   // Screen wrapping
-  if (preyX < 0) {
-    preyX = preyX + width;
+  if (memeX < 0) {
+    memeX = memeX + width;
   }
-  else if (preyX > width) {
-    preyX = preyX - width;
+  else if (memeX > width) {
+    memeX = memeX - width;
   }
 
-  if (preyY < 0) {
-    preyY = preyY + height;
+  if (memeY < 0) {
+    memeY = memeY + height;
   }
-  else if (preyY > height) {
-    preyY = preyY - height;
+  else if (memeY > height) {
+    memeY = memeY - height;
   }
-  preyTX += 0.02;
-  preyTY += 0.01;
+  memeTX += 0.02;
+  memeTY += 0.01;
 }
 
-// drawPrey()
-//
-// Draw the prey as an ellipse with alpha based on health
-function drawPrey() {
-  fill(preyFill, preyHealth);
-  ellipse(preyX, preyY, preyRadius * 2);
+
+// Draw the meme with alpha based on health
+function drawMeme() {
+  fill(memeFill, memeHealth);
+  showMeme();
+}
+
+function showMeme(){
+
+  if (stage <= 0) {
+    imageMode(CENTER);
+    image(meme1,memeX,memeY,memeSizeX, memeSizeY);
+  }
+  else if (stage <= 1 ) {
+    imageMode(CENTER);
+    image(meme2,memeX,memeY,memeSizeX, memeSizeY);
+  }
+  else if (stage <= 2) {
+    imageMode(CENTER);
+    image(meme3,memeX,memeY,memeSizeX, memeSizeY);
+  }
+  else if (stage <= 3) {
+    imageMode(CENTER);
+    image(meme4,memeX,memeY,memeSizeX, memeSizeY);
+  }
+  else if (stage <= 4) {
+    imageMode(CENTER);
+    image(meme5,memeX,memeY,memeSizeX, memeSizeY);
+  }
+  else if (stage <= 5) {
+    imageMode(CENTER);
+    image(meme6,memeX,memeY,memeSizeX, memeSizeY);
+  }
+  else if (stage <= 6) {
+    imageMode(CENTER);
+    image(meme7,memeX,memeY,memeSizeX, memeSizeY);
+  }
+  else if (stage <= 7) {
+        imageMode(CENTER);
+    image(meme8,memeX,memeY,memeSizeX, memeSizeY);
+  }
+
+  else if (stage <= 8) {
+        imageMode(CENTER);
+    image(meme9,memeX,memeY,memeSizeX, memeSizeY);
+  }
 
 }
 
-// drawPlayer()
-//
-// Draw the player as an ellipse with alpha value based on health
+
 function drawPlayer() {
-  fill(playerFill, playerHealth);
-  ellipse(playerX, playerY, playerRadius * 2);
+  //The tint is white so we dont lose any of the image's original color
+  //The playerImage fades as its health decreases
+  tint(255,255,255,playerHealth);
+  imageMode(CENTER);
+  image(playerImage, playerX,playerY,playerSizeX, playerSizeY);
+
 }
 
 // showGameOver()
@@ -317,8 +432,8 @@ function showGameOver() {
   // Set up the text to display
 
   let gameOverText = "WASTED\n\n"; //
-  gameOverText = gameOverText + "You made it to stage " + preyEaten + "\n";
-  gameOverText = gameOverText + "before you died."
+  gameOverText = gameOverText + "You saved " + memeEaten + " memes\n";
+  gameOverText = gameOverText + "before you became a dead meme."
   fill(255,0,0);
 
   // Display it in the centre of the screen
