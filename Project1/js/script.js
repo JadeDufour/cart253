@@ -30,19 +30,18 @@ let playerMaxSpeed = 2;
 let playerSizeX = 75;
 let playerSizeY =65;
 
-
 //Add a boosted speed (we will switch between the two when holding Shift)
 let playerBoostedSpeed  = 5;
 
 // Player health
 let playerHealth;
 let playerMaxHealth = 255;
-//The player looses health when speeding with the shift key
-/*let playerHealthDam;*/
+
+
 // Player fill color
 let playerFill = 50;
 
-//Changing the circle for the image (naruto)
+//Changing the circle for the playerimage (naruto)
 let playerImage;
 
 
@@ -58,7 +57,7 @@ let preyTY;
 let preyMaxSpeed = 4;
 // Prey health
 let preyHealth;
-let preyMaxHealth = 100;
+let preyMaxHealth = 150;
 // Prey fill color
 let preyFill = 200;
 
@@ -227,7 +226,45 @@ function updateHealth() {
     stage=0;
     gameOver = true;
   }
+
+  if (playerHealth < playerMaxHealth/2){
+    showPlayerMessage();
+  }
+
+  if (playerHealth < playerMaxHealth/3)
+    showPlayerMessage2();
 }
+
+
+function showPlayerMessage(){
+  textSize(20);
+  textFont('Arial');
+  textAlign(CENTER, CENTER);
+  fill(0);
+  // Set up the first text to display (the first message the avatar says)
+  let playerMessage = "Mr. Stark, I don't feel so good...";
+
+  // Display it in the centre of the screen, at 1/8 the height
+  text(playerMessage, width / 2, height/8);
+}
+
+
+function showPlayerMessage2(){
+
+  textSize(15);
+  textFont('Arial');
+  textAlign(CENTER, CENTER);
+  fill(0);
+  // Set up the second text to display (the last message the avatar says before it vanishes)
+  let playerMessage2 = "Mr. Stark, I don't wanna go..";
+
+  // Display it in the centre of the screen, at 1/6 the height
+  text(playerMessage2, width / 2, height/6);
+
+}
+
+
+
 
 // checkEating()
 //
@@ -320,14 +357,15 @@ function drawPrey() {
 }*/
 
 
-// drawPlayer()
-//
-// Draw the player as an ellipse with alpha value based on health
 function drawPlayer() {
-  fill(0, 153, 204, playerHealth);
+  //The tint is white so we dont lose any of the image's original color
+  //The playerImage fades as its health decreases
+  tint(255,255,255,playerHealth);
   imageMode(CENTER);
   image(playerImage, playerX,playerY,playerSizeX, playerSizeY);
+
 }
+
 
 // showGameOver()
 //

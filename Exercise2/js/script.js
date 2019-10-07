@@ -191,13 +191,7 @@ function draw() {
 
   // Reset the dodge counter
     dodges = 0;
-
-
-  }
-
-
-
-
+}
 
   // Check if the police and avatar overlap - if they do the player loses  <------------------
   if (dist(policeX,policeY,avatarX,avatarY) < policeSize/2 + policeSize/2) {
