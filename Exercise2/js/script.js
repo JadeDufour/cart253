@@ -76,8 +76,6 @@ backgroundImg= loadImage('assets/images/road.jpg');
 }
 
 
-
-
 // setup()
 //
 // Make the canvas, position the avatar and enemy
