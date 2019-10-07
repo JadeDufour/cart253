@@ -25,6 +25,12 @@ let playerRadius = 25;
 let playerVX = 0;
 let playerVY = 0;
 let playerMaxSpeed = 2;
+
+//Add Player size
+let playerSizeX = 75;
+let playerSizeY =65;
+
+
 //Add a boosted speed (we will switch between the two when holding Shift)
 let playerBoostedSpeed  = 5;
 
@@ -35,6 +41,11 @@ let playerMaxHealth = 255;
 /*let playerHealthDam;*/
 // Player fill color
 let playerFill = 50;
+
+//Changing the circle for the image (naruto)
+let playerImage;
+
+
 
 // Prey position, size, velocity
 let preyX;
@@ -59,11 +70,18 @@ let preyEaten = 0;
 //Add a counter so the player know at which stage of theur life they are
 let stage=0;
 
+function preload(){
+
+  playerImage= loadImage('assets/images/naruto1.gif')
+
+
+}
+
 // setup()
 //
 // Sets up the basic elements of the game
 function setup() {
-  createCanvas(500, 500);
+  createCanvas(800, 800);
   noStroke();
 
   // We're using simple functions to separate code out
@@ -125,7 +143,6 @@ function draw() {
   else {
     showGameOver();
   }
-
 }
 
 // handleInput()
@@ -158,7 +175,7 @@ function handleInput() {
   if (keyIsDown(SHIFT)) {
     playerMaxSpeed = playerBoostedSpeed;
     //The player looses health when they speed up
-    playerMaxHealth -=1;
+    playerMaxHealth -=0.5;
   }
 
   else {
@@ -294,14 +311,22 @@ function drawPrey() {
   fill(preyFill, preyHealth);
   ellipse(preyX, preyY, preyRadius * 2);
 
+  /*showMeme();*/
+
 }
+
+/*function showMeme(){
+
+}*/
+
 
 // drawPlayer()
 //
 // Draw the player as an ellipse with alpha value based on health
 function drawPlayer() {
-  fill(playerFill, playerHealth);
-  ellipse(playerX, playerY, playerRadius * 2);
+  fill(0, 153, 204, playerHealth);
+  imageMode(CENTER);
+  image(playerImage, playerX,playerY,playerSizeX, playerSizeY);
 }
 
 // showGameOver()
