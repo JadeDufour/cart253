@@ -85,8 +85,7 @@ let stage = 0;
 let backgroundImg;
 //Add a background image to the instructions
 let instructionsBackg;
-//Add mission failed image (not a background)
-let failedImg;
+
 //Declare the instructions. Tell them to the player before the game starts
 let showInstructions = true;
 
@@ -109,8 +108,6 @@ function preload() {
   backgroundImg = loadImage("assets/images/ground.jpg");
   //Load the instructions background image
   instructionsBackg = loadImage("assets/images/intro.jpg");
-  //Load the mission failed image
-  /*failedImg = loadImage("assets/images/wearewestillhere.jpg");*/
 }
 
 // setup()
@@ -157,11 +154,10 @@ function setupPlayer() {
 function draw() {
   imageMode(CENTER);
   image(backgroundImg, width / 2, height / 2, width, height);
-
   textFont('Arial');
   textAlign(CENTER, CENTER);
   textSize(35);
-  fill(0);
+  fill(255);
   text("Memes saved from Meme Review : " + stage, width / 2, height - 30);
 
   if (!gameOver) {
@@ -277,7 +273,7 @@ function updateHealth() {
 
   //A function that draws the text when player's health is halfway down
 function showPlayerMessage() {
-  textSize(20);
+  textSize(30);
   textFont('Arial');
   textAlign(CENTER, CENTER);
   fill(0);
@@ -290,7 +286,7 @@ function showPlayerMessage() {
 
   //A second function that draws the text when the is 1/3 of player's health left
 function showPlayerMessage2() {
-  textSize(15);
+  textSize(25);
   textFont('Arial');
   textAlign(CENTER, CENTER);
   fill(0);
@@ -423,13 +419,9 @@ function drawPlayer() {
 }
 
 // showGameOver()
-//
 // Display text about the game being over!
 function showGameOver() {
-  background(220, 220, 220);
-  //Load the image displayed with game over screen and text
-  /*imageMode(CENTER);
-  image(failedImg, width / 6, height / 6, 80, 80);*/
+  background(255);
 
   // Set up the font
   textSize(32);
@@ -439,7 +431,7 @@ function showGameOver() {
   // Set up the text to display
   let gameOverText = "MISSION FAILED\nWE'LL GET EM NEXT TIME\n\n"; //
   gameOverText = gameOverText + "You saved " + memeEaten + " memes\n";
-  gameOverText = gameOverText + "but could'nt get out on time."
+  gameOverText = gameOverText + "but couldn't get out on time."
   fill(255, 0, 0);
 
   // Display it in the centre of the screen
