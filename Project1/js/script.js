@@ -28,10 +28,10 @@ let playerMaxSpeed = 3;
 
 //Add Player size
 let playerSizeX = 75;
-let playerSizeY =65;
+let playerSizeY = 65;
 
 //Add a boosted speed (we will switch between the two when holding Shift)
-let playerBoostedSpeed  = 5;
+let playerBoostedSpeed = 5;
 
 // Player health
 let playerHealth;
@@ -73,18 +73,26 @@ let meme7;
 let meme8;
 let meme9;
 
-
 // Amount of health obtained per frame of "eating" (overlapping) the prey
 let eatHealth = 10;
 // Number of prey eaten during the game (the "score")
 let memeEaten = 0;
 
 //Add a counter so the player know at which stage of theur life they are
-let stage=0;
+let stage = 0;
 
-function preload(){
+//Add a background to the game
+let backgroundImg;
+//Add a background image to the instructions
+let instructionsBackg;
+//Add mission failed image (not a background)
+let failedImg;
+//Declare the instructions. Tell them to the player before the game starts
+let showInstructions = true;
+
+function preload() {
   //Load the player image
-  playerImage= loadImage('assets/images/naruto1.gif')
+  playerImage = loadImage('assets/images/naruto1.gif');
 
   //Load the memes (preys)
   meme1 = loadImage("assets/images/pepe1.png");
@@ -97,13 +105,19 @@ function preload(){
   meme8 = loadImage("assets/images/ron8.png");
   meme9 = loadImage("assets/images/safe9.png");
 
+  //Load the background image
+  backgroundImg = loadImage("assets/images/ground.jpg");
+  //Load the instructions background image
+  instructionsBackg = loadImage("assets/images/intro.jpg");
+  //Load the mission failed image
+  /*failedImg = loadImage("assets/images/wearewestillhere.jpg");*/
 }
 
 // setup()
 //
 // Sets up the basic elements of the game
 function setup() {
-  createCanvas(800, 800);
+  createCanvas(800, 600);
   noStroke();
 
   // We're using simple functions to separate code out
@@ -120,8 +134,8 @@ function setupMeme() {
   memeVY = memeMaxSpeed;
   memeHealth = memeMaxHealth;
   //Add time parameter to determine how similar in time the x and y values of the meme will be (noise)
-  memeTX= noise(0,1);
-  memeTY= noise(0,1);
+  memeTX = noise(0, 1);
+  memeTY = noise(0, 1);
 }
 
 // setupPlayer()
@@ -141,12 +155,14 @@ function setupPlayer() {
 // displays the two agents.
 // When the game is over, shows the game over screen.
 function draw() {
-  background(100, 100, 200);
+  imageMode(CENTER);
+  image(backgroundImg, width / 2, height / 2, width, height);
+
   textFont('Arial');
-  textAlign(CENTER,CENTER);
-  textSize(25);
+  textAlign(CENTER, CENTER);
+  textSize(35);
   fill(0);
-  text("Memes saved from Meme Review : "+ stage, width/2,width -30);
+  text("Memes saved from Meme Review : " + stage, width / 2, height - 30);
 
   if (!gameOver) {
     handleInput();
@@ -159,8 +175,10 @@ function draw() {
 
     drawMeme();
     drawPlayer();
-  }
-  else {
+    //Added an instructions function
+    showInstructionsFirst();
+
+  } else {
     showGameOver();
   }
 }
@@ -172,22 +190,18 @@ function handleInput() {
   // Check for horizontal movement
   if (keyIsDown(LEFT_ARROW)) {
     playerVX = -playerMaxSpeed;
-  }
-  else if (keyIsDown(RIGHT_ARROW)) {
+  } else if (keyIsDown(RIGHT_ARROW)) {
     playerVX = playerMaxSpeed;
-  }
-  else {
+  } else {
     playerVX = 0;
   }
 
   // Check for vertical movement
   if (keyIsDown(UP_ARROW)) {
     playerVY = -playerMaxSpeed;
-  }
-  else if (keyIsDown(DOWN_ARROW)) {
+  } else if (keyIsDown(DOWN_ARROW)) {
     playerVY = playerMaxSpeed;
-  }
-  else {
+  } else {
     playerVY = 0;
   }
 
@@ -195,12 +209,19 @@ function handleInput() {
   if (keyIsDown(SHIFT)) {
     playerMaxSpeed = playerBoostedSpeed;
     //The player looses health when they speed up
-    playerMaxHealth -=0.5;
+    playerMaxHealth -= 0.5;
+  } else {
+    playerMaxSpeed = 2; //Reset the player speed if the shift key is not pressed
   }
 
-  else {
-  playerMaxSpeed= 2; //Reset the player speed if the shift key is not pressed
-}
+  /*if (keyIsPressed(SPACE)){
+
+  }
+
+  else{
+
+  }*/
+
 }
 
 // movePlayer()
@@ -216,8 +237,7 @@ function movePlayer() {
   if (playerX < 0) {
     // Off the left side, so add the width to reset to the right
     playerX = playerX + width;
-  }
-  else if (playerX > width) {
+  } else if (playerX > width) {
     // Off the right side, so subtract the width to reset to the left
     playerX = playerX - width;
   }
@@ -225,8 +245,7 @@ function movePlayer() {
   if (playerY < 0) {
     // Off the top, so add the height to reset to the bottom
     playerY = playerY + height;
-  }
-  else if (playerY > height) {
+  } else if (playerY > height) {
     // Off the bottom, so subtract the height to reset to the top
     playerY = playerY - height;
   }
@@ -244,20 +263,20 @@ function updateHealth() {
   // Check if the player is dead (0 health)
   if (playerHealth === 0) {
     // If so, the game is over
-    stage=0;
+    stage = 0;
     gameOver = true;
   }
 
-  if (playerHealth < playerMaxHealth/2){
+  if (playerHealth < playerMaxHealth / 2) {
     showPlayerMessage();
   }
 
-  if (playerHealth < playerMaxHealth/3)
+  if (playerHealth < playerMaxHealth / 3)
     showPlayerMessage2();
 }
 
-
-function showPlayerMessage(){
+  //A function that draws the text when player's health is halfway down
+function showPlayerMessage() {
   textSize(20);
   textFont('Arial');
   textAlign(CENTER, CENTER);
@@ -266,11 +285,11 @@ function showPlayerMessage(){
   let playerMessage = "Mr. Stark, I don't feel so good...";
 
   // Display it in the centre of the screen, at 1/8 the height
-  text(playerMessage, width / 2, height/8);
+  text(playerMessage, width / 2, height / 8);
 }
 
-function showPlayerMessage2(){
-
+  //A second function that draws the text when the is 1/3 of player's health left
+function showPlayerMessage2() {
   textSize(15);
   textFont('Arial');
   textAlign(CENTER, CENTER);
@@ -279,9 +298,8 @@ function showPlayerMessage2(){
   let playerMessage2 = "Mr. Stark, I don't wanna go..";
 
   // Display it in the centre of the screen, at 1/6 the height
-  text(playerMessage2, width / 2, height/6);
+  text(playerMessage2, width / 2, height / 6);
 }
-
 
 // checkEating()
 //
@@ -311,7 +329,7 @@ function checkEating() {
       // Track how many meme were eaten
       memeEaten = memeEaten + 1;
       //Update score
-      stage +=1;
+      stage += 1;
       //Give player full health
       playerHealth = playerMaxHealth;
     }
@@ -332,8 +350,8 @@ function moveMeme() {
     // to the appropriate range of velocities for the meme
 
     //The meme now moves according to the Perlin noise
-    memeVX = map(noise(memeTX),0,1,-memeMaxSpeed,memeMaxSpeed);
-    memeVY = map(noise(memeTY),0,1,-memeMaxSpeed,memeMaxSpeed);
+    memeVX = map(noise(memeTX), 0, 1, -memeMaxSpeed, memeMaxSpeed);
+    memeVY = map(noise(memeTY), 0, 1, -memeMaxSpeed, memeMaxSpeed);
     memeX += memeVX;
     memeY += memeVY;
   }
@@ -345,21 +363,18 @@ function moveMeme() {
   // Screen wrapping
   if (memeX < 0) {
     memeX = memeX + width;
-  }
-  else if (memeX > width) {
+  } else if (memeX > width) {
     memeX = memeX - width;
   }
 
   if (memeY < 0) {
     memeY = memeY + height;
-  }
-  else if (memeY > height) {
+  } else if (memeY > height) {
     memeY = memeY - height;
   }
   memeTX += 0.02;
   memeTY += 0.01;
 }
-
 
 // Draw the meme with alpha based on health
 function drawMeme() {
@@ -367,75 +382,81 @@ function drawMeme() {
   showMeme();
 }
 
-function showMeme(){
+function showMeme() {
 
   if (stage <= 0) {
     imageMode(CENTER);
-    image(meme1,memeX,memeY,memeSizeX, memeSizeY);
-  }
-  else if (stage <= 1 ) {
+    image(meme1, memeX, memeY, memeSizeX, memeSizeY);
+  } else if (stage <= 1) {
     imageMode(CENTER);
-    image(meme2,memeX,memeY,memeSizeX, memeSizeY);
-  }
-  else if (stage <= 2) {
+    image(meme2, memeX, memeY, memeSizeX, memeSizeY);
+  } else if (stage <= 2) {
     imageMode(CENTER);
-    image(meme3,memeX,memeY,memeSizeX, memeSizeY);
-  }
-  else if (stage <= 3) {
+    image(meme3, memeX, memeY, memeSizeX, memeSizeY);
+  } else if (stage <= 3) {
     imageMode(CENTER);
-    image(meme4,memeX,memeY,memeSizeX, memeSizeY);
-  }
-  else if (stage <= 4) {
+    image(meme4, memeX, memeY, memeSizeX, memeSizeY);
+  } else if (stage <= 4) {
     imageMode(CENTER);
-    image(meme5,memeX,memeY,memeSizeX, memeSizeY);
-  }
-  else if (stage <= 5) {
+    image(meme5, memeX, memeY, memeSizeX, memeSizeY);
+  } else if (stage <= 5) {
     imageMode(CENTER);
-    image(meme6,memeX,memeY,memeSizeX, memeSizeY);
-  }
-  else if (stage <= 6) {
+    image(meme6, memeX, memeY, memeSizeX, memeSizeY);
+  } else if (stage <= 6) {
     imageMode(CENTER);
-    image(meme7,memeX,memeY,memeSizeX, memeSizeY);
+    image(meme7, memeX, memeY, memeSizeX, memeSizeY);
+  } else if (stage <= 7) {
+    imageMode(CENTER);
+    image(meme8, memeX, memeY, memeSizeX, memeSizeY);
+  } else if (stage <= 8) {
+    imageMode(CENTER);
+    image(meme9, memeX, memeY, memeSizeX, memeSizeY);
   }
-  else if (stage <= 7) {
-        imageMode(CENTER);
-    image(meme8,memeX,memeY,memeSizeX, memeSizeY);
-  }
-
-  else if (stage <= 8) {
-        imageMode(CENTER);
-    image(meme9,memeX,memeY,memeSizeX, memeSizeY);
-  }
-
 }
-
 
 function drawPlayer() {
   //The tint is white so we dont lose any of the image's original color
   //The playerImage fades as its health decreases
-  tint(255,255,255,playerHealth);
+  tint(255, 255, 255, playerHealth);
   imageMode(CENTER);
-  image(playerImage, playerX,playerY,playerSizeX, playerSizeY);
-
+  image(playerImage, playerX, playerY, playerSizeX, playerSizeY);
 }
 
 // showGameOver()
 //
 // Display text about the game being over!
 function showGameOver() {
-  background(220,220,220);
+  background(220, 220, 220);
+  //Load the image displayed with game over screen and text
+  /*imageMode(CENTER);
+  image(failedImg, width / 6, height / 6, 80, 80);*/
+
   // Set up the font
   textSize(32);
   textFont('Arial Black');
   textAlign(CENTER, CENTER);
   fill(0);
   // Set up the text to display
-
-  let gameOverText = "WASTED\n\n"; //
+  let gameOverText = "MISSION FAILED\nWE'LL GET EM NEXT TIME\n\n"; //
   gameOverText = gameOverText + "You saved " + memeEaten + " memes\n";
-  gameOverText = gameOverText + "before you became a dead meme."
-  fill(255,0,0);
+  gameOverText = gameOverText + "but could'nt get out on time."
+  fill(255, 0, 0);
 
   // Display it in the centre of the screen
   text(gameOverText, width / 2, height / 2);
 }
+
+function showInstructionsFirst() {
+  if (showInstructions) {
+    imageMode(CENTER);
+    image(instructionsBackg, width / 2, height / 2, width, height);
+   //We don't want the game running in the background of the instructions
+    noLoop();
+  }
+}
+
+  function mousePressed() {
+    //Remove the instructions if the player clicked
+    showInstructions = false;
+    loop();
+  }
