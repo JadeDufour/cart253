@@ -2,21 +2,21 @@
 
 /******************************************************
 
-Game - Chaser //CHANGE NAME LATER
-Jade Dufour
+Game - The hero we need, and the one we deserve.
+Modified by Jade Dufour
 
-A "simple" game of cat and mouse. The player is a circle and can move with keys,
-if they overlap the (randomly moving) prey they "eat it" by sucking out its life
-and adding it to their own. The player "dies" slowly over time so they have to keep
-eating to stay alive.
+This might be a simple game, but it is nowhere near a simple task. Today, MemeMaster64,
+you will need to save 10 memes from a dark and mysterious dungeon. Who captured these innocent memes
+you might say? We will never know, but we shall fear such mad man. Watch yourself though, for this dungeon seems
+to drain your stamina and your will to live. Press Shift to hit maximum overdrive and move with the
+arrows, like the Pro League player that you are. For every meme you catch, your health will fill back up.
+You need memes to stay alive, MemeMaster, just like in real life.
 
+________________________________________________________________________________________________________
 Includes: Physics-based movement, keyboard controls, health/stamina,
 random movement, screen wrap.
 
 ******************************************************/
-
-// Track whether the game is over
-let gameOver = false;
 
 // Player position, size, velocity
 let playerX;
@@ -88,6 +88,11 @@ let instructionsBackg;
 
 //Declare the instructions. Tell them to the player before the game starts
 let showInstructions = true;
+//Add a winning screen
+let winning = false;
+
+// Track whether the game is over
+let gameOver = false;
 
 function preload() {
   //Load the player image
@@ -158,7 +163,7 @@ function draw() {
   textAlign(CENTER, CENTER);
   textSize(35);
   fill(255);
-  text("Memes saved from Meme Review : " + stage, width / 2, height - 30);
+  text("Memes saved: " + stage, width / 2, height - 30);
 
   if (!gameOver) {
     handleInput();
@@ -173,6 +178,8 @@ function draw() {
     drawPlayer();
     //Added an instructions function
     showInstructionsFirst();
+
+
 
   } else {
     showGameOver();
@@ -271,7 +278,7 @@ function updateHealth() {
     showPlayerMessage2();
 }
 
-  //A function that draws the text when player's health is halfway down
+//A function that draws the text when player's health is halfway down
 function showPlayerMessage() {
   textSize(30);
   textFont('Arial');
@@ -284,7 +291,7 @@ function showPlayerMessage() {
   text(playerMessage, width / 2, height / 8);
 }
 
-  //A second function that draws the text when the is 1/3 of player's health left
+//A second function that draws the text when the is 1/3 of player's health left
 function showPlayerMessage2() {
   textSize(25);
   textFont('Arial');
@@ -374,7 +381,7 @@ function moveMeme() {
 
 // Draw the meme with alpha based on health
 function drawMeme() {
-  fill(memeFill, memeHealth);
+  /*fill(memeFill, memeHealth);*/
   showMeme();
 }
 
@@ -442,13 +449,20 @@ function showInstructionsFirst() {
   if (showInstructions) {
     imageMode(CENTER);
     image(instructionsBackg, width / 2, height / 2, width, height);
-   //We don't want the game running in the background of the instructions
+
+    textSize(15);
+    textFont('Arial Black');
+    textAlign(CENTER, CENTER);
+    fill(255);
+    text("*See game description to learn the controls*", width - 600,20);
+
+    //We don't want the game running in the background of the instructions
     noLoop();
   }
 }
 
-  function mousePressed() {
-    //Remove the instructions if the player clicked
-    showInstructions = false;
-    loop();
-  }
+function mousePressed() {
+  //Remove the instructions if the player clicked
+  showInstructions = false;
+  loop();
+}
