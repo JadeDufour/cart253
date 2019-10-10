@@ -17,7 +17,9 @@ Includes: Physics-based movement, keyboard controls, health/stamina,
 random movement, screen wrap.
 
 ******************************************************/
-
+//Load text fonts
+let alex;
+let amatic;
 // Player position, size, velocity
 let playerX;
 let playerY;
@@ -120,6 +122,11 @@ function preload() {
   backgroundMusic = new Audio("assets/sounds/gameMusic.mp3");
   //Load the game over sound
   overSound = new Audio("assets/sounds/busted.mp3")
+
+  //Load the two text fonts
+   alex = loadFont("assets/fonts/AlexBrush-Regular.ttf");
+   amatic = loadFont("assets/fonts/Amatic-Bold.ttf");
+
 }
 
 // setup()
@@ -164,11 +171,11 @@ function setupPlayer() {
 function draw() {
   imageMode(CENTER);
   image(backgroundImg, width / 2, height / 2, width, height);
-  textFont('Arial');
+  textFont('Amatic-Bold');
   textAlign(CENTER, CENTER);
-  textSize(35);
+  textSize(55);
   fill(255);
-  text("Memes saved: " + stage, width / 2, height - 30);
+  text("Memes saved: " + stage, width / 2, height - 50);
 
   if (!gameOver) {
     handleInput();
@@ -275,8 +282,8 @@ function updateHealth() {
 
 //A function that draws the text when player's health is halfway down
 function showPlayerMessage() {
-  textSize(30);
-  textFont('Arial');
+  textSize(35);
+  textFont('Amatic-Bold');
   textAlign(CENTER, CENTER);
   fill(0);
   // Set up the first text to display (the first message the avatar says)
@@ -288,10 +295,10 @@ function showPlayerMessage() {
 
 //A second function that draws the text when the is 1/3 of player's health left
 function showPlayerMessage2() {
-  textSize(25);
-  textFont('Arial');
+  textSize(0);
+  textFont('Amatic-Bold');
   textAlign(CENTER, CENTER);
-  fill(0);
+  fill(30);
   // Set up the second text to display (the last message the avatar says before it vanishes)
   let playerMessage2 = "Mr. Stark, I don't wanna go..";
 
@@ -420,11 +427,9 @@ function drawPlayer() {
 function lifeBar() {
   fill(255);
   textSize(35);
-  text("Will to survive : ", width/2-130, 45);
-  strokeWeight(1);
+  text("Will to survive : ", width/2-120, 40);
   fill(0, playerHealth, 0);
   rect(width/2, 30, playerHealth, 25);
-
 }
 
 // showGameOver()
