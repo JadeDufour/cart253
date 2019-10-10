@@ -20,6 +20,7 @@ random movement, screen wrap.
 //Load text fonts
 let alex;
 let amatic;
+let pricedow;
 // Player position, size, velocity
 let playerX;
 let playerY;
@@ -89,12 +90,14 @@ let backgroundImg;
 let instructionsBackg;
 //Add a background for losing screen
 let failBackg;
+//Add background for winning screen
+let winBackg;
 
 //Declare the instructions. Tell them to the player before the game starts
 let showInstructions = true;
 
 // Track whether the game is over
-let gameOver = false;
+let state = "StartScreen";
 //The background music for the game
 let backgroundMusic;
 //the sound when game over is true
@@ -118,17 +121,18 @@ function preload() {
   //Load the background image
   backgroundImg = loadImage("assets/images/ground.jpg");
   //Load the instructions background image
-  instructionsBackg = loadImage("assets/images/castle.jpg");
+  instructionsBackg = loadImage("assets/images/fond.jpg");
   //Load the background for the loosing screed
-  failBackg= loadImage("assets/images/sadBackground.jpg");
+  winBackg = loadImage("assets/images/dankWIN.jpg");
   //Load the background music
   backgroundMusic = new Audio("assets/sounds/gameMusic.mp3");
   //Load the game over sound
   overSound = new Audio("assets/sounds/busted.mp3")
 
   //Load the two text fonts
-   alex = loadFont("assets/fonts/AlexBrush-Regular.ttf");
-   amatic = loadFont("assets/fonts/Amatic-Bold.ttf");
+  alex = loadFont("assets/fonts/AlexBrush-Regular.ttf");
+  amatic = loadFont("assets/fonts/Amatic-Bold.ttf");
+  pricedow= loadFont("assets/fonts/pricedow.ttf");
 
 }
 
@@ -173,32 +177,52 @@ function setupPlayer() {
 // When the game is over, shows the game over screen.
 function draw() {
 
+if (state === "StartScreen"){
+  //Added an instructions function
+  showInstructionsFirst();
+}
+
+
+else if (state === "Play"){
+  handleInput();
+
+  movePlayer();
+  moveMeme();
+
+  updateHealth();
+  checkEating();
+  displayUI();
+  drawMeme();
+  drawPlayer();
+  lifeBar();
+}
+
+else if (state==="GameOver"){
+  showGameOver();
+}
+else if (state === "Win"){
+  displayWinning();
+  }
+}
+
+function displayWinning(){
   imageMode(CENTER);
-  image(backgroundImg, width / 2, height / 2, width, height);
+  image(winBackg, width / 2, height / 2, width, height);
   textFont('Amatic-Bold');
   textAlign(CENTER, CENTER);
   textSize(55);
   fill(255);
-  text("Memes saved: " + stage, width / 2, height - 50);
+  text("CONGRATS, MEMEMASTER64.\n You really are the MVP\n after all", width/2, height/2);
+}
 
-  if (!gameOver) {
-
-    handleInput();
-
-    movePlayer();
-    moveMeme();
-
-    updateHealth();
-    checkEating();
-
-    drawMeme();
-    drawPlayer();
-    lifeBar();
-    //Added an instructions function
-    showInstructionsFirst();
-    } else {
-    showGameOver();
-  }
+function displayUI(){
+imageMode(CENTER);
+image(backgroundImg, width / 2, height / 2, width, height);
+textFont('Amatic-Bold');
+textAlign(CENTER, CENTER);
+textSize(55);
+fill(255);
+text("Memes saved: " + stage, width / 2, height - 50);
 }
 
 // handleInput()
@@ -273,7 +297,9 @@ function updateHealth() {
   if (playerHealth === 0) {
     // If so, the game is over
     stage = 0;
-    gameOver = true;
+    state = "GameOver";
+    overSound.play();
+    backgroundMusic.pause();
   }
 
   if (playerHealth < 150) {
@@ -307,7 +333,7 @@ function showPlayerMessage2() {
   let playerMessage2 = "Mr. Stark, I don't wanna go..";
 
   // Display it in the centre of the screen, at 1/6 the height
-  text(playerMessage2, width / 2, height /5);
+  text(playerMessage2, width / 2, height / 5);
 }
 
 // checkEating()
@@ -341,7 +367,10 @@ function checkEating() {
       memeEaten = memeEaten + 1;
       //Update score
       stage += 1;
-
+      if (stage > 8){
+        background(255,0,0);
+        state= "Win";
+      }
     }
   }
 }
@@ -423,54 +452,51 @@ function drawMeme() {
 function drawPlayer() {
   //The tint is white so we dont lose any of the image's original color
   //The playerImage fades as its health decreases
+  push();
   tint(255, 255, 255, playerHealth);
   imageMode(CENTER);
   image(playerImage, playerX, playerY, playerSizeX, playerSizeY);
+  pop();
 }
 
 function lifeBar() {
   fill(255);
   textSize(35);
-  text("Will to survive : ", width/2-120, 40);
+  text("Will to survive : ", width / 2 - 120, 40);
   fill(0, playerHealth, 0);
-  rect(width/2, 30, playerHealth, 25);
+  rect(width / 2, 30, playerHealth, 25);
 }
 
 // showGameOver()
 // Display text about the game being over!
 function showGameOver() {
-  background(0);
+  background(255);
+  rectMode(CENTER);
+  fill(211,211,211);
+  rect(0,150,width*2,height/5);
   // Set up the font
-  textSize(32);
-  textFont('Arial Black');
+  textSize(60);
+  textFont('pricedow');
   textAlign(CENTER, CENTER);
   // Set up the text to display
-  let gameOverText = "MISSION FAILED\nWE'LL GET 'EM NEXT TIME\n\n"; //
+  let gameOverText = "WASTED\n\n"; //
   gameOverText = gameOverText + "You saved " + memeEaten + " meme(s)\n";
   gameOverText = gameOverText + "but couldn't get out\n the dungeon on time."
   fill(255, 0, 0);
   // Display it in the centre of the screen
   text(gameOverText, width / 2, height / 2);
-  overSound.play();
-  }
-
-function showInstructionsFirst() {
-  if (showInstructions) {
-    imageMode(CENTER);
-    image(instructionsBackg, width / 2, height / 2, width, height);
-    textSize(15);
-    textFont('Arial Black');
-    textAlign(CENTER, CENTER);
-    fill(255);
-    text("*See game description to learn the controls*", width - 600,20);
-    //We don't want the game running in the background of the instructions
-    noLoop();
-  }
 }
 
+function showInstructionsFirst() {
+    imageMode(CENTER);
+    image(instructionsBackg, width / 2, height / 2, width, height);
+    //We don't want the game running in the background of the instructions
+    }
+
 function mousePressed() {
+  if (state === "StartScreen"){
   //Remove the instructions if the player clicked
-  showInstructions = false;
+  state = "Play";
   backgroundMusic.play();
-  loop();
+    }
 }
