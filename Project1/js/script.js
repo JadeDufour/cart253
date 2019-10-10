@@ -6,7 +6,7 @@ Game - The hero we need, and the one we deserve.
 Modified by Jade Dufour
 
 This might be a simple game, but it is nowhere near a simple task. Today, MemeMaster64,
-you will need to save 10 memes from a dark and mysterious dungeon. Who captured these innocent memes
+you will need to save memes from a dark and mysterious dungeon. Who captured these innocent memes
 you might say? We will never know, but we shall fear such mad man. Watch yourself though, for this dungeon seems
 to drain your stamina and your will to live. Press Shift to hit maximum overdrive and move with the
 arrows, like the Pro League player that you are. For every meme you catch, your health will fill back up.
@@ -21,21 +21,21 @@ random movement, screen wrap.
 // Player position, size, velocity
 let playerX;
 let playerY;
-let playerRadius = 30;
+let playerRadius = 35;
 let playerVX = 0;
 let playerVY = 0;
 let playerMaxSpeed = 3;
 
 //Add Player size
-let playerSizeX = 75;
-let playerSizeY = 65;
+let playerSizeX = 80;
+let playerSizeY = 75;
 
 //Add a boosted speed (we will switch between the two when holding Shift)
 let playerBoostedSpeed = 5;
 
 // Player health
 let playerHealth;
-let playerMaxHealth = 255;
+let playerMaxHealth = 265;
 
 // Player fill color
 let playerFill = 50;
@@ -46,7 +46,7 @@ let playerImage;
 // Prey position, size, velocity
 let memeX;
 let memeY;
-let memeRadius = 30;
+let memeRadius = 35;
 let memeVX;
 let memeVY;
 let memeTX;
@@ -54,13 +54,13 @@ let memeTY;
 let memeMaxSpeed = 3;
 // Prey health
 let memeHealth;
-let memeMaxHealth = 100;
+let memeMaxHealth = 200;
 // Prey fill color
-let memeFill = 200;
+let memeFill = 255;
 
 //Prey size (for the images)
-let memeSizeX = 50;
-let memeSizeY = 50;
+let memeSizeX = 60;
+let memeSizeY = 60;
 
 //Declare that the preys are now old memes (and will change depending on the game stage)
 let meme1;
@@ -88,11 +88,14 @@ let instructionsBackg;
 
 //Declare the instructions. Tell them to the player before the game starts
 let showInstructions = true;
-//Add a winning screen
-let winning = false;
 
 // Track whether the game is over
 let gameOver = false;
+
+//The background music for the game
+let backgroundMusic;
+//the sound when game over is true
+let overSound;
 
 function preload() {
   //Load the player image
@@ -113,20 +116,22 @@ function preload() {
   backgroundImg = loadImage("assets/images/ground.jpg");
   //Load the instructions background image
   instructionsBackg = loadImage("assets/images/intro.jpg");
+  //Load the background music
+  backgroundMusic = new Audio("assets/sounds/gameMusic.mp3");
+  //Load the game over sound
+  overSound = new Audio("assets/sounds/busted.mp3")
 }
 
 // setup()
 //
 // Sets up the basic elements of the game
 function setup() {
-  createCanvas(800, 600);
+  createCanvas(700, 600);
   noStroke();
-
   // We're using simple functions to separate code out
   setupMeme();
   setupPlayer();
 }
-
 
 // Initialises meme's position, velocity, and health
 function setupMeme() {
@@ -176,10 +181,9 @@ function draw() {
 
     drawMeme();
     drawPlayer();
+    lifeBar();
     //Added an instructions function
     showInstructionsFirst();
-
-
 
   } else {
     showGameOver();
@@ -212,19 +216,10 @@ function handleInput() {
   if (keyIsDown(SHIFT)) {
     playerMaxSpeed = playerBoostedSpeed;
     //The player looses health when they speed up
-    playerMaxHealth -= 0.5;
+    playerHealth -= 0.7;
   } else {
     playerMaxSpeed = 2; //Reset the player speed if the shift key is not pressed
   }
-
-  /*if (keyIsPressed(SPACE)){
-
-  }
-
-  else{
-
-  }*/
-
 }
 
 // movePlayer()
@@ -270,11 +265,11 @@ function updateHealth() {
     gameOver = true;
   }
 
-  if (playerHealth < playerMaxHealth / 2) {
+  if (playerHealth < 150) {
     showPlayerMessage();
   }
 
-  if (playerHealth < playerMaxHealth / 3)
+  if (playerHealth < 80)
     showPlayerMessage2();
 }
 
@@ -323,6 +318,8 @@ function checkEating() {
 
     // Check if the meme died (health 0) :(
     if (memeHealth === 0) {
+
+      drawMeme();
       // Move the "new" meme to a random position
       memeX = random(0, width);
       memeY = random(0, height);
@@ -335,6 +332,7 @@ function checkEating() {
       stage += 1;
       //Give player full health
       playerHealth = playerMaxHealth;
+
     }
   }
 }
@@ -381,15 +379,11 @@ function moveMeme() {
 
 // Draw the meme with alpha based on health
 function drawMeme() {
-  /*fill(memeFill, memeHealth);*/
-  showMeme();
-}
-
-function showMeme() {
 
   if (stage <= 0) {
     imageMode(CENTER);
     image(meme1, memeX, memeY, memeSizeX, memeSizeY);
+
   } else if (stage <= 1) {
     imageMode(CENTER);
     image(meme2, memeX, memeY, memeSizeX, memeSizeY);
@@ -411,7 +405,7 @@ function showMeme() {
   } else if (stage <= 7) {
     imageMode(CENTER);
     image(meme8, memeX, memeY, memeSizeX, memeSizeY);
-  } else if (stage <= 8) {
+  } else {
     imageMode(CENTER);
     image(meme9, memeX, memeY, memeSizeX, memeSizeY);
   }
@@ -425,37 +419,43 @@ function drawPlayer() {
   image(playerImage, playerX, playerY, playerSizeX, playerSizeY);
 }
 
+function lifeBar() {
+  fill(255);
+  textSize(20);
+  text("Will to survive : ", 80, 35);
+  strokeWeight(1);
+  fill(0, playerHealth, 0);
+  rect(width/2, 30, playerHealth, 25);
+
+}
+
 // showGameOver()
 // Display text about the game being over!
 function showGameOver() {
   background(255);
-
   // Set up the font
   textSize(32);
   textFont('Arial Black');
   textAlign(CENTER, CENTER);
-  fill(0);
   // Set up the text to display
   let gameOverText = "MISSION FAILED\nWE'LL GET EM NEXT TIME\n\n"; //
-  gameOverText = gameOverText + "You saved " + memeEaten + " memes\n";
-  gameOverText = gameOverText + "but couldn't get out on time."
+  gameOverText = gameOverText + "You saved " + memeEaten + " meme(s)\n";
+  gameOverText = gameOverText + "but couldn't get out\n the dungeon on time."
   fill(255, 0, 0);
-
   // Display it in the centre of the screen
   text(gameOverText, width / 2, height / 2);
+  overSound.play();
 }
 
 function showInstructionsFirst() {
   if (showInstructions) {
     imageMode(CENTER);
     image(instructionsBackg, width / 2, height / 2, width, height);
-
     textSize(15);
     textFont('Arial Black');
     textAlign(CENTER, CENTER);
     fill(255);
     text("*See game description to learn the controls*", width - 600,20);
-
     //We don't want the game running in the background of the instructions
     noLoop();
   }
@@ -464,5 +464,6 @@ function showInstructionsFirst() {
 function mousePressed() {
   //Remove the instructions if the player clicked
   showInstructions = false;
+  backgroundMusic.play();
   loop();
 }
