@@ -87,13 +87,14 @@ let stage = 0;
 let backgroundImg;
 //Add a background image to the instructions
 let instructionsBackg;
+//Add a background for losing screen
+let failBackg;
 
 //Declare the instructions. Tell them to the player before the game starts
 let showInstructions = true;
 
 // Track whether the game is over
 let gameOver = false;
-
 //The background music for the game
 let backgroundMusic;
 //the sound when game over is true
@@ -117,7 +118,9 @@ function preload() {
   //Load the background image
   backgroundImg = loadImage("assets/images/ground.jpg");
   //Load the instructions background image
-  instructionsBackg = loadImage("assets/images/intro.jpg");
+  instructionsBackg = loadImage("assets/images/castle.jpg");
+  //Load the background for the loosing screed
+  failBackg= loadImage("assets/images/sadBackground.jpg");
   //Load the background music
   backgroundMusic = new Audio("assets/sounds/gameMusic.mp3");
   //Load the game over sound
@@ -169,6 +172,7 @@ function setupPlayer() {
 // displays the two agents.
 // When the game is over, shows the game over screen.
 function draw() {
+
   imageMode(CENTER);
   image(backgroundImg, width / 2, height / 2, width, height);
   textFont('Amatic-Bold');
@@ -178,6 +182,7 @@ function draw() {
   text("Memes saved: " + stage, width / 2, height - 50);
 
   if (!gameOver) {
+
     handleInput();
 
     movePlayer();
@@ -191,8 +196,7 @@ function draw() {
     lifeBar();
     //Added an instructions function
     showInstructionsFirst();
-
-  } else {
+    } else {
     showGameOver();
   }
 }
@@ -225,7 +229,7 @@ function handleInput() {
     //The player looses health when they speed up
     playerHealth -= 0.7;
   } else {
-    playerMaxSpeed = 2; //Reset the player speed if the shift key is not pressed
+    playerMaxSpeed = 5; //Reset the player speed if the shift key is not pressed
   }
 }
 
@@ -295,10 +299,10 @@ function showPlayerMessage() {
 
 //A second function that draws the text when the is 1/3 of player's health left
 function showPlayerMessage2() {
-  textSize(0);
+  textSize(25);
   textFont('Amatic-Bold');
   textAlign(CENTER, CENTER);
-  fill(30);
+  fill(0);
   // Set up the second text to display (the last message the avatar says before it vanishes)
   let playerMessage2 = "Mr. Stark, I don't wanna go..";
 
@@ -435,20 +439,20 @@ function lifeBar() {
 // showGameOver()
 // Display text about the game being over!
 function showGameOver() {
-  background(255);
+  background(0);
   // Set up the font
   textSize(32);
   textFont('Arial Black');
   textAlign(CENTER, CENTER);
   // Set up the text to display
-  let gameOverText = "MISSION FAILED\nWE'LL GET EM NEXT TIME\n\n"; //
+  let gameOverText = "MISSION FAILED\nWE'LL GET 'EM NEXT TIME\n\n"; //
   gameOverText = gameOverText + "You saved " + memeEaten + " meme(s)\n";
   gameOverText = gameOverText + "but couldn't get out\n the dungeon on time."
   fill(255, 0, 0);
   // Display it in the centre of the screen
   text(gameOverText, width / 2, height / 2);
   overSound.play();
-}
+  }
 
 function showInstructionsFirst() {
   if (showInstructions) {
