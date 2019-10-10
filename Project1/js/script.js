@@ -13,6 +13,7 @@ arrows, like the Pro League player that you are. For every meme you catch, your 
 You need memes to stay alive, MemeMaster, just like in real life.
 
 ________________________________________________________________________________________________________
+
 Includes: Physics-based movement, keyboard controls, health/stamina,
 random movement, screen wrap.
 
@@ -129,7 +130,7 @@ function preload() {
   //Load the background image
   backgroundImg = loadImage("assets/images/ground1.jpg");
   //Load the instructions background image
-  instructionsBackg = loadImage("assets/images/fond.jpg");
+  instructionsBackg = loadImage("assets/images/fond1.jpg");
   //Load the background for the loosing screed
   winBackg = loadImage("assets/images/dankWIN.jpg");
   //Load failling screen background
@@ -200,10 +201,12 @@ function draw() {
 
     updateHealth();
     checkEating();
+    //Add display UI function and showPlayerMessage
     displayUI();
     showPlayerMessages();
     drawMeme();
     drawPlayer();
+    //Add LifeBar function
     lifeBar();
   } else if (state === "GameOver") {
     showGameOver();
@@ -211,7 +214,7 @@ function draw() {
     displayWinning();
   }
 }
-
+//Displays the winning screen
 function displayWinning() {
   imageMode(CENTER);
   image(winBackg, width / 2, height / 2, width, height);
@@ -219,9 +222,9 @@ function displayWinning() {
   textAlign(CENTER, CENTER);
   textSize(55);
   fill(255);
-  text("CONGRATS, MEMEMASTER64.\n You really are the MVP\n after all", width / 2, height / 2);
+  text("CONGRATS, MEMEMASTER64.\n You really are the MVP\n after all.\n Long live the Master", width / 2, height / 2);
 }
-
+//Displays the UI
 function displayUI() {
   imageMode(CENTER);
   image(backgroundImg, width / 2, height / 2, width, height);
@@ -254,7 +257,7 @@ function handleInput() {
     playerVY = 0;
   }
 
-  //Add the possibility for the player to sprint
+  //Add the possibility for the player to sprint with the shift key
   if (keyIsDown(SHIFT)) {
     playerMaxSpeed = playerBoostedSpeed;
     //The player looses health when they speed up
@@ -302,14 +305,16 @@ function updateHealth() {
   // Check if the player is dead (0 health)
   if (playerHealth === 0) {
     // If so, the game is over
+    //The games goes back to stage 0
     stage = 0;
     state = "GameOver";
+    //Plays the game over sound and stops the game background music
     overSound.play();
     backgroundMusic.pause();
   }
 }
-
-function showPlayerMessages(){
+//Calls the two player messages
+function showPlayerMessages() {
   if (playerHealth < 150) {
     showPlayerMessage();
   }
@@ -377,9 +382,11 @@ function checkEating() {
       memeEaten = memeEaten + 1;
       //Update score
       stage += 1;
+      //If the player catch all memes, display winning screen
       if (stage >= 12) {
         background(255, 0, 0);
         state = "Win";
+        //Stop background music and plays cheering kids sound effect
         backgroundMusic.pause();
         cheeringKids.play();
       }
@@ -427,7 +434,7 @@ function moveMeme() {
   memeTY += 0.01;
 }
 
-// Draw the meme with alpha based on health
+// Draw the 12 memes with alpha based on health
 function drawMeme() {
 
   if (stage <= 0) {
@@ -479,7 +486,7 @@ function drawPlayer() {
   image(playerImage, playerX, playerY, playerSizeX, playerSizeY);
   pop();
 }
-
+//The life bar shows the player their health
 function lifeBar() {
   fill(255);
   textSize(35);
@@ -494,7 +501,7 @@ function showGameOver() {
   imageMode(CENTER);
   image(failBackg, width / 2, height / 2, width, height);
   rectMode(CENTER);
-  fill(211, 211, 211,127);
+  fill(211, 211, 211, 127);
   rect(0, 150, width * 2, height / 5);
   // Set up the font
   textSize(60);
@@ -508,17 +515,19 @@ function showGameOver() {
   // Display it in the centre of the screen
   text(gameOverText, width / 2, height / 2);
 }
-
+//Add an instruction screen
 function showInstructionsFirst() {
   imageMode(CENTER);
   image(instructionsBackg, width / 2, height / 2, width, height);
-  //We don't want the game running in the background of the instructions
 }
-
+//The player can click with the mouse to start playing
 function mousePressed() {
   if (state === "StartScreen") {
     //Remove the instructions if the player clicked
     state = "Play";
+    //Play the background music
     backgroundMusic.play();
   }
 }
+
+//I got all of the memes online on https://www.stickpng.com/fr/cat/memes?page=1
