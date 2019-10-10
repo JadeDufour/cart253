@@ -27,14 +27,14 @@ let playerY;
 let playerRadius = 35;
 let playerVX = 0;
 let playerVY = 0;
-let playerMaxSpeed = 7;
+let playerMaxSpeed = 4;
 
 //Add Player size
 let playerSizeX = 80;
 let playerSizeY = 75;
 
 //Add a boosted speed (we will switch between the two when holding Shift)
-let playerBoostedSpeed = 10;
+let playerBoostedSpeed = 9;
 
 // Player health
 let playerHealth;
@@ -54,7 +54,7 @@ let memeVX;
 let memeVY;
 let memeTX;
 let memeTY;
-let memeMaxSpeed = 5;
+let memeMaxSpeed = 6;
 // Prey health
 let memeHealth;
 let memeMaxHealth = 200;
@@ -127,7 +127,7 @@ function preload() {
   meme12 = loadImage("assets/images/man12.png");
 
   //Load the background image
-  backgroundImg = loadImage("assets/images/ground.jpg");
+  backgroundImg = loadImage("assets/images/ground1.jpg");
   //Load the instructions background image
   instructionsBackg = loadImage("assets/images/fond.jpg");
   //Load the background for the loosing screed
@@ -144,7 +144,7 @@ function preload() {
   //Load the two text fonts
   alex = loadFont("assets/fonts/AlexBrush-Regular.ttf");
   amatic = loadFont("assets/fonts/Amatic-Bold.ttf");
-  pricedow= loadFont("assets/fonts/pricedow.ttf");
+  pricedow = loadFont("assets/fonts/pricedow.ttf");
 }
 
 // setup()
@@ -188,51 +188,46 @@ function setupPlayer() {
 // When the game is over, shows the game over screen.
 function draw() {
 
-if (state === "StartScreen"){
-  //Added an instructions function
-  showInstructionsFirst();
-}
+  if (state === "StartScreen") {
+    //Added an instructions function
+    showInstructionsFirst();
+  } else if (state === "Play") {
+    handleInput();
 
-else if (state === "Play"){
-  handleInput();
+    movePlayer();
+    moveMeme();
 
-  movePlayer();
-  moveMeme();
-
-  updateHealth();
-  checkEating();
-  displayUI();
-  drawMeme();
-  drawPlayer();
-  lifeBar();
-}
-
-else if (state==="GameOver"){
-  showGameOver();
-}
-else if (state === "Win"){
-  displayWinning();
+    updateHealth();
+    checkEating();
+    displayUI();
+    drawMeme();
+    drawPlayer();
+    lifeBar();
+  } else if (state === "GameOver") {
+    showGameOver();
+  } else if (state === "Win") {
+    displayWinning();
   }
 }
 
-function displayWinning(){
+function displayWinning() {
   imageMode(CENTER);
   image(winBackg, width / 2, height / 2, width, height);
   textFont('Amatic-Bold');
   textAlign(CENTER, CENTER);
   textSize(55);
   fill(255);
-  text("CONGRATS, MEMEMASTER64.\n You really are the MVP\n after all", width/2, height/2);
+  text("CONGRATS, MEMEMASTER64.\n You really are the MVP\n after all", width / 2, height / 2);
 }
 
-function displayUI(){
-imageMode(CENTER);
-image(backgroundImg, width / 2, height / 2, width, height);
-textFont('Amatic-Bold');
-textAlign(CENTER, CENTER);
-textSize(55);
-fill(255);
-text("Memes saved: " + stage, width / 2, height - 50);
+function displayUI() {
+  imageMode(CENTER);
+  image(backgroundImg, width / 2, height / 2, width, height);
+  textFont('Amatic-Bold');
+  textAlign(CENTER, CENTER);
+  textSize(55);
+  fill(255);
+  text("Memes saved: " + stage, width / 2, height - 50);
 }
 
 // handleInput()
@@ -261,7 +256,7 @@ function handleInput() {
   if (keyIsDown(SHIFT)) {
     playerMaxSpeed = playerBoostedSpeed;
     //The player looses health when they speed up
-    playerHealth -= 0.7;
+    playerHealth -= 1.4;
   } else {
     playerMaxSpeed = 5; //Reset the player speed if the shift key is not pressed
   }
@@ -375,9 +370,9 @@ function checkEating() {
       memeEaten = memeEaten + 1;
       //Update score
       stage += 1;
-      if (stage > 12){
-        background(255,0,0);
-        state= "Win";
+      if (stage > 12) {
+        background(255, 0, 0);
+        state = "Win";
         backgroundMusic.pause();
         cheeringKids.play();
       }
@@ -453,20 +448,16 @@ function drawMeme() {
   } else if (stage <= 7) {
     imageMode(CENTER);
     image(meme8, memeX, memeY, memeSizeX, memeSizeY);
-  }
-    else if (stage <= 8) {
+  } else if (stage <= 8) {
     imageMode(CENTER);
     image(meme9, memeX, memeY, memeSizeX, memeSizeY);
-  }
-    else if (stage <= 9) {
+  } else if (stage <= 9) {
     imageMode(CENTER);
     image(meme10, memeX, memeY, memeSizeX, memeSizeY);
-  }
-  else if (stage <= 10) {
+  } else if (stage <= 10) {
     imageMode(CENTER);
     image(meme11, memeX, memeY, memeSizeX, memeSizeY);
-  }
-    else {
+  } else {
     imageMode(CENTER);
     image(meme12, memeX, memeY, memeSizeX, memeSizeY);
   }
@@ -496,8 +487,8 @@ function showGameOver() {
   imageMode(CENTER);
   image(failBackg, width / 2, height / 2, width, height);
   rectMode(CENTER);
-  fill(211,211,211);
-  rect(0,150,width*2,height/5);
+  fill(10,220, 220, 220);
+  rect(0, 150, width * 2, height / 5);
   // Set up the font
   textSize(60);
   textFont('pricedow');
@@ -512,15 +503,15 @@ function showGameOver() {
 }
 
 function showInstructionsFirst() {
-    imageMode(CENTER);
-    image(instructionsBackg, width / 2, height / 2, width, height);
-    //We don't want the game running in the background of the instructions
-    }
+  imageMode(CENTER);
+  image(instructionsBackg, width / 2, height / 2, width, height);
+  //We don't want the game running in the background of the instructions
+}
 
 function mousePressed() {
-  if (state === "StartScreen"){
-  //Remove the instructions if the player clicked
-  state = "Play";
-  backgroundMusic.play();
-    }
+  if (state === "StartScreen") {
+    //Remove the instructions if the player clicked
+    state = "Play";
+    backgroundMusic.play();
+  }
 }
