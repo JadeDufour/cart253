@@ -222,7 +222,7 @@ function displayWinning() {
   textAlign(CENTER, CENTER);
   textSize(55);
   fill(255);
-  text("CONGRATS, MEMEMASTER64.\n You really are the MVP\n after all.\n Long live the Master", width / 2, height / 2);
+  text("CONGRATS, MEMEMASTER64.\n You are the hero we needed\n...and the one we deserved.\n Long live the Master", width / 2, height / 2);
 }
 //Displays the UI
 function displayUI() {
