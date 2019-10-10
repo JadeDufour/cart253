@@ -105,6 +105,8 @@ let state = "StartScreen";
 let backgroundMusic;
 //the sound when game over is true
 let overSound;
+//The sound for the winning screen
+let cheeringKids;
 
 function preload() {
   //Load the player image
@@ -136,6 +138,8 @@ function preload() {
   backgroundMusic = new Audio("assets/sounds/gameMusic.mp3");
   //Load the game over sound
   overSound = new Audio("assets/sounds/busted.mp3")
+  //Load the winning game sound
+  cheeringKids = new Audio("assets/sounds/kidsYay.mp3")
 
   //Load the two text fonts
   alex = loadFont("assets/fonts/AlexBrush-Regular.ttf");
@@ -374,6 +378,8 @@ function checkEating() {
       if (stage > 12){
         background(255,0,0);
         state= "Win";
+        backgroundMusic.pause();
+        cheeringKids.play();
       }
     }
   }
