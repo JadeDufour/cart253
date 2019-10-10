@@ -152,6 +152,7 @@ function preload() {
 // Sets up the basic elements of the game
 function setup() {
   createCanvas(700, 600);
+  noSmooth();
   noStroke();
   // We're using simple functions to separate code out
   setupMeme();
@@ -200,6 +201,7 @@ function draw() {
     updateHealth();
     checkEating();
     displayUI();
+    showPlayerMessages();
     drawMeme();
     drawPlayer();
     lifeBar();
@@ -258,7 +260,7 @@ function handleInput() {
     //The player looses health when they speed up
     playerHealth -= 1.4;
   } else {
-    playerMaxSpeed = 5; //Reset the player speed if the shift key is not pressed
+    playerMaxSpeed = 4; //Reset the player speed if the shift key is not pressed
   }
 }
 // movePlayer()
@@ -305,17 +307,21 @@ function updateHealth() {
     overSound.play();
     backgroundMusic.pause();
   }
+}
 
+function showPlayerMessages(){
   if (playerHealth < 150) {
     showPlayerMessage();
   }
 
-  if (playerHealth < 80)
+  if (playerHealth < 80) {
     showPlayerMessage2();
+  }
 }
 
 //A function that draws the text when player's health is halfway down
 function showPlayerMessage() {
+  console.log("m1");
   textSize(35);
   textFont('Amatic-Bold');
   textAlign(CENTER, CENTER);
@@ -329,6 +335,7 @@ function showPlayerMessage() {
 
 //A second function that draws the text when the is 1/3 of player's health left
 function showPlayerMessage2() {
+  console.log("m2");
   textSize(25);
   textFont('Amatic-Bold');
   textAlign(CENTER, CENTER);
@@ -370,7 +377,7 @@ function checkEating() {
       memeEaten = memeEaten + 1;
       //Update score
       stage += 1;
-      if (stage > 12) {
+      if (stage >= 12) {
         background(255, 0, 0);
         state = "Win";
         backgroundMusic.pause();
@@ -487,7 +494,7 @@ function showGameOver() {
   imageMode(CENTER);
   image(failBackg, width / 2, height / 2, width, height);
   rectMode(CENTER);
-  fill(10,220, 220, 220);
+  fill(211, 211, 211,127);
   rect(0, 150, width * 2, height / 5);
   // Set up the font
   textSize(60);
