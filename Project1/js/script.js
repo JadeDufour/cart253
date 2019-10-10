@@ -75,6 +75,9 @@ let meme6;
 let meme7;
 let meme8;
 let meme9;
+let meme10;
+let meme11;
+let meme12;
 
 // Amount of health obtained per frame of "eating" (overlapping) the prey
 let eatHealth = 55;
@@ -117,6 +120,9 @@ function preload() {
   meme7 = loadImage("assets/images/patrick7.png");
   meme8 = loadImage("assets/images/ron8.png");
   meme9 = loadImage("assets/images/safe9.png");
+  meme10 = loadImage("assets/images/brian10.png");
+  meme11 = loadImage("assets/images/ugandan11.png");
+  meme12 = loadImage("assets/images/man12.png");
 
   //Load the background image
   backgroundImg = loadImage("assets/images/ground.jpg");
@@ -124,6 +130,8 @@ function preload() {
   instructionsBackg = loadImage("assets/images/fond.jpg");
   //Load the background for the loosing screed
   winBackg = loadImage("assets/images/dankWIN.jpg");
+  //Load failling screen background
+  failBackg = loadImage("assets/images/fail.jpg");
   //Load the background music
   backgroundMusic = new Audio("assets/sounds/gameMusic.mp3");
   //Load the game over sound
@@ -133,7 +141,6 @@ function preload() {
   alex = loadFont("assets/fonts/AlexBrush-Regular.ttf");
   amatic = loadFont("assets/fonts/Amatic-Bold.ttf");
   pricedow= loadFont("assets/fonts/pricedow.ttf");
-
 }
 
 // setup()
@@ -181,7 +188,6 @@ if (state === "StartScreen"){
   //Added an instructions function
   showInstructionsFirst();
 }
-
 
 else if (state === "Play"){
   handleInput();
@@ -256,7 +262,6 @@ function handleInput() {
     playerMaxSpeed = 5; //Reset the player speed if the shift key is not pressed
   }
 }
-
 // movePlayer()
 //
 // Updates player position based on velocity,
@@ -335,7 +340,6 @@ function showPlayerMessage2() {
   // Display it in the centre of the screen, at 1/6 the height
   text(playerMessage2, width / 2, height / 5);
 }
-
 // checkEating()
 //
 // Check if the player overlaps the prey and updates health of both
@@ -367,7 +371,7 @@ function checkEating() {
       memeEaten = memeEaten + 1;
       //Update score
       stage += 1;
-      if (stage > 8){
+      if (stage > 12){
         background(255,0,0);
         state= "Win";
       }
@@ -443,9 +447,22 @@ function drawMeme() {
   } else if (stage <= 7) {
     imageMode(CENTER);
     image(meme8, memeX, memeY, memeSizeX, memeSizeY);
-  } else {
+  }
+    else if (stage <= 8) {
     imageMode(CENTER);
     image(meme9, memeX, memeY, memeSizeX, memeSizeY);
+  }
+    else if (stage <= 9) {
+    imageMode(CENTER);
+    image(meme10, memeX, memeY, memeSizeX, memeSizeY);
+  }
+  else if (stage <= 10) {
+    imageMode(CENTER);
+    image(meme11, memeX, memeY, memeSizeX, memeSizeY);
+  }
+    else {
+    imageMode(CENTER);
+    image(meme12, memeX, memeY, memeSizeX, memeSizeY);
   }
 }
 
@@ -470,7 +487,8 @@ function lifeBar() {
 // showGameOver()
 // Display text about the game being over!
 function showGameOver() {
-  background(255);
+  imageMode(CENTER);
+  image(failBackg, width / 2, height / 2, width, height);
   rectMode(CENTER);
   fill(211,211,211);
   rect(0,150,width*2,height/5);
