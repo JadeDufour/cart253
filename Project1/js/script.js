@@ -24,14 +24,14 @@ let playerY;
 let playerRadius = 35;
 let playerVX = 0;
 let playerVY = 0;
-let playerMaxSpeed = 3;
+let playerMaxSpeed = 7;
 
 //Add Player size
 let playerSizeX = 80;
 let playerSizeY = 75;
 
 //Add a boosted speed (we will switch between the two when holding Shift)
-let playerBoostedSpeed = 5;
+let playerBoostedSpeed = 10;
 
 // Player health
 let playerHealth;
@@ -51,7 +51,7 @@ let memeVX;
 let memeVY;
 let memeTX;
 let memeTY;
-let memeMaxSpeed = 3;
+let memeMaxSpeed = 5;
 // Prey health
 let memeHealth;
 let memeMaxHealth = 200;
@@ -74,7 +74,7 @@ let meme8;
 let meme9;
 
 // Amount of health obtained per frame of "eating" (overlapping) the prey
-let eatHealth = 10;
+let eatHealth = 55;
 // Number of prey eaten during the game (the "score")
 let memeEaten = 0;
 
@@ -283,7 +283,7 @@ function showPlayerMessage() {
   let playerMessage = "Mr. Stark, I don't feel so good...";
 
   // Display it in the centre of the screen, at 1/8 the height
-  text(playerMessage, width / 2, height / 8);
+  text(playerMessage, width / 2, height / 7);
 }
 
 //A second function that draws the text when the is 1/3 of player's health left
@@ -296,7 +296,7 @@ function showPlayerMessage2() {
   let playerMessage2 = "Mr. Stark, I don't wanna go..";
 
   // Display it in the centre of the screen, at 1/6 the height
-  text(playerMessage2, width / 2, height / 6);
+  text(playerMessage2, width / 2, height /5);
 }
 
 // checkEating()
@@ -330,8 +330,6 @@ function checkEating() {
       memeEaten = memeEaten + 1;
       //Update score
       stage += 1;
-      //Give player full health
-      playerHealth = playerMaxHealth;
 
     }
   }
@@ -421,8 +419,8 @@ function drawPlayer() {
 
 function lifeBar() {
   fill(255);
-  textSize(20);
-  text("Will to survive : ", 80, 35);
+  textSize(35);
+  text("Will to survive : ", width/2-130, 45);
   strokeWeight(1);
   fill(0, playerHealth, 0);
   rect(width/2, 30, playerHealth, 25);
