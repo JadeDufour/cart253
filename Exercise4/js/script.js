@@ -12,6 +12,11 @@
 // Whether the game has started
 let playing = false;
 
+//Erasing this? --------------------------------------------
+
+/*let score =0; */
+
+
 // Game colors (using hexadecimal)
 let bgColor = 0;
 let fgColor = 255;
@@ -143,6 +148,7 @@ displayBackground();
     displayStartMessage();
   }
 }
+//Will add winscreen and gameoverscren later when score is implemented ------------
 /*  else if (state ==="WinScreen"){
     displayWinScreen
   }
@@ -209,7 +215,22 @@ function ballIsOutOfBounds() {
   else {
     return false;
   }
+  /*updateScore();*/
 }
+
+/*function updateScore(){
+  if (ball.y < paddleBottom || ball.y > paddleTop){
+    paddle.top
+  }
+
+//Add paddle size? right and left?
+
+
+
+}*/
+
+
+
 
 // checkBallWallCollision()
 //
@@ -292,6 +313,7 @@ function resetBall() {
 function displayStartMessage() {
   push();
   textAlign(CENTER, CENTER);
+  //Add instructions image later -------------------------------------------------
   textSize(32);
   text("CLICK TO START", width / 2, height / 2);
   pop();
