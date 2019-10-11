@@ -62,6 +62,10 @@ let rightPaddle = {
 // A variable to hold the beep sound we will play on bouncing
 let beepSFX;
 
+//A variable that states which state the player is in. Starts with the Start screen
+// Tracks the game
+let state = "StartScreen";
+
 // preload()
 //
 // Loads the beep audio for the sound of bouncing
@@ -104,9 +108,9 @@ function setupPaddles() {
 // See how tidy it looks?!
 function draw() {
   // Fill the background
-  background(bgColor);
+displayBackground();
 
-  if (playing) {
+  if (state === "PlayScreen") {
     // If the game is in play, we handle input and move the elements around
     handleInput(leftPaddle);
     handleInput(rightPaddle);
@@ -118,6 +122,12 @@ function draw() {
     checkBallPaddleCollision(leftPaddle);
     checkBallPaddleCollision(rightPaddle);
 
+    // We always display the paddles and ball so it looks like Pong!
+    displayPaddle(leftPaddle);
+    displayPaddle(rightPaddle);
+    displayBall();
+
+
     // Check if the ball went out of bounds and respond if so
     // (Note how we can use a function that returns a truth value
     // inside a conditional!)
@@ -128,16 +138,25 @@ function draw() {
       // the ball went off...
     }
   }
-  else {
+  else if (state==="StartScreen"){
     // Otherwise we display the message to start the game
     displayStartMessage();
   }
-
-  // We always display the paddles and ball so it looks like Pong!
-  displayPaddle(leftPaddle);
-  displayPaddle(rightPaddle);
-  displayBall();
 }
+/*  else if (state ==="WinScreen"){
+    displayWinScreen
+  }
+}*/
+
+/* else if (state==="GameOverScreen"){
+  displayGameOver
+  }
+*/
+
+function displayBackground(){
+    background(bgColor);
+}
+
 
 // handleInput()
 //
@@ -283,5 +302,9 @@ function displayStartMessage() {
 // Here to require a click to start playing the game
 // Which will help us be allowed to play audio in the browser
 function mousePressed() {
-  playing = true;
+  if (state === "StartScreen"){
+    //Remove the instrutions if mouse is pressed
+    //Display the gameplay
+    state = "PlayScreen";
+    }
 }
