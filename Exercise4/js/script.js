@@ -9,10 +9,6 @@
 // Up and down keys control the right hand paddle, W and S keys control
 // the left hand paddle
 
-// Whether the game has started
-let playing = false;
-
-//Erasing this? --------------------------------------------
 
 /*let score =0; */
 
@@ -215,19 +211,16 @@ function ballIsOutOfBounds() {
   else {
     return false;
   }
-  /*updateScore();*/
+  updateScore();
 }
 
-/*function updateScore(){
-  if (ball.y < paddleBottom || ball.y > paddleTop){
-    paddle.top
-  }
-
+function updateScore(){
+  if (ball.y < leftPaddle.h || ball.y > leftPaddle.h){
+     background(255);
+   }
+}
 //Add paddle size? right and left?
 
-
-
-}*/
 
 
 
