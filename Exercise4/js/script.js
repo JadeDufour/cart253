@@ -50,7 +50,7 @@ let leftPaddle = {
   upKey: 87,
   downKey: 83,
   //Add color to the paddles
-  colorPaddle:255
+  paddleColor:255
 }
 
 let ptsLeftPaddle= 0;
@@ -68,7 +68,7 @@ let rightPaddle = {
   speed: 5,
   upKey: 38,
   downKey: 40,
-  colorPaddle: 255
+  paddleColor: 255
 }
 
 let ptsRightPaddle = 0;
@@ -229,7 +229,7 @@ function ballIsOutOfBounds() {
     ptsRightPaddle +=1;
     console.log(ptsRightPaddle);
     //We want the color of the paddle to change whenever the ball hit it
-    rightPaddle.colorPaddle = color(random(0, 255), random(0, 255), random(0, 255));
+    rightPaddle.paddleColor = color(random(0, 255), random(0, 255), random(0, 255));
     ball.speedX=5;
     return true;
 
@@ -237,11 +237,13 @@ function ballIsOutOfBounds() {
   else if( ball.x > width) {
     ptsLeftPaddle +=1;
     console.log(ptsLeftPaddle);
-    leftPaddle.colorPaddle =  color(random(0, 255), random(0, 255), random(0, 255));
+    leftPaddle.paddleColor =  color(random(0, 255), random(0, 255), random(0, 255));
     ball.speedX= -5;
     return false;
   }
-  return false;
+  else {
+    return false;
+        }
   //updateScore();
 }
 
@@ -315,6 +317,7 @@ function checkBallPaddleCollision(paddle) {
 // Draws the specified paddle
 function displayPaddle(paddle) {
   // Draw the paddles
+  fill(paddle.paddleColor);
   rect(paddle.x, paddle.y, paddle.w, paddle.h);
 }
 
