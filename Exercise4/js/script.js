@@ -10,12 +10,17 @@
 // the left hand paddle
 
 
-/*let score =0; */
+/*let scoreLeft =0;
+let scoreRight=0; */
 
 
 // Game colors (using hexadecimal)
 let bgColor = 0;
 let fgColor = 255;
+
+//Notes hit (when the ball hit a paddle, a note will play)
+//Kind of like a points system
+let notes =0;
 
 // BALL
 
@@ -43,7 +48,11 @@ let leftPaddle = {
   speed: 5,
   upKey: 87,
   downKey: 83
+  //Add color to the paddles
+  //colorPaddle:255;
 }
+
+let ptsLeftPaddle= 0;
 
 // RIGHT PADDLE
 
@@ -60,6 +69,8 @@ let rightPaddle = {
   downKey: 40
 }
 
+let ptsRightPaddle = 0;
+
 // A variable to hold the beep sound we will play on bouncing
 let beepSFX;
 
@@ -67,11 +78,16 @@ let beepSFX;
 // Tracks the game
 let state = "StartScreen";
 
+//Load the text fonts
+let classic;
+
 // preload()
-//
 // Loads the beep audio for the sound of bouncing
 function preload() {
   beepSFX = new Audio("assets/sounds/beep.wav");
+
+  //Preload the text fonts
+  classic = loadFont("assets/fonts/classic.otf");
 }
 
 // setup()
@@ -151,7 +167,7 @@ displayBackground();
 }*/
 
 /* else if (state==="GameOverScreen"){
-  displayGameOver
+  displayGameOver();
   }
 */
 
@@ -205,7 +221,9 @@ function updateBall() {
 // Returns true if so, false otherwise
 function ballIsOutOfBounds() {
   // Check for ball going off the sides
-  if (ball.x < 0 || ball.x > width) {
+  if (ball.x < 0) {
+    ptsRightPaddle= ptsRight + 1;
+    paddleRight
     return true;
   }
   else {
@@ -218,6 +236,8 @@ function updateScore(){
   if (ball.y < leftPaddle.h || ball.y > leftPaddle.h){
      background(255);
    }
+
+   // state= "GameOverScreen";
 }
 //Add paddle size? right and left?
 
@@ -266,11 +286,14 @@ function checkBallPaddleCollision(paddle) {
       // Then the ball is touching the paddle
       // Reverse its vx so it starts travelling in the opposite direction
       ball.vx = -ball.vx;
+      notes +=1;
+      console.log(notes);
       // Play our bouncing sound effect by rewinding and then playing
       beepSFX.currentTime = 0;
       beepSFX.play();
     }
   }
+
 }
 
 // displayPaddle(paddle)
@@ -308,10 +331,20 @@ function displayStartMessage() {
   textAlign(CENTER, CENTER);
   //Add instructions image later -------------------------------------------------
   textSize(32);
-  text("CLICK TO START", width / 2, height / 2);
+  textFont('classic');
+  text("CLASSICAL PONG\nCLICK TO START", width / 2, height / 2);
   pop();
 }
 
+/* function displayGameOver(){
+background(0);
+fill(0);
+textAlign(CENTER,CENTER);
+textSize(25);
+textFont("classic");
+text("GAME OVER" + "\n You hit : " + notes + " notes", width/2, height/2);
+}
+*/
 // mousePressed()
 //
 // Here to require a click to start playing the game
