@@ -32,7 +32,8 @@ let ball = {
   size: 20,
   vx: 0,
   vy: 0,
-  speed: 5
+  speedX: 5,
+  speedY:5
 }
 
 // PADDLES
@@ -47,9 +48,9 @@ let leftPaddle = {
   vy: 0,
   speed: 5,
   upKey: 87,
-  downKey: 83
+  downKey: 83,
   //Add color to the paddles
-  //colorPaddle:255;
+  colorPaddle:255
 }
 
 let ptsLeftPaddle= 0;
@@ -66,7 +67,8 @@ let rightPaddle = {
   vy: 0,
   speed: 5,
   upKey: 38,
-  downKey: 40
+  downKey: 40,
+  colorPaddle: 255
 }
 
 let ptsRightPaddle = 0;
@@ -127,7 +129,12 @@ function draw() {
   // Fill the background
 displayBackground();
 
-  if (state === "PlayScreen") {
+if (state==="StartScreen"){
+  // Otherwise we display the message to start the game
+  displayStartMessage();
+}
+
+  else if(state === "PlayScreen") {
     // If the game is in play, we handle input and move the elements around
     handleInput(leftPaddle);
     handleInput(rightPaddle);
@@ -155,10 +162,7 @@ displayBackground();
       // the ball went off...
     }
   }
-  else if (state==="StartScreen"){
-    // Otherwise we display the message to start the game
-    displayStartMessage();
-  }
+
 }
 //Will add winscreen and gameoverscren later when score is implemented ------------
 /*  else if (state ==="WinScreen"){
@@ -222,23 +226,33 @@ function updateBall() {
 function ballIsOutOfBounds() {
   // Check for ball going off the sides
   if (ball.x < 0) {
-    ptsRightPaddle= ptsRight + 1;
-    paddleRight
+    ptsRightPaddle +=1;
+    console.log(ptsRightPaddle);
+    //We want the color of the paddle to change whenever the ball hit it
+    rightPaddle.colorPaddle = color(random(0, 255), random(0, 255), random(0, 255));
+    ball.speedX=5;
     return true;
+
   }
-  else {
+  else if( ball.x > width) {
+    ptsLeftPaddle +=1;
+    console.log(ptsLeftPaddle);
+    leftPaddle.colorPaddle =  color(random(0, 255), random(0, 255), random(0, 255));
+    ball.speedX= -5;
     return false;
   }
-  updateScore();
+  return false;
+  //updateScore();
 }
 
-function updateScore(){
+/*function updateScore(){
   if (ball.y < leftPaddle.h || ball.y > leftPaddle.h){
      background(255);
-   }
+   }*/
 
-   // state= "GameOverScreen";
-}
+   /* if (notes = 10){
+   state= "GameOverScreen";
+}*/
 //Add paddle size? right and left?
 
 
@@ -286,8 +300,8 @@ function checkBallPaddleCollision(paddle) {
       // Then the ball is touching the paddle
       // Reverse its vx so it starts travelling in the opposite direction
       ball.vx = -ball.vx;
-      notes +=1;
-      console.log(notes);
+      /*notes +=1;
+      console.log(notes);*/
       // Play our bouncing sound effect by rewinding and then playing
       beepSFX.currentTime = 0;
       beepSFX.play();
@@ -319,8 +333,8 @@ function resetBall() {
   // Initialise the ball's position and velocity
   ball.x = width / 2;
   ball.y = height / 2;
-  ball.vx = ball.speed;
-  ball.vy = ball.speed;
+  ball.vx = ball.speedX;
+  ball.vy = ball.speedY;
 }
 
 // displayStartMessage()
