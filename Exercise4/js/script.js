@@ -10,10 +10,6 @@
 // the left hand paddle
 
 
-/*let scoreLeft =0;
-let scoreRight=0; */
-
-
 // Game colors (using hexadecimal)
 //let bgColor = 0;
 let fgColor = 255;
@@ -78,6 +74,7 @@ let rightPaddle = {
 
 // A variable to hold the beep sound we will play on bouncing
 let beepSFX;
+let wowC;
 
 //A variable that states which state the player is in. Starts with the Start screen
 // Tracks the game
@@ -90,6 +87,7 @@ let classic;
 // Loads the beep audio for the sound of bouncing
 function preload() {
   beepSFX = new Audio("assets/sounds/beep.wav");
+  wowC = new Audio("assets/sounds/wowc.mp3");
 
   //Preload the text fonts
   classic = loadFont("assets/fonts/classic.otf");
@@ -148,6 +146,7 @@ if (state==="StartScreen"){
     checkBallWallCollision();
     checkBallPaddleCollision(leftPaddle);
     checkBallPaddleCollision(rightPaddle);
+    updateScore();
 
     // We always display the paddles and ball so it looks like Pong!
     displayPaddle(leftPaddle);
@@ -166,17 +165,12 @@ if (state==="StartScreen"){
     }
   }
 
-}
-//Will add winscreen and gameoverscren later when score is implemented ------------
-/*  else if (state ==="WinScreen"){
-    displayWinScreen
-  }
-}*/
-
-/* else if (state==="GameOverScreen"){
+ else if (state==="GameOverScreen"){
   displayGameOver();
   }
-*/
+}
+
+
 
 function displayBackground(){
 
@@ -241,6 +235,7 @@ function updateBall() {
 function ballIsOutOfBounds() {
   // Check for ball going off the sides
 
+
 if (ball.x <0 || ball.x > width) {
 
   if (ball.x < 0) {
@@ -270,22 +265,15 @@ if (ball.x <0 || ball.x > width) {
   else {
     return false;
         }
-  //updateScore();
 }
 
 
-/*function updateScore(){
-  if (ball.y < leftPaddle.h || ball.y > leftPaddle.h){
-     background(255);
-   }*/
+function updateScore(){
 
-   /* if (notes = 10){
-   state= "GameOverScreen";
-}*/
-//Add paddle size? right and left?
-
-
-
+  if (rightPaddle.points >=10 || leftPaddle.points >= 10){
+     state = "GameOverScreen";
+}
+}
 
 
 // checkBallWallCollision()
@@ -300,8 +288,8 @@ function checkBallWallCollision() {
     ball.vy = -ball.vy;
     // Play our bouncing sound effect by rewinding and then playing
     beepSFX.currentTime = 0;
-    beepSFX.play();
-  }
+    wowC.play();
+    }
 }
 
 // checkBallPaddleCollision(paddle)
@@ -333,10 +321,9 @@ function checkBallPaddleCollision(paddle) {
       console.log(notes);*/
       // Play our bouncing sound effect by rewinding and then playing
       beepSFX.currentTime = 0;
-      beepSFX.play();
+      wowC.play();
     }
   }
-
 }
 
 // displayPaddle(paddle)
@@ -381,15 +368,18 @@ function displayStartMessage() {
   pop();
 }
 
-/* function displayGameOver(){
+function displayGameOver(){
+
 background(0);
-fill(0);
+fill(255);
 textAlign(CENTER,CENTER);
 textSize(25);
 textFont("classic");
-text("GAME OVER" + "\n You hit : " + notes + " notes", width/2, height/2);
+text("GAME OVER" + "\n You Win", width/2, height/2);
 }
-*/
+
+
+
 // mousePressed()
 //
 // Here to require a click to start playing the game
