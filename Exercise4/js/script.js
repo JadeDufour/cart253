@@ -15,7 +15,7 @@ let scoreRight=0; */
 
 
 // Game colors (using hexadecimal)
-let bgColor = 0;
+//let bgColor = 0;
 let fgColor = 255;
 
 //Notes hit (when the ball hit a paddle, a note will play)
@@ -102,7 +102,7 @@ function preload() {
 // and velocities.
 function setup() {
   // Create canvas and set drawing modes
-  createCanvas(640, 480);
+  createCanvas(windowWidth,windowHeight);
   rectMode(CENTER);
   noStroke();
   fill(fgColor);
@@ -179,7 +179,19 @@ if (state==="StartScreen"){
 */
 
 function displayBackground(){
-    background(bgColor);
+
+if (rightPaddle.scored){
+  background(0);
+}
+
+if (leftPaddle.scored){
+  background(255);
+}
+
+else if (!leftPaddle.scored && ! rightPaddle.scored){
+  background(255,0,0);
+
+}
 }
 
 
