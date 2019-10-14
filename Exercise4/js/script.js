@@ -33,7 +33,8 @@ let ball = {
   vx: 0,
   vy: 0,
   speedX: 5,
-  speedY:5
+  speedY:5,
+  ballColor: 255
 }
 
 // PADDLES
@@ -234,8 +235,9 @@ if (ball.x <0 || ball.x > width) {
     rightPaddle.points +=1;
     //We want the color of the paddle to change whenever the ball hit it
     rightPaddle.paddleColor = color(random(0, 255), random(0, 255), random(0, 255));
+    //the ball respawns at a random speed
     ball.speedX=random(12,6);
-      //
+    //Who scored
     rightPaddle.scored=true;
     leftPaddle.scored=false;
   }
@@ -243,8 +245,9 @@ if (ball.x <0 || ball.x > width) {
   else if( ball.x > width) {
     leftPaddle.points +=1;
     leftPaddle.paddleColor =  color(random(0, 255), random(0, 255), random(0, 255));
+    //the ball respawns at a random speed
     ball.speedX=random(-2,-6);
-       //
+    //Who scored
     rightPaddle.scored=false;
     leftPaddle.scored=true;
   }
@@ -338,6 +341,7 @@ function displayPaddle(paddle) {
 // Draws the ball on screen as a square
 function displayBall() {
   // Draw the ball
+  fill(random(0,255), random(0.255),random(0,255));
   rect(ball.x, ball.y, ball.size, ball.size);
 }
 
