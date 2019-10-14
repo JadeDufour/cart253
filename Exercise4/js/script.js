@@ -50,8 +50,10 @@ let leftPaddle = {
   upKey: 87,
   downKey: 83,
   //Add color to the paddles
-  paddleColor:255
-}
+  paddleColor:255,
+  points:0,
+  scored:false
+  }
 
 let ptsLeftPaddle= 0;
 
@@ -68,10 +70,10 @@ let rightPaddle = {
   speed: 5,
   upKey: 38,
   downKey: 40,
-  paddleColor: 255
+  paddleColor: 255,
+  points:0,
+  scored:false
 }
-
-let ptsRightPaddle = 0;
 
 // A variable to hold the beep sound we will play on bouncing
 let beepSFX;
@@ -225,27 +227,37 @@ function updateBall() {
 // Returns true if so, false otherwise
 function ballIsOutOfBounds() {
   // Check for ball going off the sides
+
+if (ball.x <0 || ball.x > width) {
+
   if (ball.x < 0) {
-    ptsRightPaddle +=1;
-    console.log(ptsRightPaddle);
+    rightPaddle.points +=1;
     //We want the color of the paddle to change whenever the ball hit it
     rightPaddle.paddleColor = color(random(0, 255), random(0, 255), random(0, 255));
-    ball.speedX=5;
-    return true;
+    ball.speedX=random(12,6);
+      //
+    rightPaddle.scored=true;
+    leftPaddle.scored=false;
+  }
 
-  }
   else if( ball.x > width) {
-    ptsLeftPaddle +=1;
-    console.log(ptsLeftPaddle);
+    leftPaddle.points +=1;
     leftPaddle.paddleColor =  color(random(0, 255), random(0, 255), random(0, 255));
-    ball.speedX= -5;
-    return false;
+    ball.speedX=random(-2,-6);
+       //
+    rightPaddle.scored=false;
+    leftPaddle.scored=true;
   }
+  //Show the score as a text in the console for debbuging purposes
+  console.log("left: "+leftPaddle.points+"\nright: "+rightPaddle.points);
+  return true;
+}
   else {
     return false;
         }
   //updateScore();
 }
+
 
 /*function updateScore(){
   if (ball.y < leftPaddle.h || ball.y > leftPaddle.h){
