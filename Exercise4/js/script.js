@@ -33,6 +33,17 @@ let ball = {
   ballColor: 255
 }
 
+let ball2 = {
+  x: 0,
+  y: 0,
+  size: 20,
+  vx: 0,
+  vy: 0,
+  speedX: 7,
+  speedY:7,
+  ballColor: 255
+}
+
 // PADDLES
 
 // Basic definition of a left paddle object with its key properties of
@@ -81,7 +92,8 @@ let wowC;
 let state = "StartScreen";
 
 //Load the text fonts
-let classic;
+let classicFont;
+
 
 // preload()
 // Loads the beep audio for the sound of bouncing
@@ -90,7 +102,7 @@ function preload() {
   wowC = new Audio("assets/sounds/wowc.mp3");
 
   //Preload the text fonts
-  classic = loadFont("assets/fonts/classic.otf");
+  classicFont = loadFont("assets/fonts/classic.otf");
 }
 
 // setup()
@@ -142,16 +154,25 @@ if (state==="StartScreen"){
     updatePaddle(leftPaddle);
     updatePaddle(rightPaddle);
     updateBall();
+    updateBall2();
 
     checkBallWallCollision();
     checkBallPaddleCollision(leftPaddle);
     checkBallPaddleCollision(rightPaddle);
+
+    checkBall2WallCollision();
+    checkBall2PaddleCollision(leftPaddle);
+    checkBall2PaddleCollision(rightPaddle);
+
     updateScore();
 
     // We always display the paddles and ball so it looks like Pong!
     displayPaddle(leftPaddle);
     displayPaddle(rightPaddle);
     displayBall();
+
+    displayBall2();
+
 
 
     // Check if the ball went out of bounds and respond if so
@@ -160,8 +181,12 @@ if (state==="StartScreen"){
     if (ballIsOutOfBounds()) {
       // If it went off either side, reset it
       resetBall();
-      // This is where we would likely count points, depending on which side
+            // This is where we would likely count points, depending on which side
       // the ball went off...
+    }
+
+    if (ball2IsOutOfBounds()){
+      resetBall2();
     }
   }
 
@@ -171,23 +196,21 @@ if (state==="StartScreen"){
 }
 
 
-
 function displayBackground(){
-
+//The background changes color depending on who scored
+//If right player scored = black background
 if (rightPaddle.scored){
   background(0);
 }
-
+//If left player scored = white background
 if (leftPaddle.scored){
   background(255);
 }
-
+//If no one has scored yet, the background is red
 else if (!leftPaddle.scored && ! rightPaddle.scored){
   background(255,0,0);
-
 }
 }
-
 
 // handleInput()
 //
@@ -211,6 +234,17 @@ function handleInput(paddle) {
   }
 }
 
+function keyPressed(){
+  if (keyCode === RETURN){
+    spawnSecondBall();
+  }
+
+  else{
+
+  }
+}
+
+
 // updatePositions()
 //
 // Sets the positions of the paddles and ball based on their velocities
@@ -228,13 +262,18 @@ function updateBall() {
   ball.y += ball.vy;
 }
 
+function updateBall2() {
+  // Update the ball's position based on velocity
+  ball2.x += ball2.vx;
+  ball2.y += ball2.vy;
+}
+
 // ballIsOutOfBounds()
 //
 // Checks if the ball has gone off the left or right
 // Returns true if so, false otherwise
 function ballIsOutOfBounds() {
   // Check for ball going off the sides
-
 
 if (ball.x <0 || ball.x > width) {
 
@@ -254,6 +293,41 @@ if (ball.x <0 || ball.x > width) {
     leftPaddle.paddleColor =  color(random(0, 255), random(0, 255), random(0, 255));
     //the ball respawns at a random speed
     ball.speedX=random(-2,-6);
+    //Who scored
+    rightPaddle.scored=false;
+    leftPaddle.scored=true;
+  }
+  //Show the score as a text in the console for debbuging purposes
+  console.log("left: "+leftPaddle.points+"\nright: "+rightPaddle.points);
+  return true;
+}
+  else {
+    return false;
+        }
+}
+
+
+function ball2IsOutOfBounds() {
+  // Check for ball going off the sides
+
+if (ball2.x <0 || ball2.x > width) {
+
+  if (ball2.x < 0) {
+    rightPaddle.points +=1;
+    //We want the color of the paddle to change whenever the ball hit it
+    rightPaddle.paddleColor = color(random(0, 255), random(0, 255), random(0, 255));
+    //the ball respawns at a random speed
+    ball2.speedX=random(12,6);
+    //Who scored
+    rightPaddle.scored=true;
+    leftPaddle.scored=false;
+  }
+
+  else if( ball2.x > width) {
+    leftPaddle.points +=1;
+    leftPaddle.paddleColor =  color(random(0, 255), random(0, 255), random(0, 255));
+    //the ball respawns at a random speed
+    ball2.speedX=random(-2,-6);
     //Who scored
     rightPaddle.scored=false;
     leftPaddle.scored=true;
@@ -292,6 +366,18 @@ function checkBallWallCollision() {
     }
 }
 
+function checkBall2WallCollision() {
+  // Check for collisions with top or bottom...
+  if (ball2.y < 0 || ball2.y > height) {
+    // It hit so reverse velocity
+    ball2.vy = -ball2.vy;
+    // Play our bouncing sound effect by rewinding and then playing
+    beepSFX.currentTime = 0;
+    wowC.play();
+    }
+}
+
+
 // checkBallPaddleCollision(paddle)
 //
 // Checks for collisions between the ball and the specified paddle
@@ -326,6 +412,38 @@ function checkBallPaddleCollision(paddle) {
   }
 }
 
+
+function checkBall2PaddleCollision(paddle) {
+  // VARIABLES FOR CHECKING COLLISIONS
+
+  // We will calculate the top, bottom, left, and right of the
+  // paddle and the ball to make our conditionals easier to read...
+  let ball2Top = ball2.y - ball2.size / 2;
+  let ball2Bottom = ball2.y + ball2.size / 2;
+  let ball2Left = ball2.x - ball2.size / 2;
+  let ball2Right = ball2.x + ball2.size / 2;
+
+  let paddleTop = paddle.y - paddle.h / 2;
+  let paddleBottom = paddle.y + paddle.h / 2;
+  let paddleLeft = paddle.x - leftPaddle.w / 2;
+  let paddleRight = paddle.x + paddle.w / 2;
+
+  // First check the ball is in the vertical range of the paddle
+  if (ball2Bottom > paddleTop && ball2Top < paddleBottom) {
+    // Then check if it is touching the paddle horizontally
+    if (ball2Left < paddleRight && ball2Right > paddleLeft) {
+      // Then the ball is touching the paddle
+      // Reverse its vx so it starts travelling in the opposite direction
+      ball2.vx = -ball2.vx;
+      /*notes +=1;
+      console.log(notes);*/
+      // Play our bouncing sound effect by rewinding and then playing
+      beepSFX.currentTime = 0;
+      wowC.play();
+    }
+  }
+}
+
 // displayPaddle(paddle)
 //
 // Draws the specified paddle
@@ -344,6 +462,12 @@ function displayBall() {
   rect(ball.x, ball.y, ball.size, ball.size);
 }
 
+function displayBall2() {
+  // Draw the ball
+  fill(random(0,255), random(0.255),random(0,255));
+  rect(ball2.x, ball2.y, ball2.size, ball2.size);
+}
+
 // resetBall()
 //
 // Sets the starting position and velocity of the ball
@@ -355,6 +479,33 @@ function resetBall() {
   ball.vy = ball.speedY;
 }
 
+function resetBall2() {
+  // Initialise the ball's position and velocity
+  ball2.x = width / 2;
+  ball2.y = height / 2;
+  ball2.vx = ball2.speedX;
+  ball2.vy = ball2.speedY;
+}
+
+
+function spawnSecondBall(){
+
+  displayBall2();
+
+  updateBall2();
+
+  checkBall2WallCollision();
+  checkBall2PaddleCollision(leftPaddle);
+  checkBall2PaddleCollision(rightPaddle);
+
+  updateScore();
+
+  if (ball2IsOutOfBounds){
+    resetBall2();
+  }
+
+}
+
 // displayStartMessage()
 //
 // Shows a message about how to start the game
@@ -364,7 +515,7 @@ function displayStartMessage() {
   //Add instructions image later -------------------------------------------------
   textSize(32);
   textFont('classic');
-  text("CLASSICAL PONG\nCLICK TO START", width / 2, height / 2);
+  text("CLASSIC PONG\nCLICK TO START \n\n WHILE PLAYING,\n PRESS RETURN KEY FOR HARD MODE", width / 2, height / 2);
   pop();
 }
 
@@ -375,7 +526,7 @@ fill(255);
 textAlign(CENTER,CENTER);
 textSize(25);
 textFont("classic");
-text("GAME OVER" + "\n You Win", width/2, height/2);
+text("GAME OVER" + "\n\n Score \n\n LEFT PLAYER: " +leftPaddle.points +" points" + "\nRIGHT PLAYER: " + rightPaddle.points + " points", width/2, height/2);
 }
 
 
