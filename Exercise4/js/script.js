@@ -33,14 +33,15 @@ let ball = {
   ballColor: 255
 }
 
+//Add a second ball with different values
 let ball2 = {
   x: 0,
   y: 0,
-  size: 20,
+  size: 25,
   vx: 0,
   vy: 0,
-  speedX: 7,
-  speedY:7,
+  speedX: 9,
+  speedY:9,
   ballColor: 255
 }
 
@@ -54,7 +55,7 @@ let leftPaddle = {
   w: 20,
   h: 70,
   vy: 0,
-  speed: 5,
+  speed: 8,
   upKey: 87,
   downKey: 83,
   //Add color to the paddles
@@ -63,7 +64,6 @@ let leftPaddle = {
   scored:false
   }
 
-let ptsLeftPaddle= 0;
 
 // RIGHT PADDLE
 
@@ -75,7 +75,7 @@ let rightPaddle = {
   w: 20,
   h: 70,
   vy: 0,
-  speed: 5,
+  speed: 8,
   upKey: 38,
   downKey: 40,
   paddleColor: 255,
@@ -86,6 +86,11 @@ let rightPaddle = {
 // A variable to hold the beep sound we will play on bouncing
 let beepSFX;
 let wowC;
+//The background music
+let backgroundMusic;
+
+//The background image for the instructions
+let instructionsImg;
 
 //A variable that states which state the player is in. Starts with the Start screen
 // Tracks the game
@@ -94,12 +99,13 @@ let state = "StartScreen";
 //Load the text fonts
 let classicFont;
 
-
 // preload()
 // Loads the beep audio for the sound of bouncing
 function preload() {
   beepSFX = new Audio("assets/sounds/beep.wav");
   wowC = new Audio("assets/sounds/wowc.mp3");
+  backgroundMusic= new Audio("assets/sounds/inThe90s.mp3")
+  instructionsImg= loadImage("assets/images/instructions.jpg");
 
   //Preload the text fonts
   classicFont = loadFont("assets/fonts/classic.otf");
@@ -112,7 +118,7 @@ function preload() {
 // and velocities.
 function setup() {
   // Create canvas and set drawing modes
-  createCanvas(windowWidth,windowHeight);
+  createCanvas(650,450);
   rectMode(CENTER);
   noStroke();
   fill(fgColor);
@@ -152,6 +158,7 @@ if (state==="StartScreen"){
     handleInput(leftPaddle);
     handleInput(rightPaddle);
     updatePaddle(leftPaddle);
+
     updatePaddle(rightPaddle);
     updateBall();
     updateBall2();
@@ -173,6 +180,8 @@ if (state==="StartScreen"){
 
     displayBall2();
 
+    backgroundMusic.play();
+
 
 
     // Check if the ball went out of bounds and respond if so
@@ -192,24 +201,31 @@ if (state==="StartScreen"){
 
  else if (state==="GameOverScreen"){
   displayGameOver();
+  backgroundMusic.pause();
   }
 }
 
 
 function displayBackground(){
 //The background changes color depending on who scored
-//If right player scored = black background
+//If right player scored = blue
 if (rightPaddle.scored){
-  background(0);
+  background(0,0,200);
 }
-//If left player scored = white background
+//If left player scored = red
 if (leftPaddle.scored){
-  background(255);
+  background(230,0,0);
 }
-//If no one has scored yet, the background is red
+//If no one has scored yet, the background is blue
 else if (!leftPaddle.scored && ! rightPaddle.scored){
-  background(255,0,0);
+  background(0,0,139);
 }
+}
+
+function keyPressed(){
+  if (keyCode === RETURN){
+    spawnSecondBall();
+  }
 }
 
 // handleInput()
@@ -234,13 +250,21 @@ function handleInput(paddle) {
   }
 }
 
-function keyPressed(){
-  if (keyCode === RETURN){
-    spawnSecondBall();
-  }
 
-  else{
+function spawnSecondBall(){
 
+  displayBall2();
+
+  updateBall2();
+
+  checkBall2WallCollision();
+  checkBall2PaddleCollision(leftPaddle);
+  checkBall2PaddleCollision(rightPaddle);
+
+  updateScore();
+
+  if (ball2IsOutOfBounds){
+    resetBall2();
   }
 }
 
@@ -488,34 +512,24 @@ function resetBall2() {
 }
 
 
-function spawnSecondBall(){
 
-  displayBall2();
-
-  updateBall2();
-
-  checkBall2WallCollision();
-  checkBall2PaddleCollision(leftPaddle);
-  checkBall2PaddleCollision(rightPaddle);
-
-  updateScore();
-
-  if (ball2IsOutOfBounds){
-    resetBall2();
-  }
-
-}
 
 // displayStartMessage()
 //
 // Shows a message about how to start the game
 function displayStartMessage() {
+
+  push()
+  imageMode(CENTER);
+  image(instructionsImg, width / 2, height / 2, width, height);
+  pop();
+
   push();
   textAlign(CENTER, CENTER);
   //Add instructions image later -------------------------------------------------
   textSize(32);
   textFont('classic');
-  text("CLASSIC PONG\nCLICK TO START \n\n WHILE PLAYING,\n PRESS RETURN KEY FOR HARD MODE", width / 2, height / 2);
+  text("TRIPPY PONG\nCLICK TO START \n\n WHILE PLAYING,\n PRESS RETURN KEY FOR HARD MODE", width / 2, height / 2);
   pop();
 }
 
@@ -528,7 +542,6 @@ textSize(25);
 textFont("classic");
 text("GAME OVER" + "\n\n Score \n\n LEFT PLAYER: " +leftPaddle.points +" points" + "\nRIGHT PLAYER: " + rightPaddle.points + " points", width/2, height/2);
 }
-
 
 
 // mousePressed()
