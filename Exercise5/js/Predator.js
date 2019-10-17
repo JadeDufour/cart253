@@ -12,7 +12,7 @@ class Predator {
   // Either sets default values or uses the arguments provided
 
   //We add the moving keys and the sprinting key
-  constructor(x, y, speed, fillColor, radius, upKey, downKey, leftKey, rightKey) {
+  constructor(x, y, speed, fillColor, radius, upKey, downKey, leftKey, rightKey, speedKey) {
     // Position
     this.x = x;
     this.y = y;
@@ -37,6 +37,20 @@ class Predator {
     this.downKey = downKey;
     this.leftKey = leftKey;
     this.rightKey = rightKey;
+
+    //Sprinting propreties
+    this.speedKey = speedKey;
+    this.speedBoost = speed + 5 ;
+    this.initialSpeed= speed; //The predator returns to normal speed if the sprint key is not pressed
+
+//Key Codes -----------------------------------
+    //Down = 83
+    //Up= 87
+    //Left = 65
+    //Right = 68
+    //Left sprint: left shift (18)
+    //Right sprint: L  (76)
+  //-------------------------------------------
   }
 
   // handleInput
@@ -64,6 +78,15 @@ class Predator {
     else {
       this.vy = 0;
     }
+
+    if (keyIsDown (this.speedKey)){
+      this.speed = this.speedBoost;
+    }
+
+    else {
+      this.speed = this.initialSpeed;
+    }
+
   }
 
   // move
