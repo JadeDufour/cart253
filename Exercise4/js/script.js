@@ -1,11 +1,15 @@
 "use strict";
 
 // Pong
-// by Pippin Barr
+// by Jade Dufour
 //
-// A "simple" implementation of Pong with no scoring system
-// just the ability to play the game with the keyboard.
-//
+// A "simple" implementation of Pong, the background changes color depending on who scored. The paddles also change color
+// when a point is scored. Play with the arrows and hit SHIFT to spawn a secon ball to
+//make the game crazier
+
+//I'm sorry for your eyes
+
+
 // Up and down keys control the right hand paddle, W and S keys control
 // the left hand paddle
 
@@ -16,7 +20,7 @@ let fgColor = 255;
 
 //Notes hit (when the ball hit a paddle, a note will play)
 //Kind of like a points system
-let notes =0;
+let notes = 0;
 
 // BALL
 
@@ -29,7 +33,7 @@ let ball = {
   vx: 0,
   vy: 0,
   speedX: 5,
-  speedY:5,
+  speedY: 5,
   ballColor: 255
 }
 
@@ -41,7 +45,7 @@ let ball2 = {
   vx: 0,
   vy: 0,
   speedX: 9,
-  speedY:9,
+  speedY: 9,
   ballColor: 255
 }
 
@@ -59,10 +63,10 @@ let leftPaddle = {
   upKey: 87,
   downKey: 83,
   //Add color to the paddles
-  paddleColor:255,
-  points:0,
-  scored:false
-  }
+  paddleColor: 255,
+  points: 0,
+  scored: false
+}
 
 
 // RIGHT PADDLE
@@ -79,8 +83,8 @@ let rightPaddle = {
   upKey: 38,
   downKey: 40,
   paddleColor: 255,
-  points:0,
-  scored:false
+  points: 0,
+  scored: false
 }
 
 // A variable to hold the beep sound we will play on bouncing
@@ -104,8 +108,8 @@ let classicFont;
 function preload() {
   beepSFX = new Audio("assets/sounds/beep.wav");
   wowC = new Audio("assets/sounds/wowc.mp3");
-  backgroundMusic= new Audio("assets/sounds/inThe90s.mp3")
-  instructionsImg= loadImage("assets/images/instructions.jpg");
+  backgroundMusic = new Audio("assets/sounds/inThe90s.mp3")
+  instructionsImg = loadImage("assets/images/instructions.jpg");
 
   //Preload the text fonts
   classicFont = loadFont("assets/fonts/classic.otf");
@@ -118,7 +122,7 @@ function preload() {
 // and velocities.
 function setup() {
   // Create canvas and set drawing modes
-  createCanvas(650,450);
+  createCanvas(650, 450);
   rectMode(CENTER);
   noStroke();
   fill(fgColor);
@@ -146,14 +150,12 @@ function setupPaddles() {
 // See how tidy it looks?!
 function draw() {
   // Fill the background
-displayBackground();
+  displayBackground();
 
-if (state==="StartScreen"){
-  // Otherwise we display the message to start the game
-  displayStartMessage();
-}
-
-  else if(state === "PlayScreen") {
+  if (state === "StartScreen") {
+    // Otherwise we display the message to start the game
+    displayStartMessage();
+  } else if (state === "PlayScreen") {
     // If the game is in play, we handle input and move the elements around
     handleInput(leftPaddle);
     handleInput(rightPaddle);
@@ -182,50 +184,47 @@ if (state==="StartScreen"){
 
     backgroundMusic.play();
 
-
-
     // Check if the ball went out of bounds and respond if so
     // (Note how we can use a function that returns a truth value
     // inside a conditional!)
     if (ballIsOutOfBounds()) {
       // If it went off either side, reset it
       resetBall();
-            // This is where we would likely count points, depending on which side
+      // This is where we would likely count points, depending on which side
       // the ball went off...
     }
 
-    if (ball2IsOutOfBounds()){
+    if (ball2IsOutOfBounds()) {
       resetBall2();
     }
-  }
-
- else if (state==="GameOverScreen"){
-  displayGameOver();
-  backgroundMusic.pause();
+  } else if (state === "GameOverScreen") {
+    displayGameOver();
+    backgroundMusic.pause();
   }
 }
 
 
-function displayBackground(){
-//The background changes color depending on who scored
-//If right player scored = blue
-if (rightPaddle.scored){
-  background(0,0,200);
-}
-//If left player scored = red
-if (leftPaddle.scored){
-  background(230,0,0);
-}
-//If no one has scored yet, the background is blue
-else if (!leftPaddle.scored && ! rightPaddle.scored){
-  background(0,0,139);
-}
+function displayBackground() {
+  //The background changes color depending on who scored
+  //If right player scored = blue
+  if (rightPaddle.scored) {
+    background(0, 0, 200);
+  }
+  //If left player scored = red
+  if (leftPaddle.scored) {
+    background(230, 0, 0);
+  }
+  //If no one has scored yet, the background is blue
+  else if (!leftPaddle.scored && !rightPaddle.scored) {
+    background(0, 0, 139);
+  }
 }
 
-function keyPressed(){
-  if (keyCode === RETURN){
+function keyPressed() {
+  if (keyCode === RETURN) {
     spawnSecondBall();
   }
+
 }
 
 // handleInput()
@@ -243,15 +242,14 @@ function handleInput(paddle) {
   else if (keyIsDown(paddle.downKey)) {
     // Move down
     paddle.vy = paddle.speed;
-  }
-  else {
+  } else {
     // Otherwise stop moving
     paddle.vy = 0;
   }
 }
 
-
-function spawnSecondBall(){
+//Function to make the second ball
+function spawnSecondBall() {
 
   displayBall2();
 
@@ -263,7 +261,7 @@ function spawnSecondBall(){
 
   updateScore();
 
-  if (ball2IsOutOfBounds){
+  if (ball2IsOutOfBounds) {
     resetBall2();
   }
 }
@@ -299,80 +297,73 @@ function updateBall2() {
 function ballIsOutOfBounds() {
   // Check for ball going off the sides
 
-if (ball.x <0 || ball.x > width) {
+  if (ball.x < 0 || ball.x > width) {
 
-  if (ball.x < 0) {
-    rightPaddle.points +=1;
-    //We want the color of the paddle to change whenever the ball hit it
-    rightPaddle.paddleColor = color(random(0, 255), random(0, 255), random(0, 255));
-    //the ball respawns at a random speed
-    ball.speedX=random(12,6);
-    //Who scored
-    rightPaddle.scored=true;
-    leftPaddle.scored=false;
-  }
-
-  else if( ball.x > width) {
-    leftPaddle.points +=1;
-    leftPaddle.paddleColor =  color(random(0, 255), random(0, 255), random(0, 255));
-    //the ball respawns at a random speed
-    ball.speedX=random(-2,-6);
-    //Who scored
-    rightPaddle.scored=false;
-    leftPaddle.scored=true;
-  }
-  //Show the score as a text in the console for debbuging purposes
-  console.log("left: "+leftPaddle.points+"\nright: "+rightPaddle.points);
-  return true;
-}
-  else {
+    if (ball.x < 0) {
+      rightPaddle.points += 1;
+      //We want the color of the paddle to change whenever the ball hit it
+      rightPaddle.paddleColor = color(random(0, 255), random(0, 255), random(0, 255));
+      //the ball respawns at a random speed
+      ball.speedX = random(12, 6);
+      //Who scored
+      rightPaddle.scored = true;
+      leftPaddle.scored = false;
+    } else if (ball.x > width) {
+      leftPaddle.points += 1;
+      leftPaddle.paddleColor = color(random(0, 255), random(0, 255), random(0, 255));
+      //the ball respawns at a random speed
+      ball.speedX = random(-2, -6);
+      //Who scored
+      rightPaddle.scored = false;
+      leftPaddle.scored = true;
+    }
+    //Show the score as a text in the console for debbuging purposes
+    console.log("left: " + leftPaddle.points + "\nright: " + rightPaddle.points);
+    return true;
+  } else {
     return false;
-        }
+  }
 }
 
 
 function ball2IsOutOfBounds() {
   // Check for ball going off the sides
 
-if (ball2.x <0 || ball2.x > width) {
+  if (ball2.x < 0 || ball2.x > width) {
 
-  if (ball2.x < 0) {
-    rightPaddle.points +=1;
-    //We want the color of the paddle to change whenever the ball hit it
-    rightPaddle.paddleColor = color(random(0, 255), random(0, 255), random(0, 255));
-    //the ball respawns at a random speed
-    ball2.speedX=random(12,6);
-    //Who scored
-    rightPaddle.scored=true;
-    leftPaddle.scored=false;
-  }
-
-  else if( ball2.x > width) {
-    leftPaddle.points +=1;
-    leftPaddle.paddleColor =  color(random(0, 255), random(0, 255), random(0, 255));
-    //the ball respawns at a random speed
-    ball2.speedX=random(-2,-6);
-    //Who scored
-    rightPaddle.scored=false;
-    leftPaddle.scored=true;
-  }
-  //Show the score as a text in the console for debbuging purposes
-  console.log("left: "+leftPaddle.points+"\nright: "+rightPaddle.points);
-  return true;
-}
-  else {
+    if (ball2.x < 0) {
+      rightPaddle.points += 1;
+      //We want the color of the paddle to change whenever the ball hit it
+      rightPaddle.paddleColor = color(random(0, 255), random(0, 255), random(0, 255));
+      //the ball respawns at a random speed
+      ball2.speedX = random(12, 6);
+      //Who scored
+      rightPaddle.scored = true;
+      leftPaddle.scored = false;
+    } else if (ball2.x > width) {
+      leftPaddle.points += 1;
+      leftPaddle.paddleColor = color(random(0, 255), random(0, 255), random(0, 255));
+      //the ball respawns at a random speed
+      ball2.speedX = random(-2, -6);
+      //Who scored
+      rightPaddle.scored = false;
+      leftPaddle.scored = true;
+    }
+    //Show the score as a text in the console for debbuging purposes
+    console.log("left: " + leftPaddle.points + "\nright: " + rightPaddle.points);
+    return true;
+  } else {
     return false;
-        }
+  }
 }
 
 
-function updateScore(){
+function updateScore() {
 
-  if (rightPaddle.points >=10 || leftPaddle.points >= 10){
-     state = "GameOverScreen";
+  if (rightPaddle.points >= 15 || leftPaddle.points >= 15) {
+    state = "GameOverScreen";
+  }
 }
-}
-
 
 // checkBallWallCollision()
 //
@@ -387,7 +378,7 @@ function checkBallWallCollision() {
     // Play our bouncing sound effect by rewinding and then playing
     beepSFX.currentTime = 0;
     wowC.play();
-    }
+  }
 }
 
 function checkBall2WallCollision() {
@@ -398,9 +389,8 @@ function checkBall2WallCollision() {
     // Play our bouncing sound effect by rewinding and then playing
     beepSFX.currentTime = 0;
     wowC.play();
-    }
+  }
 }
-
 
 // checkBallPaddleCollision(paddle)
 //
@@ -482,13 +472,13 @@ function displayPaddle(paddle) {
 // Draws the ball on screen as a square
 function displayBall() {
   // Draw the ball
-  fill(random(0,255), random(0.255),random(0,255));
+  fill(random(0, 255), random(0.255), random(0, 255));
   rect(ball.x, ball.y, ball.size, ball.size);
 }
 
 function displayBall2() {
   // Draw the ball
-  fill(random(0,255), random(0.255),random(0,255));
+  fill(random(0, 255), random(0.255), random(0, 255));
   rect(ball2.x, ball2.y, ball2.size, ball2.size);
 }
 
@@ -511,9 +501,6 @@ function resetBall2() {
   ball2.vy = ball2.speedY;
 }
 
-
-
-
 // displayStartMessage()
 //
 // Shows a message about how to start the game
@@ -533,14 +520,14 @@ function displayStartMessage() {
   pop();
 }
 
-function displayGameOver(){
+function displayGameOver() {
 
-background(0);
-fill(255);
-textAlign(CENTER,CENTER);
-textSize(25);
-textFont("classic");
-text("GAME OVER" + "\n\n Score \n\n LEFT PLAYER: " +leftPaddle.points +" points" + "\nRIGHT PLAYER: " + rightPaddle.points + " points", width/2, height/2);
+  background(0);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(25);
+  textFont("classic");
+  text("GAME OVER" + "\n\n Score \n\n LEFT PLAYER: " + leftPaddle.points + " points" + "\nRIGHT PLAYER: " + rightPaddle.points + " points", width / 2, height / 2);
 }
 
 
@@ -549,9 +536,9 @@ text("GAME OVER" + "\n\n Score \n\n LEFT PLAYER: " +leftPaddle.points +" points"
 // Here to require a click to start playing the game
 // Which will help us be allowed to play audio in the browser
 function mousePressed() {
-  if (state === "StartScreen"){
+  if (state === "StartScreen") {
     //Remove the instrutions if mouse is pressed
     //Display the gameplay
     state = "PlayScreen";
-    }
+  }
 }

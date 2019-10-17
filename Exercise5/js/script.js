@@ -7,6 +7,8 @@
 
 // Our predator
 let tiger;
+//Our second predator, the manly man
+let manlyMan;
 
 // The three prey
 let antelope;
@@ -19,7 +21,14 @@ let bee;
 // Creates objects for the predator and three prey
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  tiger = new Predator(100, 100, 5, color(200, 200, 0), 40);
+  //WE MOVE THE TIGER WITH WASD
+  //The tiger is yellow
+  tiger = new Predator(100, 100, 5, color(200, 200, 0), 80, 87,83,65,68 );
+  //We load our second predator, manlyMan
+  //WE MOVE THE MAN WITH ARROWS
+  //The manlyMan is pink
+  manlyMan = new Predator(200, 250, 7, color(250, 120, 140), 80, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW);
+
   antelope = new Prey(100, 100, 10, color(255, 100, 10), 50);
   zebra = new Prey(100, 100, 8, color(255, 255, 255), 60);
   bee = new Prey(100, 100, 20, color(255, 255, 0), 10);
@@ -30,13 +39,18 @@ function setup() {
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
   // Clear the background to black
+
+  //Might change the color --------------------------------------
   background(0);
 
   // Handle input for the tiger
   tiger.handleInput();
+  manlyMan.handleInput();
 
   // Move all the "animals"
   tiger.move();
+  //The Man is an animal too, no matter how manly it is
+  manlyMan.move();
   antelope.move();
   zebra.move();
   bee.move();
@@ -46,8 +60,16 @@ function draw() {
   tiger.handleEating(zebra);
   tiger.handleEating(bee);
 
+  //Handle the manly man over consuming the preys
+  manlyMan.handleEating(antelope);
+  manlyMan.handleEating(zebra);
+  //Yes, the manliest of manly men also eat bees.
+  manlyMan.handleEating(bee);
+
   // Display all the "animals"
   tiger.display();
+  //Display the man
+  manlyMan.display();
   antelope.display();
   zebra.display();
   bee.display();
