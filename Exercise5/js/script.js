@@ -15,6 +15,7 @@ let antelope;
 let zebra;
 let bee;
 
+
 // setup()
 //
 // Sets up a canvas
@@ -73,4 +74,12 @@ function draw() {
   antelope.display();
   zebra.display();
   bee.display();
-}
+
+  /*//Display the amount of preys eaten by the predators
+  tiger.displayEaten(antelope);
+  tiger.displayEaten(zebra);
+  tiger.displayEaten(bee);
+
+  manlyMan.displayEaten();*/
+
+  }
