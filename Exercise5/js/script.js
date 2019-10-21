@@ -15,6 +15,8 @@ let antelope;
 let zebra;
 let bee;
 
+let preyEaten = 0;
+
 
 // setup()
 //
@@ -24,12 +26,11 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   //WE MOVE THE TIGER WITH WASD
   //The tiger is yellow
-  tiger = new Predator(100, 100, 5, color(200, 200, 0), 80, 87,83,65,68, 16 );
+  tiger = new Predator(100, 100, 5, color(200, 200, 0), 80, 87, 83, 65, 68, 16);
   //We load our second predator, manlyMan
   //WE MOVE THE MAN WITH ARROWS
   //The manlyMan is pink
   manlyMan = new Predator(200, 250, 7, color(250, 120, 140), 80, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, 76);
-
   antelope = new Prey(100, 100, 10, color(255, 100, 10), 50);
   zebra = new Prey(100, 100, 8, color(255, 255, 255), 60);
   bee = new Prey(100, 100, 20, color(255, 255, 0), 10);
@@ -75,11 +76,15 @@ function draw() {
   zebra.display();
   bee.display();
 
-  /*//Display the amount of preys eaten by the predators
-  tiger.displayEaten(antelope);
-  tiger.displayEaten(zebra);
-  tiger.displayEaten(bee);
+  displayEaten();
 
-  manlyMan.displayEaten();*/
+}
 
+
+function  displayEaten() {
+    textAlign(CENTER, CENTER);
+    fill(255);
+    textSize(30);
+    text("Prey eaten: " + tiger.preyEaten, width* 2/3, height/4);
+    text("Prey eaten: " + manlyMan.preyEaten, width /3, height / 4);
   }
