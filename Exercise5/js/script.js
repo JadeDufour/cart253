@@ -108,7 +108,6 @@ function draw() {
     turtle.avoid(hogan);
     turtle.avoid(machoMan);
 
-
     //We display the score
     displayEaten();
     //Add music playing in the background. Who doesn't love some good ol' Village people anthem
@@ -138,7 +137,7 @@ function displayIntro() {
   textSize(40);
   textFont("Impact");
   fill(255);
-  text("MACHO CHASE\nCLICK TO START \n\nMacho Man (arrows): Sprint with L\n Hulk Hogan (wasd): Sprint with LEFT SHIFT\n\n FIRST TO 25 POINTS WIN", width / 2, height / 2);
+  text("MACHO CHASE\nCLICK TO START \n\nMacho Man (arrows): Sprint with L\n Hulk Hogan (wasd): Sprint with LEFT SHIFT\n\n FIRST TO 30 POINTS WIN", width / 2, height / 2);
   pop();
 }
 

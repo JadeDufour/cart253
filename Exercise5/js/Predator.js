@@ -147,7 +147,7 @@ class Predator {
           }
         }
         //Add a condition that ends the game
-        if (this.preyEaten >= 25 || this.radius <= 0) {
+        if (this.preyEaten >= 30 || this.radius <= 0) {
           state = "GameOverScreen";
         }
       }
