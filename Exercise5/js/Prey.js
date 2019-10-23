@@ -10,7 +10,8 @@ class Prey {
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, fillColor, radius) {
+  //Changed fill with Img
+  constructor(x, y, speed, img, radius) {
     // Position
     this.x = x;
     this.y = y;
@@ -25,14 +26,39 @@ class Prey {
     this.maxHealth = radius;
     this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
     // Display properties
-    this.fillColor = fillColor;
     this.radius = this.health;
+    this.img = img;
   }
 
   // move
   //
   // Sets velocity based on the noise() function and the Prey's speed
   // Moves based on the resulting velocity and handles wrapping
+
+  //Add a function that tells the prey to move away from the predator
+  avoid(predator){
+    let d = dist(this.x, this.y, predator.x, predator.y);
+    if (d < 200){
+      let distX = this.x- predator.x;
+      let distY= this.y = predator.y;
+
+      this.vx = map(noise(this.tx), 0, 1, distX /20, distX /10);
+      this.vy = map(noise(this.ty), 0, 1, distY /20, distY /10);
+      // Update position
+      this.x += this.vx;
+      this.y += this.vy;
+      // Update time properties
+      this.tx += 0.01;
+      this.ty += 0.01;
+      // Handle wrapping
+      this.handleWrapping()
+      }
+
+    else{
+      this.move();
+    }
+  }
+
   move() {
     // Set velocity via noise()
     this.vx = map(noise(this.tx), 0, 1, -this.speed, this.speed);
@@ -75,10 +101,13 @@ class Prey {
   display() {
     push();
     noStroke();
-    fill(this.fillColor);
-    this.radius = this.health;
-    ellipse(this.x, this.y, this.radius * 2);
-    pop();
+    //I also made their starting size bigger
+    this.radius = this.health*2;
+    imageMode(CENTER);
+    if (this.radius > 0){
+      image(this.img, this.x, this.y, this.radius*2, this.radius*2);
+    }
+      pop();
   }
 
   // reset

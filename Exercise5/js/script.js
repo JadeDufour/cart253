@@ -6,17 +6,45 @@
 // The predator loses health over time, so must keep eating to survive.
 
 // Our predator
-let tiger;
-//Our second predator, the manly man
-let manlyMan;
+let hogan;
+//Our second predator, macho man
+let machoMan;
 
 // The three prey
-let antelope;
+let turtle;
 let zebra;
 let bee;
-
+// Declare the score counter (prey eaten)
 let preyEaten = 0;
 
+//Declare the images for the avatars
+// Our first competitor, Hulk Hogan
+let imgHogan;
+//Our second predator, Macho man
+let imgMachoMan;
+
+// The three prey
+let imgTurtle;
+let imgZebra;
+let imgBee;
+
+//The background ambiance
+let backgroundMusic;
+
+//let game state
+let state = "StartScreen";
+
+//Add a preload function
+function preload(){
+//Load the images for the avatars
+imgHogan = loadImage("assets/images/hogan.png");
+imgMachoMan = loadImage("assets/images/manly.png");
+imgTurtle = loadImage("assets/images/squirtle.png");
+imgZebra = loadImage("assets/images/marty.png");
+imgBee = loadImage("assets/images/bee1.png");
+
+backgroundMusic =  new Audio("assets/sounds/machoSong.mp3");
+}
 
 // setup()
 //
@@ -24,16 +52,16 @@ let preyEaten = 0;
 // Creates objects for the predator and three prey
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  //WE MOVE THE TIGER WITH WASD
-  //The tiger is yellow
-  tiger = new Predator(100, 100, 5, color(200, 200, 0), 80, 87, 83, 65, 68, 16);
-  //We load our second predator, manlyMan
-  //WE MOVE THE MAN WITH ARROWS
-  //The manlyMan is pink
-  manlyMan = new Predator(200, 250, 7, color(250, 120, 140), 80, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, 76);
-  antelope = new Prey(100, 100, 10, color(255, 100, 10), 50);
-  zebra = new Prey(100, 100, 8, color(255, 255, 255), 60);
-  bee = new Prey(100, 100, 20, color(255, 255, 0), 10);
+  //WE MOVE HULK HOGAN WITH WASD
+  //Hulk Hogan
+  hogan = new Predator(100, 100, 5, imgHogan, 80, 87, 83, 65, 68, 16);
+  //We load our second predator, machoMan
+  //WE MOVE MACHO MAN WITH ARROWS
+  //The MachoMan is pink
+  machoMan = new Predator(200, 250, 7,imgMachoMan, 80, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, 76);
+  turtle = new Prey(100, 100, 10, imgTurtle, 50);
+  zebra = new Prey(100, 100, 8, imgZebra, 60);
+  bee = new Prey(100, 100, 20, imgBee, 10);
 }
 
 // draw()
@@ -45,39 +73,43 @@ function draw() {
   //Might change the color --------------------------------------
   background(0);
 
-  // Handle input for the tiger
-  tiger.handleInput();
-  manlyMan.handleInput();
+  // Handle input for Hulk Hogan and Macho Man
+  hogan.handleInput();
+  machoMan.handleInput();
 
-  // Move all the "animals"
-  tiger.move();
-  //The Man is an animal too, no matter how manly it is
-  manlyMan.move();
-  antelope.move();
+  // Move all the avatars
+  hogan.move();
+  machoMan.move();
+  turtle.move();
   zebra.move();
   bee.move();
 
-  // Handle the tiger eating any of the prey
-  tiger.handleEating(antelope);
-  tiger.handleEating(zebra);
-  tiger.handleEating(bee);
+  // Handle Hulk Hogan eating any of the prey
+  hogan.handleEating(turtle);
+  hogan.handleEating(zebra);
+  hogan.handleEating(bee);
 
   //Handle the manly man over consuming the preys
-  manlyMan.handleEating(antelope);
-  manlyMan.handleEating(zebra);
+  machoMan.handleEating(turtle);
+  machoMan.handleEating(zebra);
   //Yes, the manliest of manly men also eat bees.
-  manlyMan.handleEating(bee);
+  machoMan.handleEating(bee);
 
-  // Display all the "animals"
-  tiger.display();
+  // Display all the avatars
+  hogan.display();
   //Display the man
-  manlyMan.display();
-  antelope.display();
+  machoMan.display();
+  turtle.display();
   zebra.display();
   bee.display();
 
-  displayEaten();
+  //Add a function so that the turtle avoids Hulk Hogan.
+  turtle.avoid(hogan);
 
+ //We display the score
+  displayEaten();
+  //Add music playing in the background. Who doesn't love some good ol' Village people anthem
+  backgroundMusic.play();
 }
 
 
@@ -85,6 +117,6 @@ function  displayEaten() {
     textAlign(CENTER, CENTER);
     fill(255);
     textSize(30);
-    text("Prey eaten: " + tiger.preyEaten, width* 2/3, height/4);
-    text("Prey eaten: " + manlyMan.preyEaten, width /3, height / 4);
+    text("Hulk Hogan's prey count: " + hogan.preyEaten, width* 2/3, height/4);
+    text("Macho Man's prey count: " + machoMan.preyEaten, width /3, height / 4);
   }

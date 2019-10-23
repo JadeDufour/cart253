@@ -12,7 +12,7 @@ class Predator {
   // Either sets default values or uses the arguments provided
 
   //We add the moving keys and the sprinting key
-  constructor(x, y, speed, fillColor, radius, upKey, downKey, leftKey, rightKey, speedKey) {
+  constructor(x, y, speed, img, radius, upKey, downKey, leftKey, rightKey, speedKey) {
     // Position
     this.x = x;
     this.y = y;
@@ -26,7 +26,7 @@ class Predator {
     this.healthLossPerMove = 0.1;
     this.healthGainPerEat = 1;
     // Display properties
-    this.fillColor = fillColor;
+    //this.fillColor = fillColor;
     this.radius = this.health; // Radius is defined in terms of health
 
     this.preyEaten = 0;
@@ -41,6 +41,8 @@ class Predator {
     this.speedKey = speedKey;
     this.speedBoost = speed + 5 ;
     this.initialSpeed= speed; //The predator returns to normal speed if the sprint key is not pressed
+
+    this.img = img;
 
 //Key Codes -----------------------------------
     //Down = 83
@@ -147,7 +149,6 @@ class Predator {
         }
       }
 
-  //handle predator health?
 
   // display
   //
@@ -156,9 +157,12 @@ class Predator {
   display() {
     push();
     noStroke();
-    fill(this.fillColor);
-    this.radius = this.health;
-    ellipse(this.x, this.y, this.radius * 2);
+    //I also made their starting size bigger
+    this.radius = this.health*2;
+    imageMode(CENTER);
+    if (this.radius > 0){
+      image(this.img, this.x, this.y, this.radius * 2, this.radius * 2);
+    }
     pop();
   }
 }
