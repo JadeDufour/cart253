@@ -42,7 +42,7 @@ imgMachoMan = loadImage("assets/images/manly.png");
 imgTurtle = loadImage("assets/images/squirtle.png");
 imgZebra = loadImage("assets/images/marty.png");
 imgBee = loadImage("assets/images/bee1.png");
-
+//Load the background music (village people)
 backgroundMusic =  new Audio("assets/sounds/machoSong.mp3");
 }
 
@@ -59,9 +59,9 @@ function setup() {
   //WE MOVE MACHO MAN WITH ARROWS
   //The MachoMan is pink
   machoMan = new Predator(200, 250, 7,imgMachoMan, 80, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, 76);
-  turtle = new Prey(100, 100, 10, imgTurtle, 50);
-  zebra = new Prey(100, 100, 8, imgZebra, 60);
-  bee = new Prey(100, 100, 20, imgBee, 10);
+  turtle = new Prey(100, 100, 10, imgTurtle, 70);
+  zebra = new Prey(100, 100, 8, imgZebra, 70);
+  bee = new Prey(100, 100, 20, imgBee, 70);
 }
 
 // draw()
