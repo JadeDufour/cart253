@@ -57,7 +57,6 @@ function setup() {
   hogan = new Predator(100, 100, 5, imgHogan, 60, 87, 83, 65, 68, 16);
   //We load our second predator, machoMan
   //WE MOVE MACHO MAN WITH ARROWS
-  //The MachoMan is pink
   machoMan = new Predator(200, 250, 7, imgMachoMan, 60, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, 76);
   turtle = new Prey(100, 100, 10, imgTurtle, 70);
   zebra = new Prey(100, 100, 8, imgZebra, 70);
@@ -105,8 +104,10 @@ function draw() {
     zebra.display();
     bee.display();
 
-    //Add a function so that the turtle avoids Hulk Hogan.
+    //Add a function so that the turtle avoids Hulk Hogan and Macho Man.
     turtle.avoid(hogan);
+    turtle.avoid(machoMan);
+
 
     //We display the score
     displayEaten();
@@ -137,7 +138,7 @@ function displayIntro() {
   textSize(40);
   textFont("Impact");
   fill(255);
-  text("MACHO CHASE\nCLICK TO START \n\nMacho Man: Sprint with L\n Hulk Hogan: Sprint with LEFT SHIFT\n\n FIRST TO 25 POINTS WIN", width / 2, height / 2);
+  text("MACHO CHASE\nCLICK TO START \n\nMacho Man (arrows): Sprint with L\n Hulk Hogan (wasd): Sprint with LEFT SHIFT\n\n FIRST TO 25 POINTS WIN", width / 2, height / 2);
   pop();
 }
 
