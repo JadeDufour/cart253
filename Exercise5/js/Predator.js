@@ -5,7 +5,6 @@
 // the screen and consume Prey objects to maintain its health.
 
 class Predator {
-
   // constructor
   //
   // Sets the initial values for the Predator's properties
@@ -147,8 +146,11 @@ class Predator {
         this.preyEaten +=1;
           }
         }
+        //Add a condition that ends the game
+        if (this.preyEaten >= 25 || this.radius <= 0) {
+          state = "GameOverScreen";
+        }
       }
-
 
   // display
   //

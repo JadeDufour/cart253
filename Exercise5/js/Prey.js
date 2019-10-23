@@ -36,14 +36,14 @@ class Prey {
   // Moves based on the resulting velocity and handles wrapping
 
   //Add a function that tells the prey to move away from the predator
-  avoid(predator){
+  avoid(predator) {
     let d = dist(this.x, this.y, predator.x, predator.y);
-    if (d < 200){
-      let distX = this.x- predator.x;
-      let distY= this.y = predator.y;
+    if (d < 200) {
+      let distX = this.x - predator.x;
+      let distY = this.y = predator.y;
 
-      this.vx = map(noise(this.tx), 0, 1, distX /20, distX /10);
-      this.vy = map(noise(this.ty), 0, 1, distY /20, distY /10);
+      this.vx = map(noise(this.tx), 0, 1, distX / 20, distX / 10);
+      this.vy = map(noise(this.ty), 0, 1, distY / 20, distY / 10);
       // Update position
       this.x += this.vx;
       this.y += this.vy;
@@ -52,9 +52,7 @@ class Prey {
       this.ty += 0.01;
       // Handle wrapping
       this.handleWrapping()
-      }
-
-    else{
+    } else {
       this.move();
     }
   }
@@ -81,15 +79,13 @@ class Prey {
     // Off the left or right
     if (this.x < 0) {
       this.x += width;
-    }
-    else if (this.x > width) {
+    } else if (this.x > width) {
       this.x -= width;
     }
     // Off the top or bottom
     if (this.y < 0) {
       this.y += height;
-    }
-    else if (this.y > height) {
+    } else if (this.y > height) {
       this.y -= height;
     }
   }
@@ -102,12 +98,12 @@ class Prey {
     push();
     noStroke();
     //I also made their starting size bigger
-    this.radius = this.health*2;
+    this.radius = this.health * 2;
     imageMode(CENTER);
-    if (this.radius > 0){
-      image(this.img, this.x, this.y, this.radius*2, this.radius*2);
+    if (this.radius > 0) {
+      image(this.img, this.x, this.y, this.radius * 2, this.radius * 2);
     }
-      pop();
+    pop();
   }
 
   // reset
