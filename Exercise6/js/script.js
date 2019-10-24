@@ -53,6 +53,6 @@ function draw() {
   // Display all the "animals"
   tiger.display();
   antelope.display();  ////////////////////FIXED (There was a missing E)
-  zebra.disploy();
+  zebra.display(); ////////////////////FIXED (Changed O for A)
   bee.display(); ////////////////////FIXED (There was two missing Es)
 }
