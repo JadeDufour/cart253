@@ -1,5 +1,5 @@
 // Predator-Prey Simulation
-// by Pippin Barr
+// by Jade Dufour
 //
 // Creates a predator and three prey (of different sizes and speeds)
 // The predator chases the prey using the arrow keys and consumes them.
@@ -12,6 +12,8 @@ let tiger;
 let antelope;
 let zebra;
 let bee;
+
+let state
 
 // setup()
 //
