@@ -57,7 +57,7 @@ class Prey { ////////////////////FIXED (Changed Glass for Class)
     // wraps it to the other side if so
     handleWrapping() {
       // Off the left or right
-      if (this.x < 0) { ////////////////////FIXED (It was the wrong > )
+      if (this.x < 0) { ////////////////////FIXED (It was the wrong >)
         this.x += width;
       }
       else if (this.x > width) {
@@ -68,7 +68,7 @@ class Prey { ////////////////////FIXED (Changed Glass for Class)
         this.y += height;
       }
       else if (this.y > height) {
-        this.y -= hight;
+        this.y -= height; ////////////////////FIXED (There was a missing E)
       }
     }
 
