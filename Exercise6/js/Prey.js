@@ -49,7 +49,7 @@ class Prey { ////////////////////FIXED (Changed Glass for Class)
     this.ty += 0.01;
     // Handle wrapping
     this.handleWrapping(); ////////////////////FIXED (There was a mix in the letters)
-
+} ////////////////////FIXED (There was a missing } )
 
     // handleWrapping
     //
