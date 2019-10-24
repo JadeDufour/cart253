@@ -31,7 +31,7 @@ class Predator {
     this.fillColor = fillColor;
     this.radius = this.health; // Radius is defined in terms of health ////////////////////FIXED (Changed the letter O for U)
     // Input properties
-    this.appKey = UP_ARROW;
+    this.upKey = UP_ARROW; ////////////////////FIXED (UP, not App)
     this.downKey = DOWN_ARROW;
     this.leftKey = LEFT_ARROW;
     this.rightKey = RIGHT_ARROW;
