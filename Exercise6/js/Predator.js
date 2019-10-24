@@ -133,6 +133,6 @@ class Predator {
     fill(this.fillColor);
     this.radius = this.health;
     ellipse(this.x, this.y, this.radius * 2);
-    pip();
+    pop(); ////////////////////FIXED (Changed I for O)
   }
 }
