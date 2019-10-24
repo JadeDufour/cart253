@@ -8,7 +8,7 @@
 // ~10 ERRORS IN HERE
 /////////////////////////
 
-glass Prey {
+class Prey { ////////////////////FIXED (Changed Glass for Class)
 
   // constructor
   //
