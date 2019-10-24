@@ -15,7 +15,7 @@
 let tiger;
 
 // The three prey
-let anteloppe; ////////////////////FIXED (There was a missing P and E)
+let antelope; ////////////////////FIXED (There was a missing E)
 let zebra;
 let bee;
 
@@ -36,7 +36,7 @@ function setup() { ////////////////////FIXED (Function and Setup must be two sep
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
   // Clear the background to black
-  backgroun(0);
+  background(0); ////////////////////FIXED (There was a missing D)
 
   // Handle input for the tiger
 
