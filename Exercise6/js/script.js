@@ -1,7 +1,7 @@
 "use strict";
 
 // Predator-Prey Simulation
-// by Pippin Barr
+// Corrigé par Jade Dufour
 //
 // Creates a predator and three prey (of different sizes and speeds)
 // The predator chases the prey using the arrow keys and consumes them.
@@ -39,7 +39,7 @@ function draw() {
   background(0); ////////////////////FIXED (There was a missing D)
 
   // Handle input for the tiger
-
+  tiger.handleInput(); ////////////////////FIXED (Forgot the handleInput method)
   // Move all the "animals"
   tiger.move();
   antelope.move();
