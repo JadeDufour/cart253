@@ -48,7 +48,7 @@ class Prey { ////////////////////FIXED (Changed Glass for Class)
     this.tx += 0.01;
     this.ty += 0.01;
     // Handle wrapping
-    this.handleWarping();
+    this.handleWrapping(); ////////////////////FIXED (There was a mix in the letters)
 
 
     // handleWrapping
