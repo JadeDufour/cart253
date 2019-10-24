@@ -54,5 +54,5 @@ function draw() {
   tiger.display();
   antelope.display();  ////////////////////FIXED (There was a missing E)
   zebra.disploy();
-  b.display();
+  bee.display(); ////////////////////FIXED (There was two missing Es)
 }
