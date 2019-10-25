@@ -32,6 +32,30 @@ class Prey {
     this.fillColor = fillColor;
     this.radius = this.health;
   }
+  // avoid
+  //
+  // the prey flees from the predator when they are at a certain distanc appart from each other
+  // Still moves based on the noise function 
+  avoid(predator) {
+    let d = dist(this.x, this.y, predator.x, predator.y);
+    if (d < 200) {
+      let distX = this.x - predator.x;
+      let distY = this.y = predator.y;
+
+      this.vx = map(noise(this.tx), 0, 1, distX / 20, distX / 10);
+      this.vy = map(noise(this.ty), 0, 1, distY / 20, distY / 10);
+      // Update position
+      this.x += this.vx;
+      this.y += this.vy;
+      // Update time properties
+      this.tx += 0.01;
+      this.ty += 0.01;
+      // Handle wrapping
+      this.handleWrapping()
+    } else {
+      this.move();
+    }
+  }
 
   // move
   //

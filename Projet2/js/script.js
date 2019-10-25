@@ -65,6 +65,18 @@ else if (state === "PlayScreen"){
   antelope.display();
   zebra.display();
   bee.display();
+
+  //the avoid method()
+
+
+  //Check if the sheeps are in the barn and update the score
+  onePointBarn.handleWelcomingSheeps();
+  twoPointsBarn.handleWelcomingSheeps();
+
+
+  //display the updated score
+  displayScore();
+
   }
 
 /*else if (state ==="GameOverScreen"){
@@ -73,6 +85,16 @@ else if (state === "PlayScreen"){
 
 
 }
+  //Displays the score depending on which barn welcomed the preys (sheeps)
+function displayScore(){
+  textAlign(CENTER);
+  fill(255);
+  textSize(30);
+  textFont("Georgia");
+  text("Points: " + (onePointBarn.preysWelcomed + twoPointsBarn.sheepsWelcomed), width/2, height / 8);
+
+}
+
 
 function displayIntroduction(){
   background(0);
