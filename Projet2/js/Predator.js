@@ -6,6 +6,13 @@
 
 class Predator {
 
+//Il va bouger avec la souris
+//Ajouter une image
+// repels les moutons
+//Not really a predator, more like a sheep keeper
+
+
+
   // constructor
   //
   // Sets the initial values for the Predator's properties
@@ -19,7 +26,7 @@ class Predator {
     this.vy = 0;
     this.speed = speed;
     // Health properties
-    this.maxHealth = radius;  
+    this.maxHealth = radius;
     this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
     this.healthLossPerMove = 0.1;
     this.healthGainPerEat = 1;

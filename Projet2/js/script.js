@@ -1,9 +1,10 @@
-// Predator-Prey Simulation
+// The shepherd (the very best)
 // by Jade Dufour
 //
-// Creates a predator and three prey (of different sizes and speeds)
-// The predator chases the prey using the arrow keys and consumes them.
-// The predator loses health over time, so must keep eating to survive.
+// This is a variation of the predator-prey game.
+// The shepherd (predator) has to bring all the sheeps in the barn before the time is up
+// The sheeps (preys) are repelled by the predator (which is move with the mouseX and mouseY)
+//The sheeps are AI
 
 // Our predator
 let tiger;
