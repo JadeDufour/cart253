@@ -10,8 +10,9 @@ class Predator {
 //Ajouter une image
 // repels les moutons
 //Not really a predator, more like a sheep keeper
+//Pourrait y avoir 2 barns, depandant de quelle sheep va dans laquelle = plus ou moins de points
 
-
+//A moins que une des deux barn puisse teleporter? (ajouter la fonction mais mettre entre parentheses son nom)
 
   // constructor
   //

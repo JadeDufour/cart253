@@ -14,6 +14,10 @@ let antelope;
 let zebra;
 let bee;
 
+//The 2 barn
+let onePointBarn;
+let twoPointsBarn;
+
 let state = "StartScreen";
 
 // setup()
@@ -26,6 +30,9 @@ function setup() {
   antelope = new Prey(100, 100, 10, color(255, 100, 10), 50);
   zebra = new Prey(100, 100, 8, color(255, 255, 255), 60);
   bee = new Prey(100, 100, 20, color(255, 255, 0), 10);
+
+  //onePointBarn = new barnBox();
+  //twoPointsBarn = new barnBox();
 }
 
 // draw()
