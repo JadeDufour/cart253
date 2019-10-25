@@ -110,6 +110,7 @@ class Predator {
   // Takes a Prey object as an argument and checks if the predator
   // overlaps it. If so, reduces the prey's health and increases
   // the predator's. If the prey dies, it gets reset.
+  //maybe add a dog that moves nimporte comment et fait peur aux moutons 
 
 
 

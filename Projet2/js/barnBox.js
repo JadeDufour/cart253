@@ -29,7 +29,8 @@ handleWelcomingSheeps(){
       prey.health = 0;
       // Check if the prey "died"
       if (prey.health < 0) {
-      this.preysWelcomed += 1;
+        prey.reset();
+        this.preysWelcomed += 1;
       }
   }
 }
@@ -37,8 +38,7 @@ handleWelcomingSheeps(){
 display() {
   push();
   noStroke();
-  fill(this.fillColor);
-  this.radius = this.health;
+  fill(255,100,100);
   ellipse(this.x, this.y, this.radius * 2);
   pop();
 }

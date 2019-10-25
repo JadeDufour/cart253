@@ -6,13 +6,14 @@
 // The sheeps (preys) are repelled by the predator (which is move with the mouseX and mouseY)
 //The sheeps are AI
 
-// Our predator
-let tiger;
+// Our "predator", the shepherd
+let shepherd;
 
-// The three prey
-let antelope;
-let zebra;
-let bee;
+//The number of preys (sheeps)
+let numberOfPreys = 15;
+
+// The prey array to contain all the Prey objects
+let prey = [];
 
 //The 2 barn
 let onePointBarn;
@@ -26,10 +27,34 @@ let state = "StartScreen";
 // Creates objects for the predator and three prey
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  tiger = new Predator(100, 100, 5, color(200, 200, 0), 40);
-  antelope = new Prey(100, 100, 10, color(255, 100, 10), 50);
+  //The predator
+  shepherd = new Predator(100, 100, 5, color(200, 200, 0), 40);
+
+//We use a for loop for the preys
+for (let i = 0; i < numberOfPreys; i++) {
+    // Generate random values for the arguments of the Prey constructor
+    let preyX = random(0, width);
+    let preyY = random(0, height);
+    let preySpeed = random(2, 12);
+    let preyColor = color(100, 100, 100); --------------À changer pour image
+    let preyRadius = random(3, 50);
+    // let preyImg = random(pinkSheep,......)
+    // Create a new Prey objects with the random values
+    let newPrey = new Prey(preyX, preyY, preySpeed, preyColor /*preyImg*/, preyRadius);
+    // Add the new Prey object to the END of our array using push()
+     prey.push(newPrey);
+  }
+
+
+
+
+
+
+
+
+  /*antelope = new Prey(100, 100, 10, color(255, 100, 10), 50);
   zebra = new Prey(100, 100, 8, color(255, 255, 255), 60);
-  bee = new Prey(100, 100, 20, color(255, 255, 0), 10);
+  bee = new Prey(100, 100, 20, color(255, 255, 0), 10);*/
 
   //onePointBarn = new barnBox();
   //twoPointsBarn = new barnBox();
@@ -49,29 +74,34 @@ else if (state === "PlayScreen"){
   // Handle input for the tiger
   tiger.handleInput();
 
-  // Move all the "animals"
+  /*// Move all the "animals"
   tiger.move();
   antelope.move();
   zebra.move();
-  bee.move();
+  bee.move();*/
 
-  // Handle the tiger eating any of the prey
-  tiger.handleEating(antelope);
-  tiger.handleEating(zebra);
-  tiger.handleEating(bee);
+  for (let i = 0; i < prey.length; i++) {
+      // And again we ask prey[i] to display itself because i gives us the current
+      // element we are counting through in the loop
+      prey[i].display();
+      prey[i].move();
+      prey[i].avoid(shepherd);
+
+      //Check if the sheeps are in the barn and update the score
+      onePointBarn.handleWelcomingSheeps(prey[i]);
+      twoPointsBarn.handleWelcomingSheeps(prey[i]);
+    }
 
   // Display all the "animals"
   tiger.display();
-  antelope.display();
+  /*antelope.display();
   zebra.display();
-  bee.display();
+  bee.display();*/
 
   //the avoid method()
+//whiteSheep.avoid(shepherd);
 
 
-  //Check if the sheeps are in the barn and update the score
-  onePointBarn.handleWelcomingSheeps();
-  twoPointsBarn.handleWelcomingSheeps();
 
 
   //display the updated score
@@ -91,7 +121,7 @@ function displayScore(){
   fill(255);
   textSize(30);
   textFont("Georgia");
-  text("Points: " + (onePointBarn.preysWelcomed + twoPointsBarn.sheepsWelcomed), width/2, height / 8);
+  text("Points: " + (onePointBarn.preysWelcomed + twoPointsBarn.preysWelcomed), width/2, height / 8);
 
 }
 
