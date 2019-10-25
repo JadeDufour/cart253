@@ -13,7 +13,7 @@ let antelope;
 let zebra;
 let bee;
 
-let state
+let state = "StartScreen";
 
 // setup()
 //
@@ -34,6 +34,10 @@ function draw() {
   // Clear the background to black
   background(0);
 
+if (state ==="StartScreen"){
+  displayIntroduction();
+}
+else if (state === "PlayScreen"){
   // Handle input for the tiger
   tiger.handleInput();
 
@@ -53,4 +57,31 @@ function draw() {
   antelope.display();
   zebra.display();
   bee.display();
+  }
+
+/*else if (state ==="GameOverScreen"){
+  displayGameOver();
+}*/
+
+
+}
+
+function displayIntroduction(){
+  background(0);
+  push();
+  textAlign(CENTER, CENTER);
+  //Add instructions image later -------------------------------------------------
+  textSize(32);
+  fill(255);
+  textFont('Arial');
+  text("Apex chaser", width / 2, height / 2);
+  pop();
+}
+
+function mousePressed() {
+  if (state === "StartScreen") {
+    //Remove the instrutions if mouse is pressed
+    //Display the gameplay
+    state = "PlayScreen";
+  }
 }
