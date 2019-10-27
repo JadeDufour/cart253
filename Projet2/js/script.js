@@ -8,7 +8,8 @@
 
 // Our "predator", the shepherd
 let shepherd;
-
+//The preys
+let sheep;
 //The number of preys (sheeps)
 let numberOfPreys = 15;
 
@@ -21,6 +22,19 @@ let twoPointsBarn;
 
 let state = "StartScreen";
 
+// Loads the images before the program starts
+function preload(){
+//The shepherd
+shepherd = loadImage("assets/images/farmer.png")
+//The sheeps
+sheep = loadImage("assets/images/sheep1.png")
+//The one point barn
+onePointBarn = loadImage("assets/images/barn1pt.png")
+//the two points barn
+twoPointsBarn = loadImage("assets/images/barn.png")
+
+}
+
 // setup()
 //
 // Sets up a canvas
@@ -30,34 +44,25 @@ function setup() {
   //The predator
   shepherd = new Predator(100, 100, 5, color(200, 200, 0), 40);
 
+
+  onePointBarn = new barnBox(width/2, 0, onePointBarn, 50);
+  twoPointsBarn = new barnBox(width/2, height, onePointBarn, 50);
+
+
 //We use a for loop for the preys
 for (let i = 0; i < numberOfPreys; i++) {
     // Generate random values for the arguments of the Prey constructor
     let preyX = random(0, width);
     let preyY = random(0, height);
     let preySpeed = random(2, 12);
-    let preyColor = color(100, 100, 100); --------------À changer pour image
+    let preyImg = image(sheep, x, y);
     let preyRadius = random(3, 50);
-    // let preyImg = random(pinkSheep,......)
     // Create a new Prey objects with the random values
-    let newPrey = new Prey(preyX, preyY, preySpeed, preyColor /*preyImg*/, preyRadius);
+    let sheep = new Prey(preyX, preyY, preySpeed, preyImg, preyRadius);
     // Add the new Prey object to the END of our array using push()
-     prey.push(newPrey);
+     prey.push(sheep);
   }
 
-
-
-
-
-
-
-
-  /*antelope = new Prey(100, 100, 10, color(255, 100, 10), 50);
-  zebra = new Prey(100, 100, 8, color(255, 255, 255), 60);
-  bee = new Prey(100, 100, 20, color(255, 255, 0), 10);*/
-
-  //onePointBarn = new barnBox();
-  //twoPointsBarn = new barnBox();
 }
 
 // draw()
@@ -122,7 +127,6 @@ function displayScore(){
   textSize(30);
   textFont("Georgia");
   text("Points: " + (onePointBarn.preysWelcomed + twoPointsBarn.preysWelcomed), width/2, height / 8);
-
 }
 
 
