@@ -7,9 +7,9 @@
 //The sheeps are AI
 
 // Our "predator", the shepherd
-let shepherd;
+let shepherdImg;
 //The preys
-let sheep;
+let sheepImg;
 //The number of preys (sheeps)
 let numberOfPreys = 15;
 
@@ -17,21 +17,21 @@ let numberOfPreys = 15;
 let prey = [];
 
 //The 2 barn
-let onePointBarn;
-let twoPointsBarn;
+let onePointBarnImg;
+let twoPointsBarnImg;
 
 let state = "StartScreen";
 
 // Loads the images before the program starts
 function preload(){
 //The shepherd
-shepherd = loadImage("assets/images/farmer.png")
+shepherdImg = loadImage("assets/images/farmer.png")
 //The sheeps
-sheep = loadImage("assets/images/sheep1.png")
+sheepImg = loadImage("assets/images/sheep1.png")
 //The one point barn
-onePointBarn = loadImage("assets/images/barn1pt.png")
+onePointBarnImg = loadImage("assets/images/barn1pt.png")
 //the two points barn
-twoPointsBarn = loadImage("assets/images/barn.png")
+twoPointsBarnImg = loadImage("assets/images/barn.png")
 
 }
 
@@ -42,11 +42,11 @@ twoPointsBarn = loadImage("assets/images/barn.png")
 function setup() {
   createCanvas(windowWidth, windowHeight);
   //The predator
-  shepherd = new Predator(100, 100, 5, color(200, 200, 0), 40);
+  shepherd = new Predator(mouseX, mouseY, 5, shepherdImg, 40);
 
 
-  onePointBarn = new barnBox(width/2, 0, onePointBarn, 50);
-  twoPointsBarn = new barnBox(width/2, height, onePointBarn, 50);
+  onePointBarn = new barnBox(width/2, 0, onePointBarnImg, 50);
+  twoPointsBarn = new barnBox(width/2, height, twoPointsBarnImg, 50);
 
 
 //We use a for loop for the preys
@@ -55,14 +55,13 @@ for (let i = 0; i < numberOfPreys; i++) {
     let preyX = random(0, width);
     let preyY = random(0, height);
     let preySpeed = random(2, 12);
-    let preyImg = image(sheep, x, y);
+    let preyImg = image(sheepImg, preyX, preyY);
     let preyRadius = random(3, 50);
     // Create a new Prey objects with the random values
-    let sheep = new Prey(preyX, preyY, preySpeed, preyImg, preyRadius);
+    let sheep = new Prey(preyX, preyY,preySpeed, preyImg, preyRadius);
     // Add the new Prey object to the END of our array using push()
      prey.push(sheep);
   }
-
 }
 
 // draw()
@@ -77,7 +76,7 @@ if (state ==="StartScreen"){
 }
 else if (state === "PlayScreen"){
   // Handle input for the tiger
-  tiger.handleInput();
+  //tiger.handleInput();
 
   /*// Move all the "animals"
   tiger.move();
@@ -88,7 +87,7 @@ else if (state === "PlayScreen"){
   for (let i = 0; i < prey.length; i++) {
       // And again we ask prey[i] to display itself because i gives us the current
       // element we are counting through in the loop
-      prey[i].display();
+      //prey[i].display();
       prey[i].move();
       prey[i].avoid(shepherd);
 
@@ -98,7 +97,7 @@ else if (state === "PlayScreen"){
     }
 
   // Display all the "animals"
-  tiger.display();
+  shepherd.display();
   /*antelope.display();
   zebra.display();
   bee.display();*/
@@ -138,7 +137,7 @@ function displayIntroduction(){
   textSize(32);
   fill(255);
   textFont('Arial');
-  text("Apex chaser", width / 2, height / 2);
+  text("OOP chaser", width / 2, height / 2);
   pop();
 }
 

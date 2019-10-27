@@ -110,7 +110,7 @@ class Predator {
   // Takes a Prey object as an argument and checks if the predator
   // overlaps it. If so, reduces the prey's health and increases
   // the predator's. If the prey dies, it gets reset.
-  //maybe add a dog that moves nimporte comment et fait peur aux moutons 
+  //maybe add a dog that moves nimporte comment et fait peur aux moutons
 
 
 
@@ -127,9 +127,8 @@ class Predator {
   display() {
     push();
     noStroke();
-    fill(this.fillColor);
-    this.radius = this.health;
-    ellipse(this.x, this.y, this.radius * 2);
+    imageMode(CENTER);
+    image(this.img, this.x, this.y);
     pop();
   }
 }

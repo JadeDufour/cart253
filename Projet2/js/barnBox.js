@@ -4,7 +4,7 @@
 //It can't move around
 // "Consumes" Prey objects
 
-class Barn {
+class barnBox {
 
   // constructor
   //
