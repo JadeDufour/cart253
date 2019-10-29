@@ -9,12 +9,12 @@
 // Our "predator", the shepherd
 let shepherdImg;
 //The preys
-let sheepImg;
+let sheep = [];
 //The number of preys (sheeps)
 let numberOfPreys = 15;
 
 // The prey array to contain all the Prey objects
-let prey = [];
+//let prey =
 
 //The 2 barn
 let onePointBarnImg;
@@ -29,9 +29,9 @@ shepherdImg = loadImage("assets/images/farmer.png")
 //The sheeps
 sheepImg = loadImage("assets/images/sheep1.png")
 //The one point barn
-onePointBarnImg = loadImage("assets/images/barn1pt.png")
+onePointBarnImg = loadImage("assets/images/1point.png")
 //the two points barn
-twoPointsBarnImg = loadImage("assets/images/barn.png")
+twoPointsBarnImg = loadImage("assets/images/2points.png")
 //The background for the play state
 grassBackground = loadImage("assets/images/grass.png")
 
@@ -47,22 +47,22 @@ function setup() {
   shepherd = new Predator(15, 30, 5, shepherdImg, 30);
 
 
-  onePointBarn = new barnBox(width/2, 0, onePointBarnImg, 50);
-  twoPointsBarn = new barnBox(width/2, height, twoPointsBarnImg, 50);
+  onePointBarn = new barnBox(width/2, 100, onePointBarnImg, 40);
+  twoPointsBarn = new barnBox(width/2, height -100, twoPointsBarnImg, 40);
 
 
 //We use a for loop for the preys
 for (let i = 0; i < numberOfPreys; i++) {
     // Generate random values for the arguments of the Prey constructor
-    let preyX = random(0, width);
+    /*let preyX = random(0, width);
     let preyY = random(0, height);
     let preySpeed = random(2, 12);
     let preyImg = image(sheepImg, preyX, preyY);
-    let preyRadius = random(3, 50);
+    let preyRadius = random(3, 50);*/
     // Create a new Prey objects with the random values
-    let sheep = new Prey(preyX, preyY,preySpeed, preyImg, preyRadius);
+    let sheep = new Prey (random(0,width), random(0, height),random(2, 12), sheepImg, 10);
     // Add the new Prey object to the END of our array using push()
-     prey.push(sheep);
+     //sheep.push();
   }
 }
 
@@ -79,35 +79,33 @@ if (state ==="StartScreen"){
 else if (state === "PlayScreen"){
 //A function to display the background
   displayBackground();
-  // Handle input for the tiger
-  //tiger.handleInput();
 
-  /*// Move all the "animals"
-  tiger.move();
-  antelope.move();
-  zebra.move();
-  bee.move();*/
 
-  for (let i = 0; i < prey.length; i++) {
+
+  for (let i = 0; i < numberOfPreys.length; i++) {
       // And again we ask prey[i] to display itself because i gives us the current
       // element we are counting through in the loop
-      //prey[i].display();
-      prey[i].move();
-      prey[i].avoid(shepherd);
+      sheep[i].display();
+      sheep[i].move();
+      sheep[i].avoid(shepherd);
+
+
 
       //Check if the sheeps are in the barn and update the score
       onePointBarn.handleWelcomingSheeps(prey[i]);
       twoPointsBarn.handleWelcomingSheeps(prey[i]);
     }
 
-  // Display all the "animals"
-  shepherd.display();
-  /*antelope.display();
-  zebra.display();
-  bee.display();*/
+    // Display all the images
+
+    shepherd.display();
+    onePointBarn.display();
+    twoPointsBarn.display();
+
+
 
   //the avoid method()
-//whiteSheep.avoid(shepherd);
+//sheep.avoid(shepherd);
 
 
 

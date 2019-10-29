@@ -18,7 +18,12 @@ class barnBox {
     this.preysWelcomed = 0;
 }
 
+//So that the shepherd cant go in the barn
+checkBarnCollision(){
 
+
+}
+//When the sheeps overlap the barn, they disappear
 handleWelcomingSheeps(){
 
     // Calculate distance from this barn to the prey
@@ -38,8 +43,8 @@ handleWelcomingSheeps(){
 display() {
   push();
   noStroke();
-  fill(255,100,100);
-  ellipse(this.x, this.y, this.radius * 2);
+  imageMode(CENTER);
+  image(this.img, this.x, this.y,this.radius * 2, this.radius * 2);
   pop();
 }
 }

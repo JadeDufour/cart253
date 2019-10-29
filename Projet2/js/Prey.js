@@ -38,7 +38,7 @@ class Prey {
   // Still moves based on the noise function
   avoid(predator) {
     let d = dist(this.x, this.y, predator.x, predator.y);
-    if (d < 200) {
+    if (d < 100) {
       let distX = this.x - predator.x;
       let distY = this.y = predator.y;
 
@@ -104,7 +104,7 @@ class Prey {
     push();
     noStroke();
     imageMode(CENTER);
-    image(this.img, this.x, this.y, 80, this.radius * 2);
+    image(this.img, this.x, this.y, this.radius * 2, this.radius * 2);
     pop();
   }
 
