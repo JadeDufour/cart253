@@ -32,15 +32,17 @@ class Prey {
     this.radius = this.health;
     this.img=img;
   }
+
+
   // avoid
   //
   // the prey flees from the predator when they are at a certain distanc appart from each other
   // Still moves based on the noise function
   avoid(predator) {
-    let d = dist(this.x, this.y, predator.x, predator.y);
+    let d = dist(this.x, this.y, mouseX, mouseY);
     if (d < 100) {
-      let distX = this.x - predator.x;
-      let distY = this.y = predator.y;
+      let distX = this.x - mouseX;
+      let distY = this.y = mouseY;
 
       this.vx = map(noise(this.tx), 0, 1, distX / 20, distX / 10);
       this.vy = map(noise(this.ty), 0, 1, distY / 20, distY / 10);

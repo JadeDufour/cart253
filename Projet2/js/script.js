@@ -9,7 +9,7 @@
 // Our "predator", the shepherd
 let shepherdImg;
 //The preys
-let sheep = [];
+let prey = [];
 //The number of preys (sheeps)
 let numberOfPreys = 15;
 
@@ -53,16 +53,10 @@ function setup() {
 
 //We use a for loop for the preys
 for (let i = 0; i < numberOfPreys; i++) {
-    // Generate random values for the arguments of the Prey constructor
-    /*let preyX = random(0, width);
-    let preyY = random(0, height);
-    let preySpeed = random(2, 12);
-    let preyImg = image(sheepImg, preyX, preyY);
-    let preyRadius = random(3, 50);*/
     // Create a new Prey objects with the random values
-    let sheep = new Prey (random(0,width), random(0, height),random(2, 12), sheepImg, 10);
+    let sheep = new Prey (random(0,width), random(0, height),random(2, 7), sheepImg, 15);
     // Add the new Prey object to the END of our array using push()
-     //sheep.push();
+     prey.push(sheep);
   }
 }
 
@@ -82,12 +76,12 @@ else if (state === "PlayScreen"){
 
 
 
-  for (let i = 0; i < numberOfPreys.length; i++) {
+  for (let i = 0; i < prey.length; i++) {
       // And again we ask prey[i] to display itself because i gives us the current
       // element we are counting through in the loop
-      sheep[i].display();
-      sheep[i].move();
-      sheep[i].avoid(shepherd);
+      prey[i].display();
+      prey[i].move();
+      prey[i].avoid(shepherd);
 
 
 

@@ -18,11 +18,7 @@ class barnBox {
     this.preysWelcomed = 0;
 }
 
-//So that the shepherd cant go in the barn
-checkBarnCollision(){
 
-
-}
 //When the sheeps overlap the barn, they disappear
 handleWelcomingSheeps(){
 
