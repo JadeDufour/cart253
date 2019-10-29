@@ -13,8 +13,8 @@ let prey = [];
 //The number of preys (sheeps)
 let numberOfPreys = 15;
 
-// The prey array to contain all the Prey objects
-//let prey =
+//the font
+let pixelFont;
 
 //The 2 barn
 let onePointBarnImg;
@@ -34,7 +34,10 @@ onePointBarnImg = loadImage("assets/images/1point.png")
 twoPointsBarnImg = loadImage("assets/images/2points.png")
 //The background for the play state
 grassBackground = loadImage("assets/images/grass.png")
-
+//the background image for the intro
+introBackground = loadImage("assets/images/farm.png")
+//the font
+//pixelFont = loadFont("assets/fonts/slkscr.ttf");
 }
 
 // setup()
@@ -42,19 +45,18 @@ grassBackground = loadImage("assets/images/grass.png")
 // Sets up a canvas
 // Creates objects for the predator and three prey
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(900,600);
   //The predator
   shepherd = new Predator(15, 30, 5, shepherdImg, 30);
-
-
-  onePointBarn = new barnBox(width/2, 100, onePointBarnImg, 40);
-  twoPointsBarn = new barnBox(width/2, height -100, twoPointsBarnImg, 40);
+//the two barns
+  onePointBarn = new barnBox(width/2, 100, onePointBarnImg, 50);
+  twoPointsBarn = new barnBox(width/2, height -100, twoPointsBarnImg, 50);
 
 
 //We use a for loop for the preys
 for (let i = 0; i < numberOfPreys; i++) {
     // Create a new Prey objects with the random values
-    let sheep = new Prey (random(0,width), random(0, height),random(2, 7), sheepImg, 15);
+    let sheep = new Prey (random(0,width), random(0, height),random(2, 5), sheepImg, 15);
     // Add the new Prey object to the END of our array using push()
      prey.push(sheep);
   }
@@ -75,7 +77,6 @@ else if (state === "PlayScreen"){
   displayBackground();
 
 
-
   for (let i = 0; i < prey.length; i++) {
       // And again we ask prey[i] to display itself because i gives us the current
       // element we are counting through in the loop
@@ -83,26 +84,17 @@ else if (state === "PlayScreen"){
       prey[i].move();
       prey[i].avoid(shepherd);
 
-
-
-      //Check if the sheeps are in the barn and update the score
-      onePointBarn.handleWelcomingSheeps(prey[i]);
-      twoPointsBarn.handleWelcomingSheeps(prey[i]);
     }
 
     // Display all the images
-
     shepherd.display();
     onePointBarn.display();
     twoPointsBarn.display();
 
 
-
-  //the avoid method()
-//sheep.avoid(shepherd);
-
-
-
+    //Check if the sheeps are in the barn and update the score
+    onePointBarn.handleWelcomingSheeps(prey);
+    twoPointsBarn.handleWelcomingSheeps(prey);
 
   //display the updated score
   displayScore();
@@ -121,9 +113,7 @@ function displayBackground(){
   imageMode(CENTER);
   image(grassBackground, width / 2, height / 2, width, height);
   pop();
-
 }
-
 
   //Displays the score depending on which barn welcomed the preys (sheeps)
 function displayScore(){
@@ -136,14 +126,26 @@ function displayScore(){
 
 //Displays the introductin
 function displayIntroduction(){
-  background(0);
+//the image
+  push();
+  imageMode(CENTER);
+  image(introBackground, width / 2, height / 2, width, height);
+  pop();
+
+//the transparent rectangle
+  push();
+  strokeWeight(0.5);
+  rectMode(CENTER);
+  fill(211, 211, 211, 127);
+  rect(0, height/2, width * 2, height / 5);
+  pop();
+//the text
   push();
   textAlign(CENTER, CENTER);
-  //Add instructions image later -------------------------------------------------
   textSize(32);
   fill(255);
-  textFont('Arial');
-  text("OOP chaser", width / 2, height / 2);
+  //textFont('pixelFont');
+  text("A day in a shepherd's life", width / 2, height / 2);
   pop();
 }
 

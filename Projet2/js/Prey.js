@@ -23,8 +23,8 @@ class Prey {
     this.vy = 0;
     this.speed = speed;
     // Time properties for noise() function
-    this.tx = random(0, 1000); // To make x and y noise different
-    this.ty = random(0, 1000); // we use random starting values
+    this.tx = random(0, 10); // To make x and y noise different
+    this.ty = random(0, 10); // we use random starting values
     // Health properties
     this.maxHealth = radius;
     this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
@@ -36,13 +36,13 @@ class Prey {
 
   // avoid
   //
-  // the prey flees from the predator when they are at a certain distanc appart from each other
+  // the sheep flees from the shepherd when they are at a certain distanc appart from each other
   // Still moves based on the noise function
   avoid(predator) {
     let d = dist(this.x, this.y, mouseX, mouseY);
     if (d < 100) {
       let distX = this.x - mouseX;
-      let distY = this.y = mouseY;
+      let distY = this.y - mouseY;
 
       this.vx = map(noise(this.tx), 0, 1, distX / 20, distX / 10);
       this.vy = map(noise(this.ty), 0, 1, distY / 20, distY / 10);

@@ -18,7 +18,6 @@ class barnBox {
     this.preysWelcomed = 0;
 }
 
-
 //When the sheeps overlap the barn, they disappear
 handleWelcomingSheeps(){
 
