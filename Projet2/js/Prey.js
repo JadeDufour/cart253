@@ -104,7 +104,7 @@ class Prey {
     push();
     noStroke();
     imageMode(CENTER);
-    image(this.img, this.x, this.y, this.radius * 2, this.radius * 2);
+    image(this.img, this.x, this.y, 80, this.radius * 2);
     pop();
   }
 
