@@ -32,6 +32,8 @@ sheepImg = loadImage("assets/images/sheep1.png")
 onePointBarnImg = loadImage("assets/images/barn1pt.png")
 //the two points barn
 twoPointsBarnImg = loadImage("assets/images/barn.png")
+//The background for the play state
+grassBackground = loadImage("assets/images/grass.png")
 
 }
 
@@ -42,7 +44,7 @@ twoPointsBarnImg = loadImage("assets/images/barn.png")
 function setup() {
   createCanvas(windowWidth, windowHeight);
   //The predator
-  shepherd = new Predator(mouseX, mouseY, 5, shepherdImg, 40);
+  shepherd = new Predator(15, 30, 5, shepherdImg, 30);
 
 
   onePointBarn = new barnBox(width/2, 0, onePointBarnImg, 50);
@@ -75,6 +77,8 @@ if (state ==="StartScreen"){
   displayIntroduction();
 }
 else if (state === "PlayScreen"){
+//A function to display the background
+  displayBackground();
   // Handle input for the tiger
   //tiger.handleInput();
 
@@ -119,6 +123,16 @@ else if (state === "PlayScreen"){
 
 
 }
+
+function displayBackground(){
+  push()
+  imageMode(CENTER);
+  image(grassBackground, width / 2, height / 2, width, height);
+  pop();
+
+}
+
+
   //Displays the score depending on which barn welcomed the preys (sheeps)
 function displayScore(){
   textAlign(CENTER);
@@ -128,7 +142,7 @@ function displayScore(){
   text("Points: " + (onePointBarn.preysWelcomed + twoPointsBarn.preysWelcomed), width/2, height / 8);
 }
 
-
+//Displays the introductin
 function displayIntroduction(){
   background(0);
   push();
