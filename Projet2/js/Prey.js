@@ -9,7 +9,7 @@ class Prey {
       //Les moutons
       //Doivent entrer dans la boite
       //Use arrays pcq il en a plusieurs
-      //les dessiner?
+    
   // constructor
   //
   // Sets the initial values for the Predator's properties

@@ -5,7 +5,6 @@
 // "Consumes" Prey objects
 
 class barnBox {
-
   // constructor
   //
   // Sets the initial values for the Barn's properties
@@ -19,19 +18,15 @@ class barnBox {
 }
 
 //When the sheeps overlap the barn, they disappear
-handleWelcomingSheeps(){
+handleWelcomingSheeps(prey){
 
     // Calculate distance from this barn to the prey
     let d = dist(this.x, this.y, prey.x, prey.y);
+    console.log(this.x, this.y, prey.x, prey.y);
     // Check if the distance is less than their two radii (an overlap)
     if (d < this.radius + prey.radius) {
-      // Decrease prey health by the same amount
-      prey.health = 0;
-      // Check if the prey "died"
-      if (prey.health < 0) {
         prey.reset();
         this.preysWelcomed += 1;
-      }
   }
 }
 

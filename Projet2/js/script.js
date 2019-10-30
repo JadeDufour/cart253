@@ -7,7 +7,7 @@
 //The sheeps are AI
 
 // Our "predator", the shepherd
-let shepherdImg;
+let shepherd;
 //The preys
 let prey = [];
 //The number of preys (sheeps)
@@ -19,6 +19,8 @@ let pixelFont;
 //The 2 barn
 let onePointBarnImg;
 let twoPointsBarnImg;
+//time count
+let timeRemaining = 60;
 
 let state = "StartScreen";
 
@@ -37,7 +39,7 @@ grassBackground = loadImage("assets/images/grass.png")
 //the background image for the intro
 introBackground = loadImage("assets/images/farm.png")
 //the font
-//pixelFont = loadFont("assets/fonts/slkscr.ttf");
+pixelFont = loadFont("assets/fonts/slkscr.ttf");
 }
 
 // setup()
@@ -52,11 +54,10 @@ function setup() {
   onePointBarn = new barnBox(width/2, 100, onePointBarnImg, 50);
   twoPointsBarn = new barnBox(width/2, height -100, twoPointsBarnImg, 50);
 
-
 //We use a for loop for the preys
 for (let i = 0; i < numberOfPreys; i++) {
     // Create a new Prey objects with the random values
-    let sheep = new Prey (random(0,width), random(0, height),random(2, 5), sheepImg, 15);
+    let sheep = new Prey (random(0,width), random(0, height),random(1, 4), sheepImg, 15);
     // Add the new Prey object to the END of our array using push()
      prey.push(sheep);
   }
@@ -75,6 +76,12 @@ if (state ==="StartScreen"){
 else if (state === "PlayScreen"){
 //A function to display the background
   displayBackground();
+  timeRemaining -= 1/60;
+  text("time remaining : " + floor(timeRemaining), width/2,height/2);
+  if (timeRemaining <= 0 ){
+    displayGameOver();
+  }
+
 
 
   for (let i = 0; i < prey.length; i++) {
@@ -84,6 +91,9 @@ else if (state === "PlayScreen"){
       prey[i].move();
       prey[i].avoid(shepherd);
 
+      //Check if the sheeps are in the barn and update the score
+      onePointBarn.handleWelcomingSheeps(prey[i]);
+      twoPointsBarn.handleWelcomingSheeps(prey[i]);
     }
 
     // Display all the images
@@ -92,18 +102,15 @@ else if (state === "PlayScreen"){
     twoPointsBarn.display();
 
 
-    //Check if the sheeps are in the barn and update the score
-    onePointBarn.handleWelcomingSheeps(prey);
-    twoPointsBarn.handleWelcomingSheeps(prey);
 
   //display the updated score
   displayScore();
 
   }
 
-/*else if (state ==="GameOverScreen"){
+else if (state ==="GameOverScreen"){
   displayGameOver();
-}*/
+}
 
 
 }
@@ -144,11 +151,19 @@ function displayIntroduction(){
   textAlign(CENTER, CENTER);
   textSize(32);
   fill(255);
-  //textFont('pixelFont');
+  textFont(pixelFont);
   text("A day in a shepherd's life", width / 2, height / 2);
   pop();
 }
 
+//A function that displays the game over screen
+function displayGameOver(){
+  push();
+  imageMode(CENTER);
+  image(introBackground, width / 2, height / 2, width, height);
+  pop();
+  text("Game Over!, \nYou managed to make " + (onePointBarn.preysWelcomed + twoPointsBarn.preysWelcomed) + "\n by leading your sheeps inside the barns", width/2,height/2);
+}
 function mousePressed() {
   if (state === "StartScreen") {
     //Remove the instrutions if mouse is pressed
