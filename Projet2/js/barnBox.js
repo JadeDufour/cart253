@@ -1,7 +1,7 @@
 // Where the player need to lead the sheep
 //
 // A class that represents a barn
-//It can't move around
+// It can't move around
 // "Consumes" Prey objects
 
 class barnBox {
@@ -18,6 +18,12 @@ class barnBox {
 }
 
 //When the sheeps overlap the barn, they disappear
+// "handleEating"
+//
+// Takes a Prey object as an argument and checks if the barn
+// overlaps it. If so, prey get deleted
+// If the prey dies, it gets reset.
+
 handleWelcomingSheeps(prey){
 
     // Calculate distance from this barn to the prey

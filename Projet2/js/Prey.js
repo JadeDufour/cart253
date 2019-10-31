@@ -6,10 +6,6 @@
 
 class Prey {
 
-      //Les moutons
-      //Doivent entrer dans la boite
-      //Use arrays pcq il en a plusieurs
-    
   // constructor
   //
   // Sets the initial values for the Predator's properties
@@ -44,8 +40,8 @@ class Prey {
       let distX = this.x - mouseX;
       let distY = this.y - mouseY;
 
-      this.vx = map(noise(this.tx), 0, 1, distX / 20, distX / 10);
-      this.vy = map(noise(this.ty), 0, 1, distY / 20, distY / 10);
+      this.vx = map(noise(this.tx), 0, 1, distX / 10, distX / 10);
+      this.vy = map(noise(this.ty), 0, 1, distY / 10, distY / 10);
       // Update position
       this.x += this.vx;
       this.y += this.vy;
