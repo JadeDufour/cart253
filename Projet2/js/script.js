@@ -21,11 +21,14 @@ let onePointBarnImg;
 let twoPointsBarnImg;
 //time count, the player has 1 minute to gather as many sheeps as possible
 let timeRemaining = 60;
+//The background music
+let happyMusic;
+//The click sound for UI start screen
+let clickUISound;
 //We set the initial state as Start Screen
 let state = "StartScreen";
 
 // Loads the images before the program starts
-sheepImg = loadImage("assets/images/sheep1.png")
 function preload() {
   //The shepherd
   shepherdImg = loadImage("assets/images/farmer.png")
@@ -41,6 +44,10 @@ function preload() {
   introBackground = loadImage("assets/images/farm.png")
   //the font
   pixelFont = loadFont("assets/fonts/slkscr.ttf");
+  //the playstate background music
+  happyMusic = new Audio("assets/sounds/pixeltownBackgroundMusic.mp3");
+  //The UI Sound (when the player clicks to play in Start screen)
+  clickUISound = new Audio("assets/sounds/UISound.mp3");
 }
 
 // setup()
@@ -78,6 +85,7 @@ function draw() {
     displayBackground();
     displayUI();
     timeCount();
+    happyMusic.play();
 
     //The prey array
     for (let i = 0; i < prey.length; i++) {
@@ -102,6 +110,7 @@ function draw() {
 
   } else if (state === "GameOverScreen") {
     displayGameOver();
+    happyMusic.pause();
   }
 }
 
@@ -210,6 +219,8 @@ function mousePressed() {
   if (state === "StartScreen") {
     //Remove the instrutions if mouse is pressed
     //Display the gameplay
+    clickUISound.play();
+
     state = "PlayScreen";
   }
 }
