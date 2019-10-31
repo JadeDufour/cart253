@@ -1,5 +1,6 @@
 // Predator
-//
+// The shepherd
+
 // A class that represents a simple predator
 // controlled by the arrow keys. It can move around
 // the screen and consume Prey objects to maintain its health.
@@ -7,8 +8,6 @@
 class Predator {
 
 //Not really a predator, more like a sheep keeper
-
-//A moins que une des deux barn puisse teleporter? (ajouter la fonction mais mettre entre parentheses son nom)
 
   // constructor
   //
@@ -18,6 +17,8 @@ class Predator {
     // Position
     this.x = x;
     this.y = y;
+    this.radius = radius; // Radius is defined in terms of health
+    this.img=img;
     // Velocity and speed
     // this.vx = 0;
     // this.vy = 0;
@@ -29,8 +30,7 @@ class Predator {
     // this.healthGainPerEat = 1;
     // Display properties
     //this.fillColor = fillColor;
-    this.radius = radius; // Radius is defined in terms of health
-    this.img=img;
+
   }
 
 

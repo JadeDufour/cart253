@@ -4,13 +4,13 @@
 // on screen based on a noise() function. It can move around
 // the screen and be consumed by Predator objects.
 
-class Prey {
-
+class Prey extends Animals {
   // constructor
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
   constructor(x, y, speed,img, radius) {
+    super(x,y,speed,img,radius)
     // Position
     this.x = x;
     this.y = y;

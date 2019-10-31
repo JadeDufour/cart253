@@ -8,6 +8,8 @@
 
 // Our "predator", the shepherd
 let shepherd;
+//the shepherd's dog, Dog (it's called Dog, pls dont judge)
+let dog;
 //The preys
 let prey = [];
 //The number of preys (sheeps)
@@ -34,6 +36,8 @@ function preload() {
   shepherdImg = loadImage("assets/images/farmer.png")
   //The sheeps
   sheepImg = loadImage("assets/images/sheep1.png")
+  //The dog
+  dogImg = loadImage("assets/images/dog.png")
   //The one point barn
   onePointBarnImg = loadImage("assets/images/1point.png")
   //the two points barn
@@ -57,7 +61,9 @@ function preload() {
 function setup() {
   createCanvas(900, 600);
   //The predator
-  shepherd = new Predator(15, 30, 5, shepherdImg, 30);
+  shepherd = new Predator(15, 30, 5, shepherdImg, 15);
+  //the dog
+  dog = new Dog (15, 30, 5, dogImg, 10);
   //the two barns
   onePointBarn = new barnBox(width / 2, 100, onePointBarnImg, 50);
   twoPointsBarn = new barnBox(width / 2, height - 100, twoPointsBarnImg, 50);
@@ -94,6 +100,8 @@ function draw() {
       prey[i].display();
       prey[i].move();
       prey[i].avoid(shepherd);
+      prey[i].avoid(dog);
+      prey[i].handleWrapping();
 
       //Check if the sheeps are in the barn and update the score
       onePointBarn.handleWelcomingSheeps(prey[i]);
@@ -102,9 +110,11 @@ function draw() {
 
     // Display all the images
     shepherd.display();
+    dog.display();
     onePointBarn.display();
     twoPointsBarn.display();
-
+    dog.move();
+    dog.handleWrapping();
     //display the updated score
     displayScore();
 
