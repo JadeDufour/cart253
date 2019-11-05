@@ -7,7 +7,7 @@
 
 class Predator {
 
-//Not really a predator, more like a sheep keeper
+  //Not really a predator, more like a sheep keeper
 
   // constructor
   //
@@ -18,7 +18,7 @@ class Predator {
     this.x = x;
     this.y = y;
     this.radius = radius; // Radius is defined in terms of health
-    this.img=img;
+    this.img = img;
     // Velocity and speed
     // this.vx = 0;
     // this.vy = 0;
@@ -42,7 +42,7 @@ class Predator {
     push();
     noStroke();
     imageMode(CENTER);
-    image(this.img, mouseX, mouseY,this.radius * 2, this.radius * 2);
+    image(this.img, mouseX, mouseY, this.radius * 2, this.radius * 2);
     pop();
   }
 }

@@ -17,6 +17,8 @@ let numberOfPreys = 15;
 
 //the font
 let pixelFont;
+//the second font
+let pacificoFont;
 
 //The 2 barn
 let onePointBarnImg;
@@ -37,7 +39,7 @@ function preload() {
   //The sheeps
   sheepImg = loadImage("assets/images/sheep1.png")
   //The dog
-  dogImg = loadImage("assets/images/dog.png")
+  dogImg = loadImage("assets/images/pug.png")
   //The one point barn
   onePointBarnImg = loadImage("assets/images/1point.png")
   //the two points barn
@@ -48,6 +50,8 @@ function preload() {
   introBackground = loadImage("assets/images/farm.png")
   //the font
   pixelFont = loadFont("assets/fonts/slkscr.ttf");
+  //the second font (used at the start screen)
+  pacificoFont= loadFont("assets/fonts/Pacifico.ttf")
   //the playstate background music
   happyMusic = new Audio("assets/sounds/pixeltownBackgroundMusic.mp3");
   //The UI Sound (when the player clicks to play in Start screen)
@@ -61,9 +65,9 @@ function preload() {
 function setup() {
   createCanvas(900, 600);
   //The predator
-  shepherd = new Predator(15, 30, 5, shepherdImg, 15);
+  shepherd = new Predator(15, 30, 5, shepherdImg, 25);
   //the dog
-  dog = new Dog (15, 30, 5, dogImg, 10);
+  dog = new Dog(15, 30, 5, dogImg, 30);
   //the two barns
   onePointBarn = new barnBox(width / 2, 100, onePointBarnImg, 50);
   twoPointsBarn = new barnBox(width / 2, height - 100, twoPointsBarnImg, 50);
@@ -146,7 +150,7 @@ function timeCount() {
   timeRemaining -= 1 / 60;
   textSize(25);
   text("time remaining : " + floor(timeRemaining), 175, 55);
-  if (timeRemaining <= 40) {
+  if (timeRemaining <= 0) {
     state = "GameOverScreen";
   }
 }
@@ -194,10 +198,10 @@ function displayIntroduction() {
 
   //The second text
   push();
-  textSize(32);
+  textSize(35);
   textAlign(CENTER);
   fill(255);
-  textFont(pixelFont);
+  textFont(pacificoFont);
   text("Try to gather as many sheep\n as possible in one minute\n The green barn scores 1 pt\n The red barn scores 2 pts ", width / 2, 400);
   pop();
 }
@@ -230,7 +234,6 @@ function mousePressed() {
     //Remove the instrutions if mouse is pressed
     //Display the gameplay
     clickUISound.play();
-
     state = "PlayScreen";
   }
 }

@@ -9,8 +9,8 @@ class Prey extends Animals {
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed,img, radius) {
-    super(x,y,speed,img,radius)
+  constructor(x, y, speed, img, radius) {
+    super(x, y, speed, img, radius)
     // Position
     this.x = x;
     this.y = y;
@@ -26,7 +26,7 @@ class Prey extends Animals {
     this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
     // Display properties
     this.radius = this.health;
-    this.img=img;
+    this.img = img;
   }
 
 
@@ -34,7 +34,7 @@ class Prey extends Animals {
   //
   // the sheep flees from the shepherd when they are at a certain distanc appart from each other
   // Still moves based on the noise function
-  avoid(predator) {
+  avoid() {
     let d = dist(this.x, this.y, mouseX, mouseY);
     if (d < 100) {
       let distX = this.x - mouseX;
@@ -60,7 +60,7 @@ class Prey extends Animals {
   // Sets velocity based on the noise() function and the Prey's speed
   // Moves based on the resulting velocity and handles wrapping
   move() {
-    // Set velocity via noise()
+    // // Set velocity via noise()
     this.vx = map(noise(this.tx), 0, 1, -this.speed, this.speed);
     this.vy = map(noise(this.ty), 0, 1, -this.speed, this.speed);
     // Update position
@@ -81,15 +81,13 @@ class Prey extends Animals {
     // Off the left or right
     if (this.x < 0) {
       this.x += width;
-    }
-    else if (this.x > width) {
+    } else if (this.x > width) {
       this.x -= width;
     }
     // Off the top or bottom
     if (this.y < 0) {
       this.y += height;
-    }
-    else if (this.y > height) {
+    } else if (this.y > height) {
       this.y -= height;
     }
   }
