@@ -225,7 +225,7 @@ function displayGameOver() {
   push();
   textFont(pixelFont);
   textSize(30);
-  text("Game Over!, \nYou managed to make " + (onePointBarn.preysWelcomed + twoPointsBarn.preysWelcomed) + " points\n by leading your sheeps inside the barns", width / 2, 260);
+  text("Game Over!, \nYou managed to make " + (onePointBarn.preysWelcomed + twoPointsBarn.preysWelcomed) + " points\n without the help of your dummy dog", width / 2, 260);
   pop();
 
 }
