@@ -51,7 +51,7 @@ function preload() {
   //the font
   pixelFont = loadFont("assets/fonts/slkscr.ttf");
   //the second font (used at the start screen)
-  pacificoFont= loadFont("assets/fonts/Pacifico.ttf")
+  pacificoFont = loadFont("assets/fonts/Pacifico.ttf")
   //the playstate background music
   happyMusic = new Audio("assets/sounds/pixeltownBackgroundMusic.mp3");
   //The UI Sound (when the player clicks to play in Start screen)
@@ -118,6 +118,7 @@ function draw() {
     onePointBarn.display();
     twoPointsBarn.display();
     dog.move();
+    shepherd.move();
     dog.handleWrapping();
     //display the updated score
     displayScore();

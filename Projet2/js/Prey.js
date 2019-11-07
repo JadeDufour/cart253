@@ -34,11 +34,11 @@ class Prey extends Animals {
   //
   // the sheep flees from the shepherd when they are at a certain distanc appart from each other
   // Still moves based on the noise function
-  avoid() {
-    let d = dist(this.x, this.y, mouseX, mouseY);
+  avoid(other) {
+    let d = dist(this.x, this.y, other.x, other.y);
     if (d < 100) {
-      let distX = this.x - mouseX;
-      let distY = this.y - mouseY;
+      let distX = this.x - other.x;
+      let distY = this.y - other.y;
 
       this.vx = map(noise(this.tx), 0, 1, distX / 10, distX / 10);
       this.vy = map(noise(this.ty), 0, 1, distY / 10, distY / 10);

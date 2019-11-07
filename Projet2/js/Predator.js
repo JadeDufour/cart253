@@ -33,6 +33,12 @@ class Predator {
 
   }
 
+  move() {
+
+    this.x = mouseX;
+    this.y = mouseY;
+
+  }
 
   // display
   //
