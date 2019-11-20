@@ -1,31 +1,28 @@
 //Project 3
 // by Jade Dufour
 
-let ship = {
-  angle: 0,
-  speed: 0,
-  x: 0,
-  y: 0,
-}
-
-let numPrey = 10;
+let numPrey = 12;
 let prey = [];
 let state = "StartScreen";
+let dj;
 
 function preload(){
   //the background image for the intro
   introBackground = loadImage("assets/images/musicDisc.jpg");
+  gameBackground = loadImage("assets/images/electro-background.jpg");
+  player = loadImage("assets/images/playerImgDJ.jpg");
 }
 
 function setup() {
   createCanvas(900,600);
-  ship.x = width/2;
-  ship.y = height/2;
+
+
+  dj = new DJ(width/2, height/2, 5, player, 30);
 
   for (let i = 0; i < numPrey; i++) {
   // Generate (mostly) random values for the arguments of the Prey constructor
-  let preyX = random(0, width);
-  let preyY = random(0, height);
+  let preyX = random(80, width-80);
+  let preyY = random(80, height-80);
   let preySpeed = random(2, 10);
   let preyColor = color(random(255),random(255),random(255));
   let preyRadius = random(3, 50);
@@ -38,7 +35,10 @@ function setup() {
 }
 
 function draw() {
-  background(200,200,200);
+  push()
+  imageMode(CENTER);
+  image(gameBackground, width / 2, height / 2, width, height);
+  pop();
 
 
 if (state === "StartScreen"){
@@ -46,52 +46,21 @@ if (state === "StartScreen"){
   }
 
 else if (state === "PlayScreen"){
-  handleInput();
-  moveShip();
-  drawShip();
+
+
+
+  dj.handleInput();
+  dj.move();
+  dj.display();
 
   for (let i = 0; i < prey.length; i++) {
     // And again we ask prey[i] to display itself because i gives us the current
     // element we are counting through in the loop
     prey[i].display();
+    // prey[i].update();
   }
 
-function handleInput() {
-  if (keyIsDown(LEFT_ARROW)) {
-    ship.angle -= 0.1;
-  }
-  else if (keyIsDown(RIGHT_ARROW)) {
-    ship.angle += 0.1;
-  }
 
-  if (keyIsDown(UP_ARROW)) {
-    ship.speed = 5;
-  }
-  else if (keyIsDown(DOWN_ARROW)) {
-    ship.speed = 0;
-  }
-}
-
-function moveShip() {
-  // The magic lines for calculating velocity!
-  let vx = ship.speed * cos(ship.angle);
-  let vy = ship.speed * sin(ship.angle);
-
-  ship.x += vx;
-  ship.y += vy;
-}
-
-function drawShip() {
-  push();
-  translate(ship.x,ship.y);
-  rotate(ship.angle);
-  noStroke();
-  fill(255,0,0);
-  ellipse(0,0,50,50);
-  stroke(0);
-  line(0,0,50,0);
-  pop();
-}
 
 }
 //For now we keep it hidden
@@ -101,6 +70,8 @@ function drawShip() {
 //
 
 }
+
+
 
 //Displays the introductin
 function displayIntroduction() {

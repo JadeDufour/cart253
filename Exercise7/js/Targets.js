@@ -19,7 +19,19 @@ class Targets {
     // Display properties
     this.fillColor = fillColor;
     this.radius = this.health;
+    this.size = this.radius;
   }
+
+  // update(){
+  //
+  //   if (this.radius <= 2 ) {
+  //     this.size += 1;
+  //   }
+  //
+  //   if else (this.radius >= 40 ){
+  //     this.size -=1;
+  //   }
+  // }
 
   // move
   //
@@ -35,8 +47,8 @@ class Targets {
     // Update time properties
     this.tx += 0.01;
     this.ty += 0.01;
-    // Handle wrapping
-    this.handleWrapping();
+    // // Handle wrapping
+    // this.handleWrapping();
   }
 
   // handleWrapping
