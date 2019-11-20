@@ -29,7 +29,7 @@ class DJ {
     // this.radius = this.health;
     // this.size = this.radius;
   }
-
+//The player moves with the arrows
   handleInput() {
     if (keyIsDown(LEFT_ARROW)) {
       this.angle -= 0.1;
@@ -54,7 +54,7 @@ class DJ {
     this.x += vx;
     this.y += vy;
   }
-
+//Display the player
   display() {
     push();
     translate(this.x,this.y);
@@ -68,7 +68,7 @@ class DJ {
   }
   // handleWrapping
   //
-  // Checks if the prey has gone off the canvas and
+  // Checks if the player has gone off the canvas and
   // wraps it to the other side if so
   handleWrapping() {
     // Off the left or right
@@ -87,30 +87,32 @@ class DJ {
     }
   }
 
+//A function that plays a sound when the player overlaps the circles
+  overlapping() {
+    // Calculate distance from the dj to the circles
+    let d = dist(this.x, this.y, musicalCircles.x, musicalCircles.y);
+    // Check if the distance is less than their two radii (an overlap)
+    if (d < this.radius + musicalCircles.radius) {
+      overlapSound.play();
+      // this.radius +=10;
 
-  // overlapping(prey) {
-  //   // Calculate distance from this predator to the prey
-  //   let d = dist(this.x, this.y, newPrey.x, newPrey.y);
-  //   // Check if the distance is less than their two radii (an overlap)
-  //   if (d < this.radius + newPrey.radius) {
-  //
-  //     this.radius +=10;
-  //
-  //     // Increase predator health and constrain it to its possible range
-  //    //  this.health += this.healthGainPerEat;
-  //    //  this.health = constrain(this.health, 0, this.maxHealth);
-  //    //  // Decrease prey health by the same amount
-  //    // Targets.health -= this.healthGainPerEat;
-  //     // Check if the prey died and reset it if so
-  //     // if (prey.health < 0) {
-  //     //   prey.reset();
-  //     //   this.preyEaten +=1;
-  //     //     }
-  //     //   }
-  //       //Add a condition that ends the game
-  //       // if (this.preyEaten >= 30 || this.radius <= 0) {
-  //       //   state = "GameOverScreen";
-  //       // }
-  //     }
+      // Increase predator health and constrain it to its possible range
+     //  this.health += this.healthGainPerEat;
+     //  this.health = constrain(this.health, 0, this.maxHealth);
+     //  // Decrease prey health by the same amount
+     // Targets.health -= this.healthGainPerEat;
+      // Check if the prey died and reset it if so
+      // if (prey.health < 0) {
+      //   prey.reset();
+      //   this.preyEaten +=1;
+      //     }
+      //   }
+        //Add a condition that ends the game
+        // if (this.preyEaten >= 30 || this.radius <= 0) {
+        //   state = "GameOverScreen";
+        // }
+      }
+
+  }
 
 }

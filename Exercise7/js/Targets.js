@@ -20,19 +20,15 @@ class Targets {
     this.fillColor = fillColor;
     // this.radius = this.health;
     this.radius = radius;
-
-
-
     //minimum size
     this.minRadius = 10;
     //maximum size
-    this.maxRadius = 40;
+    this.maxRadius = 50;
     //change speed for size (how much will the size increase/decrease each frame)
     this.radiusSpeed = .5;
 
-
   }
-
+//The circles shrink and grow
   update(){
 
     //if the size is either too small, or too big, flip the size speed sign (if it was positive (growing) - make it negative (shrink) - and vice versa)
@@ -41,42 +37,32 @@ class Targets {
       }
       //increment the size with the size speed (be it positive or negative)
       this.radius += this.radiusSpeed;
-
-
-
-    // if (this.radius <= 31 ) {
-    //   this.radius += 1;
-    // }
-
-    // while (this.radius >= 40 ){
-    //   this.radius -=1;
-    // }
   }
 
   // move
   //
-  // Sets velocity based on the noise() function and the Prey's speed
-  // Moves based on the resulting velocity and handles wrapping
-  move() {
-    // Set velocity via noise()
-    this.vx = map(noise(this.tx), 0, 1, -this.speed, this.speed);
-    this.vy = map(noise(this.ty), 0, 1, -this.speed, this.speed);
-    // Update position
-    this.x += this.vx;
-    this.y += this.vy;
-    // Update time properties
-    this.tx += 0.01;
-    this.ty += 0.01;
-    // // Handle wrapping
-    // this.handleWrapping();
-  }
+  // // Sets velocity based on the noise() function and the Prey's speed
+  // // Moves based on the resulting velocity and handles wrapping
+  // move() {
+  //   // Set velocity via noise()
+  //   this.vx = map(noise(this.tx), 0, 1, -this.speed, this.speed);
+  //   this.vy = map(noise(this.ty), 0, 1, -this.speed, this.speed);
+  //   // Update position
+  //   this.x += this.vx;
+  //   this.y += this.vy;
+  //   // Update time properties
+  //   this.tx += 0.01;
+  //   this.ty += 0.01;
+  //   // // Handle wrapping
+  //   // this.handleWrapping();
+  // }
 
 
 
   // display
   //
-  // Draw the prey as an ellipse on the canvas
-  // with a radius the same size as its current health.
+  // Draw the musical circles as an ellipse on the canvas
+
   display() {
     push();
     noStroke();
@@ -84,6 +70,11 @@ class Targets {
     ellipse(this.x, this.y, this.radius * 2);
     pop();
   }
+  // push();
+  // noStroke();
+  // imageMode(CENTER);
+  // image(this.img, this.x, this.y, this.radius * 2, this.radius * 2);
+  // pop();
 
   // reset
   //
