@@ -14,24 +14,44 @@ class Targets {
     this.tx = random(0, 1000); // To make x and y noise different
     this.ty = random(0, 1000); // we use random starting values
     // Health properties
-    this.maxHealth = radius;
-    this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
+    // this.maxHealth = radius;
+    // this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
     // Display properties
     this.fillColor = fillColor;
-    this.radius = this.health;
-    this.size = this.radius;
+    // this.radius = this.health;
+    this.radius = radius;
+
+
+
+    //minimum size
+    this.minRadius = 10;
+    //maximum size
+    this.maxRadius = 40;
+    //change speed for size (how much will the size increase/decrease each frame)
+    this.radiusSpeed = .5;
+
+
   }
 
-  // update(){
-  //
-  //   if (this.radius <= 2 ) {
-  //     this.size += 1;
-  //   }
-  //
-  //   if else (this.radius >= 40 ){
-  //     this.size -=1;
-  //   }
-  // }
+  update(){
+
+    //if the size is either too small, or too big, flip the size speed sign (if it was positive (growing) - make it negative (shrink) - and vice versa)
+      if(this.radius < this.minRadius || this.radius > this.maxRadius) {
+        this.radiusSpeed *= -1;
+      }
+      //increment the size with the size speed (be it positive or negative)
+      this.radius += this.radiusSpeed;
+
+
+
+    // if (this.radius <= 31 ) {
+    //   this.radius += 1;
+    // }
+
+    // while (this.radius >= 40 ){
+    //   this.radius -=1;
+    // }
+  }
 
   // move
   //
@@ -51,26 +71,7 @@ class Targets {
     // this.handleWrapping();
   }
 
-  // handleWrapping
-  //
-  // Checks if the prey has gone off the canvas and
-  // wraps it to the other side if so
-  // handleWrapping() {
-  //   // Off the left or right
-  //   if (this.x < 0) {
-  //     this.x += width;
-  //   }
-  //   else if (this.x > width) {
-  //     this.x -= width;
-  //   }
-  //   // Off the top or bottom
-  //   if (this.y < 0) {
-  //     this.y += height;
-  //   }
-  //   else if (this.y > height) {
-  //     this.y -= height;
-  //   }
-  // }
+
 
   // display
   //
@@ -80,7 +81,6 @@ class Targets {
     push();
     noStroke();
     fill(this.fillColor);
-    this.radius = this.health;
     ellipse(this.x, this.y, this.radius * 2);
     pop();
   }
@@ -89,13 +89,13 @@ class Targets {
   //
   // Set the position to a random location and reset health
   // and radius back to default
-  reset() {
-    // Random position
-    this.x = random(0, width);
-    this.y = random(0, height);
-    // Default health
-    this.health = this.maxHealth;
-    // Default radius
-    this.radius = this.health;
-  }
+  // reset() {
+  //   // Random position
+  //   this.x = random(0, width);
+  //   this.y = random(0, height);
+  //   // Default health
+  //   this.health = this.maxHealth;
+  //   // Default radius
+  //   this.radius = this.health;
+  // }
 }

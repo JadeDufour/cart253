@@ -8,6 +8,7 @@ class DJ {
       this.speed= 0;
       this.x= x;
       this.y= y;
+      this.radius = radius;
 
 
     // //the Position
@@ -65,7 +66,51 @@ class DJ {
     line(0,0,50,0);
     pop();
   }
+  // handleWrapping
+  //
+  // Checks if the prey has gone off the canvas and
+  // wraps it to the other side if so
+  handleWrapping() {
+    // Off the left or right
+    if (this.x < 0) {
+      this.x += width;
+    }
+    else if (this.x > width) {
+      this.x -= width;
+    }
+    // Off the top or bottom
+    if (this.y < 0) {
+      this.y += height;
+    }
+    else if (this.y > height) {
+      this.y -= height;
+    }
+  }
 
 
+  // overlapping(prey) {
+  //   // Calculate distance from this predator to the prey
+  //   let d = dist(this.x, this.y, newPrey.x, newPrey.y);
+  //   // Check if the distance is less than their two radii (an overlap)
+  //   if (d < this.radius + newPrey.radius) {
+  //
+  //     this.radius +=10;
+  //
+  //     // Increase predator health and constrain it to its possible range
+  //    //  this.health += this.healthGainPerEat;
+  //    //  this.health = constrain(this.health, 0, this.maxHealth);
+  //    //  // Decrease prey health by the same amount
+  //    // Targets.health -= this.healthGainPerEat;
+  //     // Check if the prey died and reset it if so
+  //     // if (prey.health < 0) {
+  //     //   prey.reset();
+  //     //   this.preyEaten +=1;
+  //     //     }
+  //     //   }
+  //       //Add a condition that ends the game
+  //       // if (this.preyEaten >= 30 || this.radius <= 0) {
+  //       //   state = "GameOverScreen";
+  //       // }
+  //     }
 
 }
