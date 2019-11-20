@@ -10,9 +10,15 @@ let ship = {
 
 let numPrey = 10;
 let prey = [];
+let state = "StartScreen";
+
+function preload(){
+  //the background image for the intro
+  introBackground = loadImage("assets/images/musicDisc.jpg");
+}
 
 function setup() {
-  createCanvas(900,900);
+  createCanvas(900,600);
   ship.x = width/2;
   ship.y = height/2;
 
@@ -33,6 +39,13 @@ function setup() {
 
 function draw() {
   background(200,200,200);
+
+
+if (state === "StartScreen"){
+  displayIntroduction();
+  }
+
+else if (state === "PlayScreen"){
   handleInput();
   moveShip();
   drawShip();
@@ -42,7 +55,6 @@ function draw() {
     // element we are counting through in the loop
     prey[i].display();
   }
-}
 
 function handleInput() {
   if (keyIsDown(LEFT_ARROW)) {
@@ -79,4 +91,46 @@ function drawShip() {
   stroke(0);
   line(0,0,50,0);
   pop();
+}
+
+}
+//For now we keep it hidden
+// else if (state ==="GameOverScreen"){
+//
+// }
+//
+
+}
+
+//Displays the introductin
+function displayIntroduction() {
+  //the image
+  push();
+  imageMode(CENTER);
+  image(introBackground, width / 2, height / 2, width, height);
+  pop();
+
+  //the transparent rectangle
+  push();
+  strokeWeight(0.5);
+  rectMode(CENTER);
+  fill(211, 211, 211, 127);
+  rect(0, height / 2, width * 2, height / 5);
+  pop();
+  //the text
+  push();
+  textAlign(CENTER, CENTER);
+  textSize(32);
+  fill(255);
+  // textFont(pixelFont);
+  text("Musical Mayhem", width / 2, height / 2);
+  pop();
+}
+
+function mousePressed() {
+  if (state === "StartScreen") {
+    //Remove the instrutions if mouse is pressed
+    //Display the gameplay
+    state = "PlayScreen";
+  }
 }
