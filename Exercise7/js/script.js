@@ -38,7 +38,7 @@ function setup() {
 //The for loop for the circles
   for (let i = 0; i < numCircles; i++) {
   // Create a new Prey objects with the random values
-  let circles = new Targets(random(60, width-60), random(60, height-60), random(2, 10), color(random(255),random(255),random(255)), random(10, 50));
+  let circles = new Targets(random(60, width-60), random(60, height-140), random(2, 10), color(random(255),random(255),random(255)), random(10, 50));
   // Add the new Prey object to the END of our array using push()
   musicalCircles.push(circles);
   }
@@ -63,6 +63,8 @@ else if (state === "PlayScreen"){
   dj.handleWrapping();
 //A function for the sounds of the mouse, to clean the script
   playMouseInputs();
+  displayGameUI();
+
 
 //The for loop for the circles
   for (let i = 0; i < musicalCircles.length; i++) {
@@ -70,6 +72,8 @@ else if (state === "PlayScreen"){
     // element we are counting through in the loop
     musicalCircles[i].update();
     musicalCircles[i].display();
+
+    //AT THE MOMENT SOUND OVERLAPPING DOES NOT WORK and I dont know why <-------------------------------
     dj.overlapping(musicalCircles[i]);
   }
 
@@ -94,10 +98,10 @@ function displayIntroduction() {
 
   //the transparent rectangle
   push();
-  strokeWeight(0.5);
+  strokeWeight(0.3);
   rectMode(CENTER);
-  fill(211, 211, 211, 127);
-  rect(0, height / 2, width * 2, height / 5);
+  fill(127, 0, 255, 127);
+  rect(width/2, height / 2, width/2, height / 5);
   pop();
   //the text
   push();
@@ -108,6 +112,27 @@ function displayIntroduction() {
   text("Musical Mayhem", width / 2, height / 2);
   pop();
 }
+
+function displayGameUI(){
+  //the pink transparent rectangle at the bottom of the canvas
+  push();
+  strokeWeight(0.3);
+  rectMode(CENTER);
+  fill(255, 0, 155, 127);
+  rect(width/2, height, width, height / 4);
+  pop();
+  //the text
+  push();
+  textAlign(CENTER, CENTER);
+  textSize(18);
+  fill(255);
+  textFont("marker");
+  text("(not definitive text) Move your mouse around the screen for some beat\nGo over the circles for sound effect", width / 2, height-37);
+  pop();
+
+}
+
+
 //A beat plays depending on the location of the mouse on the canvas
 function playMouseInputs(){
 
