@@ -24,7 +24,7 @@ class Runner {
     this.img = img;
     //the gravity
     this.gravity = 1;
-    this.jumpingSpeed = 15;
+    this.jumpingSpeed = 115;
 
     //Key Codes -----------------------------------
 
@@ -64,7 +64,8 @@ class Runner {
       this.vy = -this.jumpingSpeed;
     }
 
-    console.log(this.y)
+    console.log(this.y);
+    console.log(this.x);
 
   }
 
@@ -78,19 +79,41 @@ move() {
 
 handleWrapping(){
   if (this.y < 0) {
-   // nextLevel()
    //
-   // Once the climber goes up, the state moves to the next level
+   // If the player falls off the screen, its game over
    state = "GameOverScreen";
 }
 }
 
 // gravity()
 //
-// When the climber is up in the air, it has to come down
 gravityEffect() {
   // Gravity pulls the player to the ground
   this.vy += this.gravity;
+}
+
+stayOnScreen(){
+  // let d = dist(this.x, this.y, platform.x, platform.y);
+
+    // dist()
+    //
+    // To keep track of the platform and the avatar are in contact
+    // if (d < this.width / 2 + platform.width / 2) {
+    //   console.log("standing");
+    //   // this.vy
+    //   //
+    //   // To make sure that the climber doesn't fall
+    //   this.grounded = true;
+    //   this.pull = 0;
+    //   this.vy = 0;
+
+    // }
+
+    if(this.y = 400){
+      this.gravity = 0;
+      this.vy = 0;
+    }
+
 }
 
 
