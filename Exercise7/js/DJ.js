@@ -9,7 +9,7 @@ class DJ {
       this.x= x;
       this.y= y;
       this.radius = radius;
-
+      this.lastCircle = null;
 
     // //the Position
     // this.x = x;
@@ -89,30 +89,29 @@ class DJ {
 
 //A function that plays a sound when the player overlaps the circles
   overlapping() {
-    // Calculate distance from the dj to the circles
-    let d = dist(this.x, this.y, musicalCircles.x, musicalCircles.y);
-    // Check if the distance is less than their two radii (an overlap)
-    if (d < this.radius + musicalCircles.radius) {
-      overlapSound.play();
-      // this.radius +=10;
 
-      // Increase predator health and constrain it to its possible range
-     //  this.health += this.healthGainPerEat;
-     //  this.health = constrain(this.health, 0, this.maxHealth);
-     //  // Decrease prey health by the same amount
-     // Targets.health -= this.healthGainPerEat;
-      // Check if the prey died and reset it if so
-      // if (prey.health < 0) {
-      //   prey.reset();
-      //   this.preyEaten +=1;
-      //     }
-      //   }
-        //Add a condition that ends the game
-        // if (this.preyEaten >= 30 || this.radius <= 0) {
-        //   state = "GameOverScreen";
-        // }
+  for (let i = 0; i < 12; i++) {
+    if (this.lastCircle == null){
+      // Calculate distance from the dj to the circles
+      let d = dist(this.x, this.y, musicalCircles.x, musicalCircles.y);
+      // Check if the distance is less than their two radii (an overlap)
+      if (d < this.radius + musicalCircles.radius) {
+        console.log('jj');
+        this.lastCircle = musicalCircles[i];
+        // playMode("untilDone");
+        overlapSound.play();
+
+        }
+    }
+
+
+
+  else {
+      if ( d == false && this.lastCircle == musicalCircles[i] ){
+            overlapSound.pause();
+            this.lastCircle = null;
       }
-
+    }
   }
-
+  }
 }

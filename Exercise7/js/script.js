@@ -6,7 +6,7 @@
 // Continue Description ----------------------------------
 //by Jade Dufour
 
-let numCircles = 12;
+let numCircles = 5;
 let musicalCircles = [];
 let state = "StartScreen";
 let dj;
@@ -29,6 +29,7 @@ function preload(){
   //Beats
   overlapSound = new Audio("assets/sounds/bassSound2.wav");
   bassSound1 = new Audio("assets/sounds/bassSound1.wav");
+  bassSound2 = new Audio("assets/sounds/beat.wav");
 }
 
 function setup() {
@@ -38,7 +39,7 @@ function setup() {
 //The for loop for the circles
   for (let i = 0; i < numCircles; i++) {
   // Create a new Prey objects with the random values
-  let circles = new Targets(random(60, width-60), random(60, height-140), random(2, 10), color(random(255),random(255),random(255)), random(10, 50));
+  let circles = new Targets(400, 400, random(2, 10), color(random(255),random(255),random(255)), random(10, 50));
   // Add the new Prey object to the END of our array using push()
   musicalCircles.push(circles);
   }
@@ -116,7 +117,7 @@ function displayIntroduction() {
 function displayGameUI(){
   //the pink transparent rectangle at the bottom of the canvas
   push();
-  strokeWeight(0.3);
+  strokeWeight(0.3);8
   rectMode(CENTER);
   fill(255, 0, 155, 127);
   rect(width/2, height, width, height / 4);
