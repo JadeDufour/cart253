@@ -6,13 +6,13 @@
 class Runner {
 
 
-  constructor(x, y, speed, img, radius, jump, left, right) {
+  constructor(x, y, speed, img, radius,  jump, left, right) {
     // Position
     this.x = x;
     this.y = y;
-    this.radius = radius; // Radius is defined in terms of health
+    this.radius = radius;
     this.img = img;
-    // Velocity and speed
+    // Velocity & speed
     this.vx = 0;
     this.vy = 0;
     this.speed = speed;
@@ -28,7 +28,7 @@ class Runner {
 
     //Key Codes -----------------------------------
 
-        //Up= 87
+        //Up= 32 (space bar)
         //Left = 65
         //Right = 68
 
@@ -49,42 +49,56 @@ class Runner {
 
 
   handleInput() {
-    // Horizontal movement
+    // Horizontal movements
     if (keyIsDown(this.leftKey)) {
       this.vx = -this.speed;
-    }
-    else if (keyIsDown(this.rightKey)) {
+    } else if (keyIsDown(this.rightKey)) {
       this.vx = this.speed;
-    }
-    else {
+    } else {
       this.vx = 0;
     }
-    // Vertical movement
-    if (keyIsDown(this.upKey){
-        // The jumping power velocity
-        this.vy = -jumpingSpeed;
+
+    // Jumping
+
+    if (keyIsDown(this.jumpKey)) {
+      this.vy = -this.jumpingSpeed;
+    }
+
+    console.log(this.y)
 
   }
 
+// move()
+
+move() {
+  // Update the position of the object
+  this.x += this.vx;
+  this.y += this.vy;
+}
+
+handleWrapping(){
+  if (this.y < 0) {
+   // nextLevel()
+   //
+   // Once the climber goes up, the state moves to the next level
+   state = "GameOverScreen";
+}
+}
+
+// gravity()
+//
+// When the climber is up in the air, it has to come down
+gravityEffect() {
+  // Gravity pulls the player to the ground
+  this.vy += this.gravity;
+}
 
 
-
-
-  move() {
-
-
-
-  }
-
-  // display
-  //
-  // Draw the predator as an ellipse on the canvas
-  // with a radius the same size as its current health.
   display() {
     push();
     noStroke();
     imageMode(CENTER);
-    image(this.img, mouseX, mouseY, this.radius * 2, this.radius * 2);
+    image(this.img, this.x, this.y, this.radius * 2, this.radius * 2);
     pop();
   }
 }

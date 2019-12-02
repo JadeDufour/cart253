@@ -4,18 +4,26 @@
 // This is an endless runner -------------------------  continue description ------------------------------------------------------------------
 
 let state = "StartScreen";
+let player;
 
-function setup() {
-createCanvas(900, 600);
 
-}
 function preload(){
 
+  imgPlayer = loadImage("assets/images/player.png");
+
 }
 
 
+function setup() {
+  createCanvas(900, 600);
 
-  function draw() {
+  //the runner (player)
+  player = new Runner(100,400,3, imgPlayer, 15, 32,65,68);
+}
+//(x, y, speed, img, radius,  jump, left, right)
+
+
+function draw() {
     //a blue background (sky)
     background(55,200,255);
 
@@ -24,6 +32,11 @@ function preload(){
       displayIntroduction();
     } else if (state === "PlayScreen") {
 
+      player.handleWrapping();
+      player.handleInput();
+      player.move();
+      player.gravityEffect();
+      player.display();
 
       //The prey array----------------------
 
@@ -32,11 +45,12 @@ function preload(){
       //display the updated score
       // displayScore();
 
-    } else if (state === "GameOverScreen") {
-      displayGameOver();
-      // happyMusic.pause();
-    }
+    // } else if (state === "GameOverScreen") {
+    //   displayGameOver();
+    //   //music.pause();
+    // }
   }
+}
 
 
 function displayIntroduction(){
@@ -48,7 +62,6 @@ function mousePressed() {
   if (state === "StartScreen") {
     //Remove the instrutions if mouse is pressed
     //Display the gameplay
-
     state = "PlayScreen";
   }
 }
