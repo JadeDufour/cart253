@@ -24,8 +24,9 @@ class Runner {
     this.img = img;
     //the gravity
     this.gravity = 1;
-    this.jumpingSpeed = 115;
-
+    this.jumpingSpeed = 5;
+    this.acceleration = 0.008;
+    this.grounded = false;
     //Key Codes -----------------------------------
 
         //Up= 32 (space bar)
@@ -34,16 +35,6 @@ class Runner {
 
       //-------------------------------------------
 
-
-
-
-    // Health properties
-    // this.maxHealth = radius;
-    // this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
-    // this.healthLossPerMove = 0.1;
-    // this.healthGainPerEat = 1;
-    // Display properties
-    //this.fillColor = fillColor;
 
   }
 
@@ -64,8 +55,8 @@ class Runner {
       this.vy = -this.jumpingSpeed;
     }
 
-    console.log(this.y);
-    console.log(this.x);
+    console.log("y position : " + this.y);
+    console.log("x position : " + this.x);
 
   }
 
@@ -93,28 +84,33 @@ gravityEffect() {
 }
 
 stayOnScreen(){
-  // let d = dist(this.x, this.y, platform.x, platform.y);
+  let d = dist(this.x, this.y, platformsGroup.x, platformsGroup.y);
 
-    // dist()
-    //
-    // To keep track of the platform and the avatar are in contact
-    // if (d < this.width / 2 + platform.width / 2) {
-    //   console.log("standing");
-    //   // this.vy
-    //   //
-    //   // To make sure that the climber doesn't fall
-    //   this.grounded = true;
-    //   this.pull = 0;
-    //   this.vy = 0;
+    //dist()
 
-    // }
-
-    if(this.y = 400){
-      this.gravity = 0;
+    //To keep track of the platform and the avatar are in contact
+    if (d < this.width / 2 + platformsGroup.width / 2) {
+      console.log("standing");
+      // this.vy
+      //
+      // To make sure that the climber doesn't fall
+      this.grounded = true;
+      this.pull = 0;
       this.vy = 0;
+
     }
+// let d = dist(this.y , platformsGroup.platformHeight)
+//     if(d >= 1){
+//       this.gravity = 0;
+//       this.vy = 0;
+//     }
+//
+//     if (d < 1){
+//       this.gravity = 1;
+//     }
 
 }
+
 
 
   display() {
