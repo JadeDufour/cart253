@@ -32,10 +32,10 @@ move(){
 
 handleWrapping(){
   // Off the left
-  if (this.x*2 < -500) {
-    this.x += 1400;
+  if (this.x*2 < -600) {
+    this.x += (width+500);
     this.y= random(200,650);
-    this.width= random(300,700);
+    this.width= random(200,700);
   }
 }
 

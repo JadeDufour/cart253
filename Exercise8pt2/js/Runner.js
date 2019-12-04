@@ -16,18 +16,20 @@ class Runner {
     this.vx = 0;
     this.vy = 0;
     this.speed = speed;
+
     // Input properties
     this.jumpKey = jump;  // (up)
     this.leftKey = left;
     this.rightKey = right;
+
     // display propreties
     this.img = img;
     //the gravity
     this.gravity = 2;
     this.jumpingSpeed =jumpSpeed;
-    this.acceleration = 0.008;
+    this.acceleration = 0.8;
     // this.grounded = false;
-    this.jump=true;
+    this.jump=false;
     this.points= 0;
     //Key Codes -----------------------------------
 
@@ -58,6 +60,8 @@ class Runner {
       this.jump = true;
     }
 
+
+
     console.log("y position : " + this.y);
     console.log("x position : " + this.x);
 
@@ -67,13 +71,13 @@ class Runner {
 
 move() {
   // Update the position of the object
-  this.x += this.vx;
+  this.x += this.vx += this.acceleration;
   this.y += this.vy;
 
 }
 
 falling(){
-  if (this.y > 900) {
+  if (this.y > 900 || this.x <0 || this.x>width) {
    //
    // If the player falls off the screen, its game over
    state = "GameOverScreen";
@@ -104,7 +108,8 @@ stayOnScreen(platforms){
       this.jump=true;
       this.speed +3;
 
-      this.y = constrain(this.y, platforms.y-40,this.y+100);
+
+      this.y = constrain(this.y, (platforms.y-25),(this.y+100));
 
     }
 
