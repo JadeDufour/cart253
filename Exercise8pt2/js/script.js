@@ -7,9 +7,7 @@ let state = "StartScreen";
 let player;
 let uiFont;
 let playerScoreOverTime =0;
-//The platforms loop,  *** I went to Stack Overflow for help and inspiration****
-// let platformsGroup;
-// let currentPlatformLocation;
+
 
 let plat = [];
 let numPlat = 3;
@@ -19,6 +17,9 @@ let backgroundSpeed = 0.09;
 
 let testArray=[];
 let numTest = 1;
+
+let introSquares=[];
+let numSquares = 600;
 
 function preload(){
   //the player
@@ -37,28 +38,23 @@ function setup() {
   createCanvas(1200, 700);
   //the runner (player)
   player = new Runner(100,475,6,7, imgPlayer, 45, 32,65,68,450);
-                      //x, y, speed, img, radius,  jump, left, righ
-
 
   for(i=0; i< numTest; i++){
-
     let testX= 100;
     let testY= 500;
 
-
     let test = new Platforms(testX, testY,9, 500,200, tilesImg);
-
-//x, y, speed, width, height, img
-
-
     testArray.push(test);
   }
-  //
-  //
 
   for(i=0; i< numPlat; i++){
     r = new platf(random(0,width), random(0,620), 50,50);
     plat.push(r);
+  }
+
+  for(i=0; i< numSquares; i++){
+    squares = new Squares(random(0,width), random(0,height),random(50,80), random(50,80), color(random(255),random(255),random(255)), random(2,3));
+    introSquares.push(squares);
   }
 
 }
@@ -80,6 +76,13 @@ function draw() {
 
     if (state === "StartScreen") {
       displayIntroduction();
+
+      for(i=0; i< introSquares.length; i++){
+      introSquares[i].display();
+      introSquares[i].avoid();
+      introSquares[i].move();
+
+      }
     } else if (state === "PlayScreen") {
       // camera.position.x = player.x + 300;
       player.falling();
