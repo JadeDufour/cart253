@@ -8,12 +8,14 @@ let player;
 let uiFont;
 let playerScore =0;
 //The platforms loop,  *** I went to Stack Overflow for help and inspiration****
-let platformsGroup;
-let currentPlatformLocation;
+// let platformsGroup;
+// let currentPlatformLocation;
 
 let plat = [];
 let numPlat = 5;
 
+let backgroundX = 0;
+let backgroundSpeed = 5;
 // let platArray = [];
 
 // platArray[0] = {
@@ -21,10 +23,8 @@ let numPlat = 5;
 //   y:0
 // };
 
-
-//we need to move the background and it needs to loop
-// let backgroundSpritePosition
-// let backgroundSprite = [];
+let testArray=[];
+let numTest = 5;
 
 function preload(){
   //the player
@@ -43,18 +43,21 @@ function setup() {
   createCanvas(900, 600);
   //the runner (player)
   player = new Runner(100,200,3, imgPlayer, 45, 32,65,68);
-  // player.setCollider("rectangle", 0,0,10,40);
-// for( let i = 0; i < 5; i ++);{
-//   platform = new Platforms(-900,550,15,500,300, tilesImg);
-//   platArray.push(platform);}
-//x, y, speed, width, height, img
-  // player.setCollider('rectangle', 0,0,10,40);
-  platformsGroup = new Group();
-  currentPlatformLocation = -900;
+  //
+  // platformsGroup = new Group();
+  // currentPlatformLocation = -900;
 
+
+  for(i=0; i< numTest; i++){
+    test = new Platforms(200, 300,9, 500,300, tilesImg);
+    //x, y, speed, width, height, img
+    testArray.push(test);
+  }
+  //
+  //
 
   for(i=0; i< numPlat; i++){
-    r = new platf(600, 500, 500,200);
+    r = new platf(900, 500, 500,200);
     plat.push(r);
   }
 
@@ -65,20 +68,36 @@ function setup() {
 
 
 function draw() {
-    //a blue background (sky)
-    background(55,200,255);
+
+    background(50,150,200);
+     image(ingameBackground, backgroundX, 0, width, height);
+     image(ingameBackground,backgroundX - width, 0, width, height);
+     if (backgroundX > (width)) {
+       backgroundX = backgroundX + backgroundSpeed;
+     } else {
+       backgroundX = 0;
+     }
 
 
     if (state === "StartScreen") {
       displayIntroduction();
     } else if (state === "PlayScreen") {
-
+      // camera.position.x = player.x + 300;
       player.handleWrapping();
       player.handleInput();
       player.move();
       player.gravityEffect();
       player.display();
       player.stayOnScreen();
+
+
+      for(i=0; i<numTest; i++){
+        testArray[i].display();
+        testArray[i].move();
+        testArray[i].handleWrapping();
+        // plat[i].collide(player);
+
+      }
 
 
       for(i=0; i<numPlat; i++){
@@ -88,17 +107,17 @@ function draw() {
       }
 
 
-
-      addNewPlatforms();
-      removeOldPlatforms();
+      //
+      // addNewPlatforms();
+      // removeOldPlatforms();
       // player.collide();
       drawSprites();
-
+      updateScore();
       }
 
 
-      updateScore();
-      camera.position.x = player.x + 300;
+
+
       //The prey array----------------------
 
       // Display all the images
@@ -129,10 +148,10 @@ this.disp = function(){
 		fill(this.color);
 		this.x -= 13; //move to the right!
     // Off the left or right
-     if (this.x > 0) {
-       this.x -= width;
-     }if (this.x < width) {
-      this.x += width;
+     // if (this.x > 0) {
+     //   this.x -= width;}
+       if (this.x < 0) {
+      this.x += 900;
      }
 		rect(this.x,this.y,this.w,this.h);
 
@@ -168,27 +187,27 @@ function updateScore(){
 
 
 
-function addNewPlatforms(){
-
-  if (platformsGroup.length < 5){
-
-      let currentPlatformLength = 1000;
-      let platformHeight = 450;
-      let platform = createSprite(((currentPlatformLocation += currentPlatformLength)),platformHeight , random(500,1000), 200);
-
-      // image(tilesImg, currentPlatformLocation.x, currentPlatformLocation.y);
-      platformsGroup.add(platform);
-      // console.log(currentPlatformLocation.x);
-      }
-  }
-
-  function removeOldPlatforms() {
-      for (let i = 0; i < platformsGroup.length; i++) {
-        if ((platformsGroup[i].position.x) < player.x - 900) {
-          platformsGroup[i].remove();
-        }
-      }
-    }
+// function addNewPlatforms(){
+//
+//   if (platformsGroup.length < 5){
+//
+//       let currentPlatformLength = 1000;
+//       let platformHeight = 450;
+//       let platform = createSprite(((currentPlatformLocation += currentPlatformLength)),platformHeight , random(500,1000), 200);
+//
+//       // image(tilesImg, currentPlatformLocation.x, currentPlatformLocation.y);
+//       platformsGroup.add(platform);
+//       // console.log(currentPlatformLocation.x);
+//       }
+//   }
+//
+//   function removeOldPlatforms() {
+//       for (let i = 0; i < platformsGroup.length; i++) {
+//         if ((platformsGroup[i].position.x) < player.x - 900) {
+//           platformsGroup[i].remove();
+//         }
+//       }
+//     }
 
 
 

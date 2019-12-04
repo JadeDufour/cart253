@@ -84,12 +84,12 @@ gravityEffect() {
 }
 
 stayOnScreen(){
-  let d = dist(this.x, this.y, platformsGroup.x, platformsGroup.y);
+  let d = dist(this.x, this.y, width, height/2);
 
     //dist()
 
     //To keep track of the platform and the avatar are in contact
-    if (d < this.width / 2 + platformsGroup.width / 2) {
+    if (d < this.width / 2 + width / 2) {
       console.log("standing");
       // this.vy
       //
@@ -99,16 +99,6 @@ stayOnScreen(){
       this.vy = 0;
 
     }
-// let d = dist(this.y , platformsGroup.platformHeight)
-//     if(d >= 1){
-//       this.gravity = 0;
-//       this.vy = 0;
-//     }
-//
-//     if (d < 1){
-//       this.gravity = 1;
-//     }
-
 }
 
 

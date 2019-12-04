@@ -14,7 +14,7 @@ class Platforms {
     this.img = img;
     this.speed = speed;
     this.vx = 0;
-
+   this.acceleration = 0.008;
 
 
 
@@ -30,24 +30,29 @@ class Platforms {
 
 move(){
   //Update the position based on the Velocity
-    this.x += this.vx;
+    this.x -= this.vx;
   //they only move on the X axis, and accelerate as time goes by
-    this.vx-= this.acceleration;
+    this.vx+= this.acceleration;
   //
   // this.handleWrapping();
 }
 
 
-// handleWrapping(){
-//   // Off the left or right
-//   if (this.x > 0) {
-//     this.x -= width;
-//   } else if (this.x < width) {
-//     this.x += width;
-//   }
-//
-//
-// }
+handleWrapping(){
+  // Off the left or right
+  if (this.x < 0) {
+    this.x += width;
+  } else if (this.x > width) {
+    this.x -= width;
+  }
+  // Off the top or bottom
+  if (this.y < 0) {
+    this.y += height;
+  } else if (this.y > height) {
+    this.y -= height;
+  }
+
+}
 
 
 
