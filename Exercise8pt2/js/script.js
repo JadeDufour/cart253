@@ -16,12 +16,6 @@ let numPlat = 3;
 
 let backgroundX = 0;
 let backgroundSpeed = 0.09;
-// let platArray = [];
-
-// platArray[0] = {
-//   x: 900,
-//   y:0
-// };
 
 let testArray=[];
 let numTest = 1;
@@ -42,7 +36,7 @@ function preload(){
 function setup() {
   createCanvas(1200, 700);
   //the runner (player)
-  player = new Runner(100,475,6,7, imgPlayer, 45, 32,65,68);
+  player = new Runner(100,475,6,7, imgPlayer, 45, 32,65,68,450);
                       //x, y, speed, img, radius,  jump, left, righ
 
 
@@ -63,7 +57,7 @@ function setup() {
   //
 
   for(i=0; i< numPlat; i++){
-    r = new platf(random(0,width), random(20,680), 50,50);
+    r = new platf(random(0,width), random(0,620), 50,50);
     plat.push(r);
   }
 
@@ -73,7 +67,7 @@ function setup() {
 
 
 function draw() {
-
+//The background in moving very slowly to the left
     background(50,150,200);
      image(ingameBackground, backgroundX, 0, width, height);
      image(ingameBackground,backgroundX + width, 0, width, height);
@@ -82,13 +76,6 @@ function draw() {
      } else {
        backgroundX -= width;
      }
-
-
-     // if (this.x < 0) {
-     //   this.x += width;
-     // } else if (this.x > width) {
-     //   this.x -= width;
-     // }
 
 
     if (state === "StartScreen") {
@@ -102,7 +89,7 @@ function draw() {
       player.display();
       // player.stayOnScreen();
 
-      player.gravity = 1;
+      player.gravity = 1.5;
       // player.grounded = false;
 
 
@@ -119,14 +106,16 @@ function draw() {
 
       for(i=0; i<numPlat; i++){
         plat[i].disp();
-        // plat[i].collide(player);
+        plat[i].collide(player);
 
       }
 
 
       drawSprites();
-      updateScore();
+      updateTime();
       updatePoints();
+      player.updateHealth();
+      lifeBar();
       }
 
 
@@ -141,28 +130,39 @@ function draw() {
 
 
 
-
+//**I wanted to try a different way of playing with arrays, I tried the method
+//shown on Bmoren's github : https://bmoren.github.io/p5.collide2D/examples/objectCollision/index.html**
 function platf(x,y,w,h){
 this.x= x;
 this.y=y;
 this.w= w;
 this.h=h;
 this.color = color(random(255),random(255),random(255));
+this.hit = false;
 
 this.disp = function(){
     noStroke();
 		fill(this.color);
-		this.x -= 13; //move to the right!
+		this.x -= 12; //move to the right!
     // Off the left or right
      if (this.x < (-900)) {
       this.x += 2800;
-      this.y = random(20,700);
+      this.y = random(20,620);
       this.color = color(random(255),random(255),random(255));
+      this.w= random(40,60);
+      this.h= random(30,65);
      }
 
 		rect(this.x,this.y,this.w,this.h);
 
 	}
+
+this.collide = function(player){
+  this.hit = collideRectCircle(this.x, this.y, this.w, this.h, player.x, player.y, player.radius);
+  if(this.hit){
+    player.health -=3.2;
+  }
+}
 }
 
 
@@ -182,7 +182,7 @@ function displayGameOver(){
   text("Game Over", width/2, height/2);
 }
 
-function updateScore(){
+function updateTime(){
   //based on how long the player has been running (got help from p5js with that one)
   if (frameCount % 60 === 0){
     playerScoreOverTime++;
@@ -192,7 +192,7 @@ function updateScore(){
   noStroke();
   textSize(25);
   textAlign(CENTER);
-  text(playerScoreOverTime + " s ", camera.position.x + 360, camera.position.y +160);
+  text(playerScoreOverTime + " s ", 180, 670);
 }
 
 function updatePoints(){
@@ -201,10 +201,19 @@ function updatePoints(){
   noStroke();
   textSize(25);
   textAlign(CENTER);
-  text(player.points + " points ", camera.position.x + 360, camera.position.y +100);
+  text(player.points + " points ", 440, 670);
 }
 
+function lifeBar(){
 
+    fill(255);
+    textSize(35);
+
+    fill(200,100 , (player.health));
+    rect(640, 640, player.health, 25);
+
+
+}
 
 
 

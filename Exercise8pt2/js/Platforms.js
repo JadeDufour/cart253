@@ -34,7 +34,7 @@ handleWrapping(){
   // Off the left
   if (this.x*2 < -600) {
     this.x += (width+500);
-    this.y= random(200,650);
+    this.y= random(200,600);
     this.width= random(200,700);
   }
 }

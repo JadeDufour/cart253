@@ -6,7 +6,7 @@
 class Runner {
 
 
-  constructor(x, y, speed, jumpSpeed, img, radius,  jump, left, right) {
+  constructor(x, y, speed, jumpSpeed, img, radius,  jump, left, right, maxhealth) {
     // Position
     this.x = x;
     this.y = y;
@@ -16,6 +16,8 @@ class Runner {
     this.vx = 0;
     this.vy = 0;
     this.speed = speed;
+    this.maxHealth = maxhealth;
+    this.health= this.maxHealth;
 
     // Input properties
     this.jumpKey = jump;  // (up)
@@ -67,6 +69,17 @@ class Runner {
 
   }
 
+
+updateHealth(){
+  this.health -= 0.2;
+  this.health = constrain(this.health, 0, this.maxHealth);
+
+  if (this.health ===0){
+    state = "GameOverScreen";
+  }
+}
+
+
 // move()
 
 move() {
@@ -98,7 +111,7 @@ stayOnScreen(platforms){
 
 
     //To keep track of the platform and the avatar are in contact
-    if (d < this.radius/2 + platforms.width/2) {
+    if (d < this.radius/4 + platforms.width/2) {
 
       //
       // To make sure that the climber doesn't fall
@@ -107,9 +120,9 @@ stayOnScreen(platforms){
       this.vy = 0;
       this.jump=true;
       this.speed +3;
+      this.health += 0.5;
 
-
-      this.y = constrain(this.y, (platforms.y-25),(this.y+100));
+      this.y = constrain(this.y, (platforms.y-25),(this.y));
 
     }
 
