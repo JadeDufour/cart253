@@ -41,7 +41,6 @@ class Squares {
 
   move() {
 
-
     // Update position
     this.x += this.vx;
     this.y += this.vy;

@@ -1,7 +1,10 @@
-// Infinite runner - The great escape
+// --------------------
+//Infinite runner - The cute escape
+//Someone moved the big squares that were keeping you safe from the outside world and now they're flying everywhere...
+//Run as fast as you can while avoiding the squares, good luck!
 // by Jade Dufour
 //
-// This is an endless runner -------------------------  continue description ------------------------------------------------------------------
+//----------------------
 
 let state = "StartScreen";
 let player;
@@ -30,7 +33,12 @@ function preload(){
   ingameBackground = loadImage("assets/images/Background.png");
   //the platform images
   tilesImg = loadImage("assets/images/platforms.png");
-
+  //the intro image
+  //
+  //Both the intro and game over background images were made in photoshop with game asset art I found on itch.io
+  introImg = loadImage("assets/images/introRealbackground.png");
+  //the gameover image
+  gameOverImg= loadImage("assets/images/gameover.png");
 }
 
 
@@ -171,18 +179,25 @@ this.collide = function(player){
 
 
 function displayIntroduction(){
-  background(200,55,155);
+  push();
+  imageMode(CENTER);
+  image(introImg, width / 2, height / 2, width, height);
+  pop();
 
 }
 
 function displayGameOver(){
-  background(200,55,155);
-  fill(255);
+  push();
+  imageMode(CENTER);
+  image(gameOverImg, width / 2, height / 2, width, height);
+  pop();
+  fill(240,160,20);
   textFont('SuperMario256');
   noStroke();
-  textSize(25);
+  textSize(40);
   textAlign(CENTER);
-  text("Game Over", width/2, height/2);
+  text("You made " + player.points +  " points" + "\n In " + playerScoreOverTime + " seconds", width/2, height/2 );
+
 }
 
 function updateTime(){
@@ -211,31 +226,11 @@ function lifeBar(){
 
     fill(255);
     textSize(35);
-
     fill(200,100 , (player.health));
     rect(640, 640, player.health, 25);
 
 
 }
-
-
-
-  // for (let i=0; i < platformsArray.length; i++){
-  //   platformsArray[i].display();
-  //   platformsArray[i].move();
-  //
-  //   if (platformsArray[i].x ==125){
-  //       platformsArray.push(ground);
-  //   }
-  //   // platformsArray[i].handleWrapping();
-  //
-  // }
-
-// }
-
-
-
-
 
 
 
@@ -245,4 +240,6 @@ function mousePressed() {
     //Display the gameplay
     state = "PlayScreen";
   }
+
+
 }
