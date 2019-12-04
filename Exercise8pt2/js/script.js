@@ -6,16 +6,16 @@
 let state = "StartScreen";
 let player;
 let uiFont;
-let playerScore =0;
+let playerScoreOverTime =0;
 //The platforms loop,  *** I went to Stack Overflow for help and inspiration****
 // let platformsGroup;
 // let currentPlatformLocation;
 
 let plat = [];
-let numPlat = 5;
+let numPlat = 3;
 
 let backgroundX = 0;
-let backgroundSpeed = 5;
+let backgroundSpeed = 0.09;
 // let platArray = [];
 
 // platArray[0] = {
@@ -24,13 +24,13 @@ let backgroundSpeed = 5;
 // };
 
 let testArray=[];
-let numTest = 5;
+let numTest = 1;
 
 function preload(){
   //the player
   imgPlayer = loadImage("assets/images/player.png");
   //the UI font, called SuperMario256
-  uiFont = loadFont("assets/fonts/SuperMario256.ttf")
+  uiFont = loadFont("assets/fonts/SuperMario256.ttf");
   //the in-game background (found on itch.io, in a free platformer art asset)
   ingameBackground = loadImage("assets/images/Background.png");
   //the platform images
@@ -40,27 +40,32 @@ function preload(){
 
 
 function setup() {
-  createCanvas(900, 600);
+  createCanvas(1200, 700);
   //the runner (player)
-  player = new Runner(100,200,3, imgPlayer, 45, 32,65,68);
-  //
-  // platformsGroup = new Group();
-  // currentPlatformLocation = -900;
+  player = new Runner(100,475,6,7, imgPlayer, 45, 32,65,68);
+                      //x, y, speed, img, radius,  jump, left, righ
 
 
   for(i=0; i< numTest; i++){
-    test = new Platforms(200, 300,9, 500,300, tilesImg);
-    //x, y, speed, width, height, img
+
+    let testX= 100;
+    let testY= 500;
+
+
+    let test = new Platforms(testX, testY,9, 500,200, tilesImg);
+
+//x, y, speed, width, height, img
+
+
     testArray.push(test);
   }
   //
   //
 
   for(i=0; i< numPlat; i++){
-    r = new platf(900, 500, 500,200);
+    r = new platf(random(0,width), random(20,680), 50,50);
     plat.push(r);
   }
-
 
 }
 
@@ -71,31 +76,43 @@ function draw() {
 
     background(50,150,200);
      image(ingameBackground, backgroundX, 0, width, height);
-     image(ingameBackground,backgroundX - width, 0, width, height);
-     if (backgroundX > (width)) {
-       backgroundX = backgroundX + backgroundSpeed;
+     image(ingameBackground,backgroundX + width, 0, width, height);
+     if (backgroundX < (width)) {
+       backgroundX = backgroundX - backgroundSpeed;
      } else {
-       backgroundX = 0;
+       backgroundX -= width;
      }
+
+
+     // if (this.x < 0) {
+     //   this.x += width;
+     // } else if (this.x > width) {
+     //   this.x -= width;
+     // }
 
 
     if (state === "StartScreen") {
       displayIntroduction();
     } else if (state === "PlayScreen") {
       // camera.position.x = player.x + 300;
-      player.handleWrapping();
+      player.falling();
       player.handleInput();
       player.move();
       player.gravityEffect();
       player.display();
-      player.stayOnScreen();
+      // player.stayOnScreen();
+
+      player.gravity = 1;
+      // player.grounded = false;
 
 
-      for(i=0; i<numTest; i++){
+      for(i=0; i< testArray.length; i++){
         testArray[i].display();
         testArray[i].move();
         testArray[i].handleWrapping();
         // plat[i].collide(player);
+        player.stayOnScreen(testArray[i]);
+
 
       }
 
@@ -107,28 +124,17 @@ function draw() {
       }
 
 
-      //
-      // addNewPlatforms();
-      // removeOldPlatforms();
-      // player.collide();
       drawSprites();
       updateScore();
+      updatePoints();
       }
 
 
 
-
-      //The prey array----------------------
-
-      // Display all the images
-
-      //display the updated score
-      // displayScore();
-
-    // } else if (state === "GameOverScreen") {
-    //   displayGameOver();
+    else if(state === "GameOverScreen") {
+       displayGameOver();
     //   //music.pause();
-    // }
+     }
   }
 // }
 
@@ -148,22 +154,16 @@ this.disp = function(){
 		fill(this.color);
 		this.x -= 13; //move to the right!
     // Off the left or right
-     // if (this.x > 0) {
-     //   this.x -= width;}
-       if (this.x < 0) {
-      this.x += 900;
+     if (this.x < (-900)) {
+      this.x += 2800;
+      this.y = random(20,700);
+      this.color = color(random(255),random(255),random(255));
      }
+
 		rect(this.x,this.y,this.w,this.h);
 
 	}
 }
-
-
-
-
-
-
-
 
 
 
@@ -172,43 +172,37 @@ function displayIntroduction(){
 
 }
 
-function updateScore(){
-  //based on how long the player has been running (got help from p5js with that one)
-  if (frameCount % 60 === 0){
-    playerScore++;
-  }
+function displayGameOver(){
+  background(200,55,155);
   fill(255);
-  textFont('uiFont');
+  textFont('SuperMario256');
   noStroke();
   textSize(25);
   textAlign(CENTER);
-  text(playerScore , camera.position.x + 360, camera.position.y +160);
+  text("Game Over", width/2, height/2);
 }
 
+function updateScore(){
+  //based on how long the player has been running (got help from p5js with that one)
+  if (frameCount % 60 === 0){
+    playerScoreOverTime++;
+  }
+  fill(255);
+  textFont('SuperMario256');
+  noStroke();
+  textSize(25);
+  textAlign(CENTER);
+  text(playerScoreOverTime + " s ", camera.position.x + 360, camera.position.y +160);
+}
 
-
-// function addNewPlatforms(){
-//
-//   if (platformsGroup.length < 5){
-//
-//       let currentPlatformLength = 1000;
-//       let platformHeight = 450;
-//       let platform = createSprite(((currentPlatformLocation += currentPlatformLength)),platformHeight , random(500,1000), 200);
-//
-//       // image(tilesImg, currentPlatformLocation.x, currentPlatformLocation.y);
-//       platformsGroup.add(platform);
-//       // console.log(currentPlatformLocation.x);
-//       }
-//   }
-//
-//   function removeOldPlatforms() {
-//       for (let i = 0; i < platformsGroup.length; i++) {
-//         if ((platformsGroup[i].position.x) < player.x - 900) {
-//           platformsGroup[i].remove();
-//         }
-//       }
-//     }
-
+function updatePoints(){
+  fill(255);
+  textFont('SuperMario256');
+  noStroke();
+  textSize(25);
+  textAlign(CENTER);
+  text(player.points + " points ", camera.position.x + 360, camera.position.y +100);
+}
 
 
 

@@ -14,19 +14,11 @@ class Platforms {
     this.img = img;
     this.speed = speed;
     this.vx = 0;
-   this.acceleration = 0.008;
-
-
-
-    // this.radius = radius;
-    // this.img = img;
-    // // Velocity & speed
-    // this.vx = 0;
-    // this.vy = 0;
-    // this.speed = speed;
-
+    this.acceleration = 0.008;
+    this.remove= false;
 
   }
+
 
 move(){
   //Update the position based on the Velocity
@@ -39,19 +31,12 @@ move(){
 
 
 handleWrapping(){
-  // Off the left or right
-  if (this.x < 0) {
-    this.x += width;
-  } else if (this.x > width) {
-    this.x -= width;
+  // Off the left
+  if (this.x*2 < -500) {
+    this.x += 1400;
+    this.y= random(200,650);
+    this.width= random(300,700);
   }
-  // Off the top or bottom
-  if (this.y < 0) {
-    this.y += height;
-  } else if (this.y > height) {
-    this.y -= height;
-  }
-
 }
 
 

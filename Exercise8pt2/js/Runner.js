@@ -6,12 +6,12 @@
 class Runner {
 
 
-  constructor(x, y, speed, img, radius,  jump, left, right) {
+  constructor(x, y, speed, jumpSpeed, img, radius,  jump, left, right) {
     // Position
     this.x = x;
     this.y = y;
-    this.radius = radius;
     this.img = img;
+    this.radius= radius;
     // Velocity & speed
     this.vx = 0;
     this.vy = 0;
@@ -23,10 +23,12 @@ class Runner {
     // display propreties
     this.img = img;
     //the gravity
-    this.gravity = 1;
-    this.jumpingSpeed = 5;
+    this.gravity = 2;
+    this.jumpingSpeed =jumpSpeed;
     this.acceleration = 0.008;
-    this.grounded = false;
+    // this.grounded = false;
+    this.jump=true;
+    this.points= 0;
     //Key Codes -----------------------------------
 
         //Up= 32 (space bar)
@@ -53,6 +55,7 @@ class Runner {
 
     if (keyIsDown(this.jumpKey)) {
       this.vy = -this.jumpingSpeed;
+      this.jump = true;
     }
 
     console.log("y position : " + this.y);
@@ -66,10 +69,11 @@ move() {
   // Update the position of the object
   this.x += this.vx;
   this.y += this.vy;
+
 }
 
-handleWrapping(){
-  if (this.y < 0) {
+falling(){
+  if (this.y > 900) {
    //
    // If the player falls off the screen, its game over
    state = "GameOverScreen";
@@ -78,27 +82,40 @@ handleWrapping(){
 
 // gravity()
 //
-gravityEffect() {
+gravityEffect(platforms) {
   // Gravity pulls the player to the ground
   this.vy += this.gravity;
+
 }
 
-stayOnScreen(){
-  let d = dist(this.x, this.y, width, height/2);
+stayOnScreen(platforms){
 
-    //dist()
+  let d = dist(this.x, this.y, platforms.x, platforms.y);
+
 
     //To keep track of the platform and the avatar are in contact
-    if (d < this.width / 2 + width / 2) {
-      console.log("standing");
-      // this.vy
+    if (d < this.radius/2 + platforms.width/2) {
+
       //
       // To make sure that the climber doesn't fall
-      this.grounded = true;
-      this.pull = 0;
+
+      this.gravity = 0;
       this.vy = 0;
+      this.jump=true;
+      this.speed +3;
+
+      this.y = constrain(this.y, platforms.y-40,this.y+100);
 
     }
+
+      else if (d < this.radius + platforms.y, platforms.x){
+        this.points +=1;
+      }
+
+    // else{
+    //   this.gravity =2;
+    //   this.jump=true;
+    // }
 }
 
 
