@@ -29,7 +29,12 @@ let hitMark;
 let gameOverSong;
 //the intro song
 let introSong;
-
+//the ingame music
+let inGameSong;
+//small icons I found in a game asset on itch.io
+let lifeIcon;
+let timeIcon;
+let pointsIcon;
 
 function preload(){
   //the player
@@ -42,16 +47,22 @@ function preload(){
   tilesImg = loadImage("assets/images/platforms.png");
   //the intro image
   //
-  //Both the intro and game over background images were made in photoshop with game asset art I found on itch.io
+  //Both the intro and game over background images were made in photoshop with the same game asset art
   introImg = loadImage("assets/images/introRealbackground.png");
   //the gameover image
   gameOverImg= loadImage("assets/images/gameover.png");
+  //the small icons
+  lifeIcon= loadImage("assets/images/blueIcon.png");
+  timeIcon= loadImage("assets/images/timeIcon.png");
+  pointsIcon= loadImage("assets/images/pointsIcon.png");
   //the hit square sound
   hitMark = new Audio("assets/sounds/hit.wav");
   //the song used in the outro
   gameOverSong =new Audio("assets/sounds/introOutro.mp3");
   //the introSong
   introSong = new Audio("assets/sounds/intro.wav");
+  //the game Song
+  inGameSong = new Audio("assets/sounds/game.mp3");
 }
 
 
@@ -104,8 +115,6 @@ function draw() {
        textAlign(CENTER);
        text("click to start " , width/2, height/2);
        pop();
-        introSong.play();
-
      }
     else if (state === "StartScreen") {
       displayIntroduction();
@@ -114,9 +123,8 @@ function draw() {
       introSquares[i].display();
       introSquares[i].avoid();
       introSquares[i].move();
-
-
       }
+      introSong.play();
     } else if (state === "PlayScreen") {
       introSong.pause();
       player.falling();
@@ -124,20 +132,17 @@ function draw() {
       player.move();
       player.gravityEffect();
       player.display();
-      // player.stayOnScreen();
+      introSong.pause();
+      inGameSong.play();
 
       player.gravity = 1.5;
-      // player.grounded = false;
 
 
       for(i=0; i< testArray.length; i++){
         testArray[i].display();
         testArray[i].move();
         testArray[i].handleWrapping();
-        // plat[i].collide(player);
         player.stayOnScreen(testArray[i]);
-
-
       }
 
 
@@ -159,6 +164,7 @@ function draw() {
 
     else if(state === "GameOverScreen") {
        displayGameOver();
+       inGameSong.pause();
        gameOverSong.play();
      }
   }
@@ -224,7 +230,7 @@ function displayGameOver(){
   noStroke();
   textSize(40);
   textAlign(CENTER);
-  text("You made " + player.points +  " points" + "\n In " + playerScoreOverTime + " seconds", width/2, height/2 );
+  text("You made " + player.points +  " points" + "\n In " + playerScoreOverTime + " seconds" + "\n\n Good Job!", width/2, height/2 );
 
 }
 
@@ -233,31 +239,44 @@ function updateTime(){
   if (frameCount % 60 === 0){
     playerScoreOverTime++;
   }
+  push();
+  imageMode(CENTER);
+  image(timeIcon, 320, 660, 40, 40);
+  pop();
   fill(255);
   textFont('SuperMario256');
   noStroke();
   textSize(25);
   textAlign(CENTER);
-  text(playerScoreOverTime + " s ", 180, 670);
+  text(playerScoreOverTime + " s ", 400, 670);
 }
 
+// lifeIcon= loadImage("assets/images/blueIcon.png");
+// timeIcon= loadImage("assets/images/timeIcon.png");
+// pointsIcong= loadImage("assets/images/pointsIcon.png");
+
 function updatePoints(){
+  push();
+  imageMode(CENTER);
+  image(pointsIcon, 670, 660, 40, 40);
+  pop();
   fill(255);
   textFont('SuperMario256');
   noStroke();
   textSize(25);
   textAlign(CENTER);
-  text(player.points + " points ", 440, 670);
+  text(player.points + " points ", 800, 670);
 }
 
 function lifeBar(){
-
+    push();
+    imageMode(CENTER);
+    image(lifeIcon, 330, 50, 40, 40);
+    pop();
     fill(255);
     textSize(35);
     fill(200,100 , (player.health));
-    rect(640, 640, player.health, 25);
-
-
+    rect(400, 40, player.health, 25);
 }
 
 
