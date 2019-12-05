@@ -6,7 +6,7 @@
 //
 //----------------------
 
-let state = "StartScreen";
+let state = "IntroScreen";
 let player;
 let uiFont;
 let playerScoreOverTime =0;
@@ -23,6 +23,13 @@ let numTest = 1;
 
 let introSquares=[];
 let numSquares = 600;
+//when the player hits a flying square
+let hitMark;
+//the outro song
+let gameOverSong;
+//the intro song
+let introSong;
+
 
 function preload(){
   //the player
@@ -39,6 +46,12 @@ function preload(){
   introImg = loadImage("assets/images/introRealbackground.png");
   //the gameover image
   gameOverImg= loadImage("assets/images/gameover.png");
+  //the hit square sound
+  hitMark = new Audio("assets/sounds/hit.wav");
+  //the song used in the outro
+  gameOverSong =new Audio("assets/sounds/introOutro.mp3");
+  //the introSong
+  introSong = new Audio("assets/sounds/intro.wav");
 }
 
 
@@ -81,8 +94,20 @@ function draw() {
        backgroundX -= width;
      }
 
+     if (state === "IntroScreen"){
 
-    if (state === "StartScreen") {
+       push();
+       fill(255);
+       textFont('SuperMario256');
+       noStroke();
+       textSize(30);
+       textAlign(CENTER);
+       text("click to start " , width/2, height/2);
+       pop();
+        introSong.play();
+
+     }
+    else if (state === "StartScreen") {
       displayIntroduction();
 
       for(i=0; i< introSquares.length; i++){
@@ -90,9 +115,10 @@ function draw() {
       introSquares[i].avoid();
       introSquares[i].move();
 
+
       }
     } else if (state === "PlayScreen") {
-      // camera.position.x = player.x + 300;
+      introSong.pause();
       player.falling();
       player.handleInput();
       player.move();
@@ -133,10 +159,10 @@ function draw() {
 
     else if(state === "GameOverScreen") {
        displayGameOver();
-    //   //music.pause();
+       gameOverSong.play();
      }
   }
-// }
+
 
 
 
@@ -171,7 +197,9 @@ this.disp = function(){
 this.collide = function(player){
   this.hit = collideRectCircle(this.x, this.y, this.w, this.h, player.x, player.y, player.radius);
   if(this.hit){
-    player.health -=3.2;
+    player.health -=3.5;
+    hitMark.play();
+
   }
 }
 }
@@ -235,10 +263,14 @@ function lifeBar(){
 
 
 function mousePressed() {
-  if (state === "StartScreen") {
+  if (state === "IntroScreen") {
     //Remove the instrutions if mouse is pressed
     //Display the gameplay
-    state = "PlayScreen";
+    state = "StartScreen";
+  }
+
+  else if (state === "StartScreen"){
+    state = "PlayScreen"
   }
 
 
