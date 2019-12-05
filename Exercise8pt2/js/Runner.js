@@ -128,7 +128,7 @@ stayOnScreen(platforms){
       this.speed +3;
       this.health += 0.5;
 
-      this.y = constrain(this.y, (platforms.y-25),(this.y));
+      this.y = constrain(this.y, (platforms.y-105),(this.y));
 
     }
 

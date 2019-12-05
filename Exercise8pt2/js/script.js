@@ -50,7 +50,7 @@ function preload(){
   //the in-game background (found on itch.io, in a free platformer art asset)
   ingameBackground = loadImage("assets/images/Background.png");
   //the platform images
-  tilesImg = loadImage("assets/images/platforms.png");
+  tilesImg = loadImage("assets/images/Goodplatforms.png");
   //the intro image
   //
   //Both the intro and game over background images were made in photoshop with the same game asset art
@@ -85,13 +85,13 @@ function preload(){
 function setup() {
   createCanvas(1200, 700);
   //the runner (player)
-  player = new Runner(100,475,6,7, tilesImg, 45, 32,65,68,450);
+  player = new Runner(150,255,6,7, tilesImg, 45, 32,65,68,450);
 
   for(i=0; i< numTest; i++){
     let testX= 100;
     let testY= 500;
 
-    let test = new Platforms(testX, testY,9, 500,200, tilesImg);
+    let test = new Platforms(testX, testY,9, 500,150, tilesImg);
     testArray.push(test);
   }
 
