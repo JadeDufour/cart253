@@ -96,7 +96,7 @@ move() {
 }
 
 falling(){
-  if (this.y > 1200 || this.x <0 || this.x>width || this.y < 0) {
+  if (this.y >= 1200 || this.x <0 || this.x>width || this.y < 0) {
    //
    // If the player falls off the screen, its game over
    state = "GameOverScreen";
