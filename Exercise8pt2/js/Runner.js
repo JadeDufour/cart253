@@ -33,6 +33,7 @@ class Runner {
     // this.grounded = false;
     this.jump=false;
     this.points= 0;
+    this.touching = false;
     //Key Codes -----------------------------------
 
         //Up= 32 (space bar)
@@ -45,13 +46,17 @@ class Runner {
   }
 
 
+
   handleInput() {
     // Horizontal movements
     if (keyIsDown(this.leftKey)) {
       this.vx = -this.speed;
     } else if (keyIsDown(this.rightKey)) {
       this.vx = this.speed;
-    } else {
+    }
+
+
+     else {
       this.vx = 0;
     }
 
@@ -87,6 +92,7 @@ move() {
   this.x += this.vx += this.acceleration;
   this.y += this.vy;
 
+
 }
 
 falling(){
@@ -99,7 +105,7 @@ falling(){
 
 // gravity()
 //
-gravityEffect(platforms) {
+gravityEffect() {
   // Gravity pulls the player to the ground
   this.vy += this.gravity;
 
@@ -110,15 +116,15 @@ stayOnScreen(platforms){
   let d = dist(this.x, this.y, platforms.x, platforms.y);
 
 
-    //To keep track of the platform and the avatar are in contact
-    if (d < this.radius/4 + platforms.width/2) {
+    //To keep track of the platform and the player
+    if (d < this.radius + platforms.width/2) {
+      this.touching = true;
+      //so the player stays on the platform
+      if(this.jump=false){
+        this.gravity = 0;
+      }
 
-      //
-      // To make sure that the climber doesn't fall
-
-      this.gravity = 0;
       this.vy = 0;
-      this.jump=true;
       this.speed +3;
       this.health += 0.5;
 
@@ -126,23 +132,46 @@ stayOnScreen(platforms){
 
     }
 
+    if (d > this.radius + platforms.width/2) {
+      this.touching = false;
+    }
+
       else if (d < this.radius + platforms.y, platforms.x){
         this.points +=1;
       }
 
-    // else{
-    //   this.gravity =2;
-    //   this.jump=true;
-    // }
 }
-
-
-
+//this (display) is probably the most chaotic thing i've ever done in javascript. But it works, and this is truly where my knowledge ends, so i'll embrace this mess of a script I created
   display() {
-    push();
-    noStroke();
-    imageMode(CENTER);
-    image(this.img, this.x, this.y, this.radius * 2, this.radius * 2);
-    pop();
+
+    if ((keyIsDown(this.leftKey)) || (keyIsDown(this.rightKey))){
+        noStroke();
+        imageMode(CENTER);
+        image(animationFrames[currentAnimationFrame], this.x, this.y, this.radius * 2, this.radius * 2);
+        let programFramesPerAnimationFrame = floor(programFrameRate / animationFrameRate);
+         if (frameCount % programFramesPerAnimationFrame === 0) {
+        currentAnimationFrame++;
+           if (currentAnimationFrame >= animationFrames.length) {
+         currentAnimationFrame = 0;
+       }
+      }
+    }
+
+    else if(keyIsDown(this.jumpKey) && (player.y++) ) {
+      imageMode(CENTER);
+      image(jumpUp, this.x, this.y, this.radius * 2, this.radius * 2);
+    }
+
+    else if ( !(keyIsDown(this.jumpKey))&& (player.y--) ){
+      imageMode(CENTER);
+      image(jumpDown, this.x, this.y, this.radius * 2, this.radius * 2);
+    }
+
+    else if ( (this.touching = true) && (this.vx++) && (this.vy = 0) && (this.jump=false) ) {
+      imageMode(CENTER);
+      image(idle, this.x, this.y, this.radius * 2, this.radius * 2);
+    }
+
+
   }
 }

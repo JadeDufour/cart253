@@ -10,7 +10,13 @@ let state = "IntroScreen";
 let player;
 let uiFont;
 let playerScoreOverTime =0;
+//Pippin's code https://github.com/pippinbarr/cart253-2019/blob/master/examples/arrays-of-images.md-----------------
+let animationFrames = [];
+let numberAnimationFrames = 6;
+let currentAnimationFrame = 0;
+let animationFrameRate = 12; // How many frames per second for this animation (run)
 
+let programFrameRate = 60;  //-----------------------
 
 let plat = [];
 let numPlat = 3;
@@ -63,13 +69,23 @@ function preload(){
   introSong = new Audio("assets/sounds/intro.wav");
   //the game Song
   inGameSong = new Audio("assets/sounds/game.mp3");
+
+  for (let i = 1; i <= numberAnimationFrames; i++) {
+    let filePath = "assets/images/animation/" + i + ".png";
+    animationFrames.push(loadImage(filePath));
+  }
+
+  jumpUp = loadImage("assets/images/animation/jump/up.png");
+  jumpDown = loadImage("assets/images/animation/jump/down.png");
+  idle = loadImage("assets/images/animation/idle/1.png");
+
 }
 
 
 function setup() {
   createCanvas(1200, 700);
   //the runner (player)
-  player = new Runner(100,475,6,7, imgPlayer, 45, 32,65,68,450);
+  player = new Runner(100,475,6,7, tilesImg, 45, 32,65,68,450);
 
   for(i=0; i< numTest; i++){
     let testX= 100;
@@ -95,18 +111,10 @@ function setup() {
 
 
 function draw() {
-//The background in moving very slowly to the left
-    background(50,150,200);
-     image(ingameBackground, backgroundX, 0, width, height);
-     image(ingameBackground,backgroundX + width, 0, width, height);
-     if (backgroundX < (width)) {
-       backgroundX = backgroundX - backgroundSpeed;
-     } else {
-       backgroundX -= width;
-     }
+
 
      if (state === "IntroScreen"){
-
+       movingBackground();
        push();
        fill(255);
        textFont('SuperMario256');
@@ -115,6 +123,7 @@ function draw() {
        textAlign(CENTER);
        text("click to start " , width/2, height/2);
        pop();
+
      }
     else if (state === "StartScreen") {
       displayIntroduction();
@@ -126,6 +135,7 @@ function draw() {
       }
       introSong.play();
     } else if (state === "PlayScreen") {
+      movingBackground();
       introSong.pause();
       player.falling();
       player.handleInput();
@@ -134,6 +144,8 @@ function draw() {
       player.display();
       introSong.pause();
       inGameSong.play();
+
+
 
       player.gravity = 1.5;
 
@@ -210,7 +222,17 @@ this.collide = function(player){
 }
 }
 
-
+function movingBackground(){
+  //The background is moving very slowly to the left
+  background(50,150,200);
+ image(ingameBackground, backgroundX, 0, width, height);
+ image(ingameBackground,backgroundX + width, 0, width, height);
+ if (backgroundX < (width)) {
+   backgroundX = backgroundX - backgroundSpeed;
+ } else {
+   backgroundX -= width;
+ }
+}
 
 function displayIntroduction(){
   push();
@@ -251,9 +273,6 @@ function updateTime(){
   text(playerScoreOverTime + " s ", 400, 670);
 }
 
-// lifeIcon= loadImage("assets/images/blueIcon.png");
-// timeIcon= loadImage("assets/images/timeIcon.png");
-// pointsIcong= loadImage("assets/images/pointsIcon.png");
 
 function updatePoints(){
   push();
@@ -271,12 +290,12 @@ function updatePoints(){
 function lifeBar(){
     push();
     imageMode(CENTER);
-    image(lifeIcon, 330, 50, 40, 40);
+    image(lifeIcon, 420, 50, 40, 40);
     pop();
     fill(255);
     textSize(35);
     fill(200,100 , (player.health));
-    rect(400, 40, player.health, 25);
+    rect(490, 40, player.health, 25);
 }
 
 
