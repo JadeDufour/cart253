@@ -6,7 +6,7 @@
 class Squares {
 
 
-  constructor(x, y, width, height, color, speed){
+  constructor(x, y, width, height, color, speed) {
     //Position
     this.x = x;
     this.y = y;
@@ -15,15 +15,15 @@ class Squares {
     this.height = height;
     this.color = color;
     //velocity & speed
-    this.vx=0;
-    this.vy=0;
+    this.vx = 0;
+    this.vy = 0;
     this.speed = speed;
     // Time properties for noise() function
     this.tx = random(0, 10); // To make x and y noise different
     this.ty = random(0, 10); // we use random starting values
 
   }
-//The squares avoid the mouse
+  //The squares avoid the mouse
   avoid() {
     let d = dist(this.x, this.y, mouseX, mouseY);
     if (d < 50) {
@@ -39,7 +39,7 @@ class Squares {
       this.move();
     }
   }
-//And they move accordingly
+  //And they move accordingly
   move() {
     // Update position
     this.x += this.vx;
@@ -49,14 +49,14 @@ class Squares {
     this.ty += 0.01;
   }
 
-//display()
-  display(){
-   push();
-   rectMode(CENTER);
-   fill(this.color);
-   noStroke();
-   rect(this.x,this.y,this.width,this.height);
-   pop();
+  //display()
+  display() {
+    push();
+    rectMode(CENTER);
+    fill(this.color);
+    noStroke();
+    rect(this.x, this.y, this.width, this.height);
+    pop();
 
   }
 }
