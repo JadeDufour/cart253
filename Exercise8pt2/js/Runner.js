@@ -5,7 +5,6 @@
 
 class Runner {
 
-
   constructor(x, y, speed, jumpSpeed, img, radius,  jump, left, right, maxhealth) {
     // Position
     this.x = x;
@@ -16,6 +15,7 @@ class Runner {
     this.vx = 0;
     this.vy = 0;
     this.speed = speed;
+    //Health
     this.maxHealth = maxhealth;
     this.health= this.maxHealth;
 
@@ -42,10 +42,7 @@ class Runner {
 
       //-------------------------------------------
 
-
   }
-
-
 
   handleInput() {
     // Horizontal movements
@@ -54,31 +51,24 @@ class Runner {
     } else if (keyIsDown(this.rightKey)) {
       this.vx = this.speed;
     }
-
-
      else {
       this.vx = 0;
     }
 
     // Jumping
-
     if (keyIsDown(this.jumpKey)) {
       this.vy = -this.jumpingSpeed;
       this.jump = true;
     }
-
-
-
     console.log("y position : " + this.y);
     console.log("x position : " + this.x);
-
   }
 
-
+//Every frame the player loses a certain amount of health
 updateHealth(){
   this.health -= 0.2;
   this.health = constrain(this.health, 0, this.maxHealth);
-
+//of they get to 0, its game over
   if (this.health ===0){
     state = "GameOverScreen";
   }
@@ -86,20 +76,22 @@ updateHealth(){
 
 
 // move()
-
 move() {
   // Update the position of the object
   this.x += this.vx += this.acceleration;
   this.y += this.vy;
-
-
 }
 
+//Check if the player has gone off the screen
 falling(){
   if (this.y >= 1200 || this.x <0 || this.x>width || this.y < 0) {
-   //
+
    // If the player falls off the screen, its game over
    state = "GameOverScreen";
+}
+//And if they overlap the water, a water drop sfx plays
+if ( this.y >= 700 && this.y <=1000 ){
+  waterSound.play();
 }
 }
 
@@ -108,14 +100,12 @@ falling(){
 gravityEffect() {
   // Gravity pulls the player to the ground
   this.vy += this.gravity;
-
 }
 
+//The player has to be able to stand on the platforms
 stayOnScreen(platforms){
 
   let d = dist(this.x, this.y, platforms.x, platforms.y);
-
-
     //To keep track of the platform and the player
     if (d < this.radius + platforms.width/2) {
       this.touching = true;
@@ -127,21 +117,19 @@ stayOnScreen(platforms){
       this.vy = 0;
       this.speed +3;
       this.health += 0.5;
-
       this.y = constrain(this.y, (platforms.y-105),(this.y));
-
     }
 
     if (d > this.radius + platforms.width/2) {
       this.touching = false;
     }
-
+//if they are on the platform, they get points
       else if (d < this.radius + platforms.y, platforms.x){
         this.points +=1;
       }
 
 }
-//this (display) is probably the most chaotic thing i've ever done in javascript. But it works, and this is truly where my knowledge ends, so i'll embrace this mess of a script I created
+//This (display) is probably the most chaotic thing i've ever done in javascript. But it works, kinda, and this is truly where my knowledge ends, so i'll embrace this mess of a script I created
   display() {
 
     if ((keyIsDown(this.leftKey)) || (keyIsDown(this.rightKey))){
@@ -171,7 +159,5 @@ stayOnScreen(platforms){
       imageMode(CENTER);
       image(idle, this.x, this.y, this.radius * 2, this.radius * 2);
     }
-
-
   }
 }
